@@ -10,44 +10,18 @@ import SwiftUI
 struct MiniCalendarBodyView: View {
     let calendarVM: MiniCalendarViewModel
     
-    private var daysInCurrentMonth: Int {
-        numberOfDays(month: calendarVM.getCalendarMonth())
-    }
-    private var firstWeekday: Int {
-        firstWeekdayOfMonth(month: calendarVM.getCalendarMonth()) - 1
-    }
-    
-    private var daysInPreviousMonth: Int {
-        guard let previousMonth = Calendar.current.date(byAdding: .month, value: -1, to: calendarVM.getCalendarMonth()) else {
-            return numberOfDays(month: calendarVM.getCalendarMonth())
-        }
-        
-        return numberOfDays(month: previousMonth)
-    }
-    
     var body: some View {
         VStack {
+            // 요일을 보여주는 뷰
             dateHeaderView()
             
+            // 달력의 실제 날짜들을 보여주는 뷰
             dateGridView()
         }
     }
 }
 
 private extension MiniCalendarBodyView {
-    // 해당 월에 총 날짜 수
-    func numberOfDays(month: Date) -> Int {
-        return Calendar.current.range(of: .day, in: .month, for: month)?.count ?? 0
-    }
-    
-    // 해당 월의 첫 날짜가 갖는 요일
-    func firstWeekdayOfMonth(month: Date) -> Int {
-        let components = Calendar.current.dateComponents([.year, .month], from: month)
-        let firstDayOfMonth = Calendar.current.date(from: components)!
-        
-        return Calendar.current.component(.weekday, from: firstDayOfMonth)
-    }
-    
     @ViewBuilder
     func dateHeaderView() -> some View {
         let weekends: [String] = ["일", "월", "화", "수", "목", "금", "토"]
@@ -63,21 +37,24 @@ private extension MiniCalendarBodyView {
     
     @ViewBuilder
     func dateGridView() -> some View {
-        let weekCount = Int(ceil(Double(daysInCurrentMonth + firstWeekday) / 7)) // 해당 달의 행의 갯 수
-        let currentMonthDays = daysInCurrentMonth + firstWeekday // 이번 달의 날짜를 구분하기 위한 변수
+        let firstWeekDayOfMonth = calendarVM.firstWeekdayOfMonth()
+        let currentMonthDays = calendarVM.numberOfDays(month: calendarVM.getCalendarMonth())
+        let currentMonthEndDays = firstWeekDayOfMonth + currentMonthDays // 첫째 주 일요일부터 시작했을 때 이번 달 마지막 날의 인덱스
+        let weekCount = Int(ceil(Double(firstWeekDayOfMonth + currentMonthDays) / 7)) // 해당 달의 행의 갯 수
         
         LazyVGrid(columns: Array(repeating: GridItem(), count: 7), spacing: 5) {
             ForEach(0 ..< weekCount * 7, id: \.self) { index in
-                if index < firstWeekday {
-                    let day = daysInPreviousMonth - firstWeekday + index + 1
+                if index < firstWeekDayOfMonth {
+                    let previousMonthDays: Int = calendarVM.numberOfDays(month: calendarVM.getChangedMonth(value: -1))
+                    let day = previousMonthDays - firstWeekDayOfMonth + index + 1
                     
                     dayView(day: day, month: -1)
-                } else if(index < currentMonthDays) { // 이번 달
-                    let day = index - firstWeekday + 1
+                } else if(index < currentMonthEndDays) { // 이번 달
+                    let day = index - firstWeekDayOfMonth + 1
                     
                     dayView(day: day)
                 } else {
-                    dayView(day: index - currentMonthDays + 1, month: 1)
+                    dayView(day: index - currentMonthEndDays + 1, month: 1)
                 }
             }
         }
