@@ -48,26 +48,28 @@ private extension MiniCalendarBodyView {
                     let previousMonthDays: Int = calendarVM.numberOfDays(month: calendarVM.getChangedMonth(value: -1))
                     let day = previousMonthDays - firstWeekDayOfMonth + index + 1
                     
-                    dayView(day: day, month: -1)
+                    dayView(day: day, changeMonthValue: -1)
                 } else if(index < currentMonthEndDays) { // 이번 달
                     let day = index - firstWeekDayOfMonth + 1
                     
                     dayView(day: day)
                 } else {
-                    dayView(day: index - currentMonthEndDays + 1, month: 1)
+                    dayView(day: index - currentMonthEndDays + 1, changeMonthValue: 1)
                 }
             }
         }
     }
     
     @ViewBuilder
-    func dayView(day: Int, month: Int = 0) -> some View {
+    func dayView(day: Int, changeMonthValue: Int = 0) -> some View {
         Button {
-            calendarVM.changeMonth(value: month)
+            calendarVM.changeMonth(value: changeMonthValue)
         } label: {
             VStack(spacing: 5) {
                 Text(String(day))
-                    .foregroundStyle(month == 0 ? .black : .gray)
+                    .foregroundStyle(changeMonthValue == 0 ? .black : .gray)
+                    .font(calendarVM.isSelectedDay(month: calendarVM.getChangedMonth(value: changeMonthValue), day: day) ?
+                        .system(size: 14, weight: .bold) : .system(size: 12))
             }
         }
     }

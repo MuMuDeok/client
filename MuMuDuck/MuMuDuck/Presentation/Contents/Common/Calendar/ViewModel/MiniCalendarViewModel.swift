@@ -10,19 +10,34 @@ import Foundation
 @Observable
 class MiniCalendarViewModel {
     private var calendarMonth: Date
-    private var selectedDay: Date
+    private var selectedDate: Date
     
     init(calendarMonth: Date = Date(), selectedDay: Date = Date()) {
         self.calendarMonth = calendarMonth
-        self.selectedDay = selectedDay
+        self.selectedDate = selectedDay
     }
     
     func getCalendarMonth() -> Date {
         return calendarMonth
     }
     
-    func getSelectedDay() -> Date {
-        return selectedDay
+    func getSelectedDate() -> Date {
+        return selectedDate
+    }
+    
+    func isSelectedDay(month: Date, day: Int) -> Bool {
+        let selectedDateComponenets = Calendar.current.dateComponents([.year, .month, .day], from: selectedDate)
+        let compareDateComponenets = Calendar.current.dateComponents([.year, .month], from: month)
+        
+        guard let selectedYear = selectedDateComponenets.year, let selectedMonth = selectedDateComponenets.month, let selectedDay = selectedDateComponenets.day else {
+            return false
+        }
+        
+        guard let compareYear = compareDateComponenets.year, let compareMonth = compareDateComponenets.month else {
+            return false
+        }
+            
+        return selectedYear == compareYear && selectedMonth == compareMonth && selectedDay == day
     }
     
     func changeMonth(value: Int) {
