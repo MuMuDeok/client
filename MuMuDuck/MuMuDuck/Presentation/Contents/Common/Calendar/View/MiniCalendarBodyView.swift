@@ -17,6 +17,14 @@ struct MiniCalendarBodyView: View {
         firstWeekdayOfMonth(month: calendarVM.getCalendarMonth()) - 1
     }
     
+    private var daysInPreviousMonth: Int {
+        guard let previousMonth = Calendar.current.date(byAdding: .month, value: -1, to: calendarVM.getCalendarMonth()) else {
+            return numberOfDays(month: calendarVM.getCalendarMonth())
+        }
+        
+        return numberOfDays(month: previousMonth)
+    }
+    
     var body: some View {
         VStack {
             dateHeaderView()
@@ -55,27 +63,35 @@ private extension MiniCalendarBodyView {
     
     @ViewBuilder
     func dateGridView() -> some View {
+        let weekCount = Int(ceil(Double(daysInCurrentMonth + firstWeekday) / 7)) // 해당 달의 행의 갯 수
         let currentMonthDays = daysInCurrentMonth + firstWeekday // 이번 달의 날짜를 구분하기 위한 변수
         
         LazyVGrid(columns: Array(repeating: GridItem(), count: 7), spacing: 5) {
-            ForEach(0 ..< currentMonthDays, id: \.self) { index in
+            ForEach(0 ..< weekCount * 7, id: \.self) { index in
                 if index < firstWeekday {
-                    Text("")
+                    let day = daysInPreviousMonth - firstWeekday + index + 1
                     
-                } else { // 이번 달
+                    dayView(day: day, month: -1)
+                } else if(index < currentMonthDays) { // 이번 달
                     let day = index - firstWeekday + 1
                     
                     dayView(day: day)
+                } else {
+                    dayView(day: index - currentMonthDays + 1, month: 1)
                 }
             }
         }
     }
     
     @ViewBuilder
-    func dayView(day: Int) -> some View {
-        VStack(spacing: 5) {
-            Text(String(day))
-                .foregroundStyle(.black)
+    func dayView(day: Int, month: Int = 0) -> some View {
+        Button {
+            calendarVM.changeMonth(value: month)
+        } label: {
+            VStack(spacing: 5) {
+                Text(String(day))
+                    .foregroundStyle(month == 0 ? .black : .gray)
+            }
         }
     }
 }
