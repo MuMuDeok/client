@@ -33,4 +33,25 @@ final class MiniCalendarViewModelTest: XCTestCase {
         
         XCTAssertEqual(calendarVM.getCalendarMonth(), expectedDate, "The month should be changed to the next month")
     }
+    
+    
+    func test_whenGetFeburaryTotalDays_thenReturn28() {
+        // given
+        var dateComponents = DateComponents()
+        dateComponents.year = 2025
+        dateComponents.month = 2    // 테스트를 위해 2월로 설정
+        dateComponents.day = 1
+        
+        guard let calendarDate = Calendar.current.date(from: dateComponents) else {
+            return XCTFail("Failed to create date from components")
+        }
+        
+        let calendarVM = MiniCalendarViewModel(calendarMonth: calendarDate)
+        
+        // when
+        let days = calendarVM.numberOfDays(month: calendarDate)
+        
+        // then
+        XCTAssertEqual(days, 28, "Return value must be 28")
+    }
 }
