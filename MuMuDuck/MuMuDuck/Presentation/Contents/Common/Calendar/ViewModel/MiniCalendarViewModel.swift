@@ -26,6 +26,9 @@ class MiniCalendarViewModel {
     }
     
     func changeMonth(value: Int) {
-        
+        let calendar = Calendar.current
+        if let newMonth = calendar.date(byAdding: .month, value: value, to: calendarMonth) {
+            self.calendarMonth = newMonth
+        }
     }
 }
