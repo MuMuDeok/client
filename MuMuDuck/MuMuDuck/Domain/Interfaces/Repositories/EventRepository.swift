@@ -8,5 +8,5 @@
 import Foundation
 
 protocol EventRepository {
-    func getEventsOfDay(day: Date) -> [any Event]
+    func fetchEvents() -> [any Event]
 }
