@@ -20,7 +20,7 @@ final class MiniCalendarViewModelTest: XCTestCase {
             return XCTFail("Failed to create date from components")
         }
         
-        let calendarVM = MiniCalendarViewModel(calendarMonth: calendarDate)
+        let calendarVM = MiniCalendarViewModel(calendarMonth: calendarDate, eventRepository: DefaultEventRepository())
         
         // when
         calendarVM.changeMonth(value: 1) // 다음 달로 변경
@@ -46,7 +46,7 @@ final class MiniCalendarViewModelTest: XCTestCase {
             return XCTFail("Failed to create date from components")
         }
         
-        let calendarVM = MiniCalendarViewModel(calendarMonth: calendarDate)
+        let calendarVM = MiniCalendarViewModel(calendarMonth: calendarDate, eventRepository: DefaultEventRepository())
         
         // when
         let days = calendarVM.numberOfDays(month: calendarDate)
