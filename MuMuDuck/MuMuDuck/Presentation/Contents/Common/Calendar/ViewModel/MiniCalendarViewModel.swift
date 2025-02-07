@@ -42,6 +42,19 @@ class MiniCalendarViewModel {
         return selectedYear == compareYear && selectedMonth == compareMonth && selectedDay == day
     }
     
+    func clickDate(changeMonthValue value: Int, day: Int) {
+        let calendar = Calendar.current
+        var dateComponents = calendar.dateComponents([.year, .month], from: getChangedMonth(value: value))
+        dateComponents.day = day
+        
+        guard let newDate = Calendar.current.date(from: dateComponents) else {
+            return
+        }
+        
+        self.selectedDate = newDate
+        self.changeMonth(value: value) // 다른 달인 경우 달 변경
+    }
+    
     func changeMonth(value: Int) {
         let calendar = Calendar.current
         if let newMonth = calendar.date(byAdding: .month, value: value, to: calendarMonth) {

@@ -73,7 +73,7 @@ private extension MiniCalendarBodyView {
     func dayView(day: Int, changeMonthValue: Int = 0) -> some View {
         VStack(spacing: 10) {
             Button {
-                calendarVM.changeMonth(value: changeMonthValue)
+                calendarVM.clickDate(changeMonthValue: changeMonthValue, day: day)
             } label: {
                 VStack(spacing: 5) {
                     Text(String(day))
