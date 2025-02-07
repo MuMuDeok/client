@@ -13,7 +13,7 @@ enum EventType {
     case performance
 }
 
-protocol Event {
+protocol Event: Equatable {
     var id: UUID { get }
     var title: String { get }
     var isAllDay: Bool { get }
