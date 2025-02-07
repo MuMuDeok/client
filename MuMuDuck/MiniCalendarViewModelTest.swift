@@ -54,4 +54,44 @@ final class MiniCalendarViewModelTest: XCTestCase {
         // then
         XCTAssertEqual(days, 28, "Return value must be 28")
     }
+    
+    func test_whenClickNextMonth15_thenCalendarMonthAndSelectedDateMonthWillChangeTo3AndSelectedDateWill15() {
+        // when
+        let calendar = Calendar.current
+        var calendarDateComponents = DateComponents()
+        calendarDateComponents.year = 2025
+        calendarDateComponents.month = 2    // 테스트를 위해 2월로 설정
+        calendarDateComponents.day = 1
+        
+        guard let calendarDate = calendar.date(from: calendarDateComponents) else {
+            return XCTFail("Failed to create date from components")
+        }
+        let calendarVM = MiniCalendarViewModel(calendarMonth: Date(), eventRepository: DefaultEventRepository())
+        
+        // given
+        var clickDateComponents = DateComponents()
+        clickDateComponents.year = 2025
+        clickDateComponents.month = 3
+        clickDateComponents.day = 15
+        
+        guard let date = calendar.date(from: clickDateComponents) else {
+            return XCTFail("Failed to create")
+        }
+        
+        calendarVM.clickDate(changeMonthValue: 1, day: 15)
+        // then
+        
+        guard let calendarMonth = calendar.dateComponents([.month], from: calendarVM.getCalendarMonth()).month else {
+            return XCTFail("Failed to get month from components")
+        }
+        
+        let selectedDateComponents = calendar.dateComponents([.month, .day], from: calendarVM.getSelectedDate())
+        guard let selectedMonth = selectedDateComponents.month, let selectedDay = selectedDateComponents.day else {
+            return XCTFail("Failed to get month and day from components")
+        }
+        
+        XCTAssertEqual(calendarMonth, 3)
+        XCTAssertEqual(selectedMonth, 3)
+        XCTAssertEqual(selectedDay, 15)
+    }
 }
