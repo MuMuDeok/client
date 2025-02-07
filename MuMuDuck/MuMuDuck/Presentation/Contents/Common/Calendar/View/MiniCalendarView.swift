@@ -8,8 +8,32 @@
 import SwiftUI
 
 struct MiniCalendarView: View {
-    let calendarVM: MiniCalendarViewModel = MiniCalendarViewModel()
+    let calendarVM: MiniCalendarViewModel
     @State var isGestured: Bool = false
+    
+    init() {
+        // mockEvents에 원하는 값의 Date타입을 만들기 위한 임시 함수
+        func getDate(year: Int, month: Int, day: Int) -> Date {
+            var dateComponents = DateComponents()
+            dateComponents.year = year
+            dateComponents.month = month
+            dateComponents.day = day
+            if let date = Calendar.current.date(from: dateComponents) {
+                return date
+            } else {
+                return Date()
+            }
+        }
+        
+        let mockEvents: [any Event] = [
+            PersonalEvent(title: "테스트1", isAllDay: false, startDate: getDate(year: 2025, month: 2, day: 8), endDate: getDate(year: 2025, month: 2, day: 9), isAlert: false),
+            PersonalEvent(title: "테스트2", isAllDay: false, startDate: getDate(year: 2025, month: 2, day: 10), endDate: getDate(year: 2025, month: 2, day: 13), isAlert: false),
+            PersonalEvent(title: "테스트3", isAllDay: false, startDate: getDate(year: 2025, month: 2, day: 12), endDate: getDate(year: 2025, month: 2, day: 13), isAlert: false),
+            PersonalEvent(title: "테스트4", isAllDay: false, startDate: getDate(year: 2025, month: 2, day: 18), endDate: getDate(year: 2025, month: 2, day: 20), isAlert: false),
+            PersonalEvent(title: "테스트5", isAllDay: false, startDate: getDate(year: 2025, month: 2, day: 21), endDate: getDate(year: 2025, month: 2, day: 21), isAlert: false),
+        ]
+        calendarVM = MiniCalendarViewModel(eventRepository: DefaultEventRepository(events: mockEvents))
+    }
     
     var body: some View {
         VStack(spacing : 20) {

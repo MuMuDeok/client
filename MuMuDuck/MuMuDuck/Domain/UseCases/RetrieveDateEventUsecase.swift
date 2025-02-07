@@ -8,9 +8,9 @@
 import Foundation
 
 class RetrieveDateEventUsecase {
-    private let eventRepository: DefaultEventRepository
+    private let eventRepository: EventRepository
     
-    init(eventRepository: DefaultEventRepository) {
+    init(eventRepository: EventRepository) {
         self.eventRepository = eventRepository
     }
     

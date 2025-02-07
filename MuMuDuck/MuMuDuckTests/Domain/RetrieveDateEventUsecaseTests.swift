@@ -14,10 +14,9 @@ final class RetrieveDateEventUsecaseTests: XCTestCase {
     
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
-//        mockEvents =
         mockEvents = [
             PersonalEvent(title: "테스트1", isAllDay: false, startDate: getDate(year: 2025, month: 2, day: 8), endDate: getDate(year: 2025, month: 2, day: 9), isAlert: false),
-            PersonalEvent(title: "테스트2", isAllDay: false, startDate: getDate(year: 2025, month: 2, day: 10), endDate: getDate(year: 2025, month: 2, day: 3), isAlert: false),
+            PersonalEvent(title: "테스트2", isAllDay: false, startDate: getDate(year: 2025, month: 2, day: 10), endDate: getDate(year: 2025, month: 2, day: 13), isAlert: false),
             PersonalEvent(title: "테스트3", isAllDay: false, startDate: getDate(year: 2025, month: 2, day: 12), endDate: getDate(year: 2025, month: 2, day: 13), isAlert: false),
             PersonalEvent(title: "테스트4", isAllDay: false, startDate: getDate(year: 2025, month: 2, day: 18), endDate: getDate(year: 2025, month: 2, day: 20), isAlert: false),
             PersonalEvent(title: "테스트5", isAllDay: false, startDate: getDate(year: 2025, month: 2, day: 21), endDate: getDate(year: 2025, month: 2, day: 21), isAlert: false),
