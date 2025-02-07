@@ -1,5 +1,5 @@
 //
-//  MiniCalendarViewModelTest.swift
+//  MiniCalendarViewModelTests.swift
 //  MuMuDuckTests
 //
 //  Created by 강승우 on 2/7/25.
@@ -56,7 +56,7 @@ final class MiniCalendarViewModelTest: XCTestCase {
     }
     
     func test_whenClickNextMonth15_thenCalendarMonthAndSelectedDateMonthWillChangeTo3AndSelectedDateWill15() {
-        // when
+        // given
         let calendar = Calendar.current
         var calendarDateComponents = DateComponents()
         calendarDateComponents.year = 2025
@@ -66,18 +66,9 @@ final class MiniCalendarViewModelTest: XCTestCase {
         guard let calendarDate = calendar.date(from: calendarDateComponents) else {
             return XCTFail("Failed to create date from components")
         }
-        let calendarVM = MiniCalendarViewModel(calendarMonth: Date(), eventRepository: DefaultEventRepository())
+        let calendarVM = MiniCalendarViewModel(calendarMonth: calendarDate, eventRepository: DefaultEventRepository())
         
-        // given
-        var clickDateComponents = DateComponents()
-        clickDateComponents.year = 2025
-        clickDateComponents.month = 3
-        clickDateComponents.day = 15
-        
-        guard let date = calendar.date(from: clickDateComponents) else {
-            return XCTFail("Failed to create")
-        }
-        
+        // when
         calendarVM.clickDate(changeMonthValue: 1, day: 15)
         // then
         
