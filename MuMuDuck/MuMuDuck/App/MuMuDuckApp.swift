@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct MuMuDuckApp: App {
+    @StateObject var coordinator: Coordinator = Coordinator()
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(coordinator)
         }
     }
 }
