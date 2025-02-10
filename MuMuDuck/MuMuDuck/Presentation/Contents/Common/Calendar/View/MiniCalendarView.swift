@@ -8,18 +8,16 @@
 import SwiftUI
 
 struct MiniCalendarView: View {
-    let calendarVM: MiniCalendarViewModel
+    let calendarVM: MiniCalendarViewModel = MiniCalendarViewModel()
     @State var isGestured: Bool = false
-    
-    init() {
-        calendarVM = MiniCalendarViewModel()
-    }
+    @Binding var month: Date
+    @Binding var selectedDate: Date
     
     var body: some View {
         VStack(spacing : 20) {
-            MiniCalendarHeaderView(calendarVM: calendarVM)
+            MiniCalendarHeaderView(calendarVM: calendarVM, month: $month)
             
-            MiniCalendarBodyView(calendarVM: calendarVM)
+            MiniCalendarBodyView(calendarVM: calendarVM, month: $month, selectedDate: $selectedDate)
         }
         .gesture(dragGesture)
     }
@@ -30,10 +28,10 @@ private extension MiniCalendarView {
         DragGesture()
             .onChanged { gesture in
                 if gesture.location.x - gesture.startLocation.x > 100 && isGestured == false {
-                    calendarVM.changeMonth(value: -1)
+                    month = calendarVM.changeMonth(month: month, value: -1)
                     self.isGestured = true
                 } else if gesture.location.x - gesture.startLocation.x < -100 && isGestured == false {
-                    calendarVM.changeMonth(value: 1)
+                    month = calendarVM.changeMonth(month: month, value: 1)
                     self.isGestured = true
                 }
                 print(gesture.location.x - gesture.startLocation.x)

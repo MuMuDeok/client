@@ -9,11 +9,9 @@ import SwiftUI
 
 struct MyCalendarTapView: View {
     @EnvironmentObject var coordinator: Coordinator
-    let myCalendarVM: MyCalendarTapViewModel
-    
-    init() {
-        self.myCalendarVM = MyCalendarTapViewModel()
-    }
+    let myCalendarVM: MyCalendarTapViewModel = MyCalendarTapViewModel()
+    @State var month: Date = Date()
+    @State var selectedDate: Date = Date()
     
     var body: some View {
         VStack {
@@ -26,9 +24,11 @@ struct MyCalendarTapView: View {
                 
                 Spacer()
             } else { // 달력 접힌 상태
-                MiniCalendarView()
+                MiniCalendarView(month: $month, selectedDate: $selectedDate)
                 
                 toggleOutspreadButton()
+                
+                miniCalendarEventListView()
                 
                 Spacer()
             }
@@ -81,6 +81,15 @@ extension MyCalendarTapView {
             }
             .frame(height: 40)
             .frame(maxWidth: .infinity)
+        }
+    }
+    
+    @ViewBuilder
+    func miniCalendarEventListView() -> some View {
+        ScrollView {
+            HStack {
+                
+            }
         }
     }
 }

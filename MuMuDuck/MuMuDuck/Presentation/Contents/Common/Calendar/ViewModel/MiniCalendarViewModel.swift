@@ -9,25 +9,13 @@ import Foundation
 
 @Observable
 class MiniCalendarViewModel {
-    private var calendarMonth: Date
-    private var selectedDate: Date
     let retrieveDateEventUsecase: RetrieveDateEventUsecase
     
-    init(calendarMonth: Date = Date(), selectedDay: Date = Date()) {
-        self.calendarMonth = calendarMonth
-        self.selectedDate = selectedDay
+    init() {
         self.retrieveDateEventUsecase = RetrieveDateEventUsecase()
     }
     
-    func getCalendarMonth() -> Date {
-        return calendarMonth
-    }
-    
-    func getSelectedDate() -> Date {
-        return selectedDate
-    }
-    
-    func isSelectedDay(month: Date, day: Int) -> Bool {
+    func isSelectedDay(month: Date, day: Int, selectedDate: Date) -> Bool {
         let selectedDateComponenets = Calendar.current.dateComponents([.year, .month, .day], from: selectedDate)
         let compareDateComponenets = Calendar.current.dateComponents([.year, .month], from: month)
         
@@ -42,30 +30,22 @@ class MiniCalendarViewModel {
         return selectedYear == compareYear && selectedMonth == compareMonth && selectedDay == day
     }
     
-    func clickDate(changeMonthValue value: Int, day: Int) {
+    func clickDate(month: Date, day: Int) -> Date{
         let calendar = Calendar.current
-        var dateComponents = calendar.dateComponents([.year, .month], from: getChangedMonth(value: value))
+        var dateComponents = calendar.dateComponents([.year, .month], from: month)
         dateComponents.day = day
         
         guard let newDate = Calendar.current.date(from: dateComponents) else {
-            return
+            return month
         }
         
-        self.selectedDate = newDate
-        self.changeMonth(value: value) // 다른 달인 경우 달 변경
+        return newDate
     }
     
-    func changeMonth(value: Int) {
+    func changeMonth(month: Date, value: Int) -> Date {
         let calendar = Calendar.current
-        if let newMonth = calendar.date(byAdding: .month, value: value, to: calendarMonth) {
-            self.calendarMonth = newMonth
-        }
-    }
-    
-    func getChangedMonth(value: Int) -> Date {
-        let calendar = Calendar.current
-        guard let newMonth = calendar.date(byAdding: .month, value: value, to: calendarMonth) else {
-            return calendarMonth
+        guard let newMonth = calendar.date(byAdding: .month, value: value, to: month) else {
+            return Date()
         }
         
         return newMonth
@@ -77,8 +57,8 @@ class MiniCalendarViewModel {
     }
     
     // 달력이 보여주는 월의 첫 날짜가 갖는 요일
-    func firstWeekdayOfMonth() -> Int {
-        let components = Calendar.current.dateComponents([.year, .month], from: calendarMonth)
+    func firstWeekdayOfMonth(month: Date) -> Int {
+        let components = Calendar.current.dateComponents([.year, .month], from: month)
         let firstDayOfMonth = Calendar.current.date(from: components)!
         
         return Calendar.current.component(.weekday, from: firstDayOfMonth) - 1

@@ -8,11 +8,7 @@
 import Foundation
 
 class RetrieveDateEventUsecase {
-    private let eventRepository: EventRepository
-    
-    init() {
-        self.eventRepository = DefaultEventRepository.shared
-    }
+    private let eventRepository: EventRepository = DefaultEventRepository.shared
     
     func execute(date: Date) -> [any Event] {
         let calendar = Calendar.current
