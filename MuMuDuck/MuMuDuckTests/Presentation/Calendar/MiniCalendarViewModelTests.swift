@@ -20,10 +20,11 @@ final class MiniCalendarViewModelTest: XCTestCase {
             return XCTFail("Failed to create date from components")
         }
         
-        let calendarVM = MiniCalendarViewModel(calendarMonth: calendarDate, eventRepository: DefaultEventRepository())
+        let calendarVM = MiniCalendarViewModel()
+        var month = calendarDate
         
         // when
-        calendarVM.changeMonth(value: 1) // 다음 달로 변경
+        let calendarMonth = calendarVM.changeMonth(month: calendarDate, value: 1) // 다음 달로 변경
         
         // then
         let expectedDateComponents = DateComponents(year: 2025, month: 6, day: 1) // 예상되는 날짜
@@ -31,7 +32,7 @@ final class MiniCalendarViewModelTest: XCTestCase {
             return XCTFail("Failed to create expected date from components")
         }
         
-        XCTAssertEqual(calendarVM.getCalendarMonth(), expectedDate, "The month should be changed to the next month")
+        XCTAssertEqual(calendarMonth, expectedDate, "The month should be changed to the next month")
     }
     
     
@@ -46,7 +47,7 @@ final class MiniCalendarViewModelTest: XCTestCase {
             return XCTFail("Failed to create date from components")
         }
         
-        let calendarVM = MiniCalendarViewModel(calendarMonth: calendarDate, eventRepository: DefaultEventRepository())
+        let calendarVM = MiniCalendarViewModel()
         
         // when
         let days = calendarVM.numberOfDays(month: calendarDate)
@@ -66,17 +67,25 @@ final class MiniCalendarViewModelTest: XCTestCase {
         guard let calendarDate = calendar.date(from: calendarDateComponents) else {
             return XCTFail("Failed to create date from components")
         }
-        let calendarVM = MiniCalendarViewModel(calendarMonth: calendarDate, eventRepository: DefaultEventRepository())
+        let calendarVM = MiniCalendarViewModel()
+        var selectedDate = calendarDate
+        var month = calendarDate
         
         // when
-        calendarVM.clickDate(changeMonthValue: 1, day: 15)
-        // then
+        calendarDateComponents.month = 3
         
-        guard let calendarMonth = calendar.dateComponents([.month], from: calendarVM.getCalendarMonth()).month else {
+        guard let newCalendarDate = calendar.date(from: calendarDateComponents) else {
+            return XCTFail("Failed to create date from components")
+        }
+        selectedDate = calendarVM.clickDate(month: newCalendarDate, day: 15)
+        month = selectedDate
+        
+        // then
+        guard let calendarMonth = calendar.dateComponents([.month], from: month).month else {
             return XCTFail("Failed to get month from components")
         }
         
-        let selectedDateComponents = calendar.dateComponents([.month, .day], from: calendarVM.getSelectedDate())
+        let selectedDateComponents = calendar.dateComponents([.month, .day], from: selectedDate)
         guard let selectedMonth = selectedDateComponents.month, let selectedDay = selectedDateComponents.day else {
             return XCTFail("Failed to get month and day from components")
         }

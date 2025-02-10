@@ -25,8 +25,8 @@ final class RetrieveDateEventUsecaseTests: XCTestCase {
     
     func test_whenRetriveEventWithDate_thenReturnEventIncludeDate() {
         // given
-        let repository = DefaultEventRepository(events: mockEvents)
-        let usecase = RetrieveDateEventUsecase(eventRepository: repository)
+        let repository = DefaultEventRepository()
+        let usecase = RetrieveDateEventUsecase()
         let date = getDate(year: 2025, month: 2, day: 21)
         
         // when
