@@ -10,8 +10,8 @@ import Foundation
 class RetrieveDateEventUsecase {
     private let eventRepository: EventRepository
     
-    init(eventRepository: EventRepository) {
-        self.eventRepository = eventRepository
+    init() {
+        self.eventRepository = DefaultEventRepository.shared
     }
     
     func execute(date: Date) -> [any Event] {

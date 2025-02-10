@@ -13,10 +13,10 @@ class MiniCalendarViewModel {
     private var selectedDate: Date
     let retrieveDateEventUsecase: RetrieveDateEventUsecase
     
-    init(calendarMonth: Date = Date(), selectedDay: Date = Date(), eventRepository: EventRepository) {
+    init(calendarMonth: Date = Date(), selectedDay: Date = Date()) {
         self.calendarMonth = calendarMonth
         self.selectedDate = selectedDay
-        self.retrieveDateEventUsecase = RetrieveDateEventUsecase(eventRepository: eventRepository)
+        self.retrieveDateEventUsecase = RetrieveDateEventUsecase()
     }
     
     func getCalendarMonth() -> Date {
