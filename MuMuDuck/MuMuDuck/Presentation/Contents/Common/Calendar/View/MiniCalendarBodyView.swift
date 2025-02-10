@@ -78,6 +78,7 @@ private extension MiniCalendarBodyView {
         
         VStack(spacing: 10) {
             Button {
+                self.month = newMonth
                 self.selectedDate = calendarVM.clickDate(month: newMonth, day: day)
             } label: {
                 if calendarVM.isSelectedDay(month: newMonth, day: day, selectedDate: selectedDate) {
