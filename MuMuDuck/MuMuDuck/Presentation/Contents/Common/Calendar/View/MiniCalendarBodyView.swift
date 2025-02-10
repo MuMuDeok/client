@@ -80,11 +80,22 @@ private extension MiniCalendarBodyView {
             Button {
                 self.selectedDate = calendarVM.clickDate(month: newMonth, day: day)
             } label: {
-                VStack(spacing: 5) {
+                if calendarVM.isSelectedDay(month: newMonth, day: day, selectedDate: selectedDate) {
+                    Text(String(day))
+                        .foregroundStyle(.white)
+                        .font(.system(size: 14, weight: .bold))
+                        .padding(5)
+                        .background {
+                            Circle()
+                                .frame(width: 24, height: 24)
+                                .foregroundStyle(.gray)
+                        }
+                        
+                } else {
                     Text(String(day))
                         .foregroundStyle(changeMonthValue == 0 ? .black : .gray)
-                        .font(calendarVM.isSelectedDay(month: newMonth, day: day, selectedDate: selectedDate) ?
-                            .system(size: 14, weight: .bold) : .system(size: 14))
+                        .font(.system(size: 14))
+                        .padding(5)
                 }
             }
             
