@@ -9,12 +9,8 @@ import Foundation
 
 @Observable
 class MyCalendarTapViewModel {
-    private let eventrepository: EventRepository
+    private let retrieveDateEventUsecase:RetrieveDateEventUsecase  = RetrieveDateEventUsecase()
     private var isOutspread: Bool = false
-    
-    init() {
-        self.eventrepository = DefaultEventRepository.shared
-    }
     
     func isCalendarOutspread() -> Bool {
         return isOutspread
@@ -22,5 +18,9 @@ class MyCalendarTapViewModel {
     
     func toggleCalendarOutspread() {
         isOutspread.toggle()
+    }
+    
+    func getDayEvents(date: Date) -> [any Event] {
+        return retrieveDateEventUsecase.execute(date: date)
     }
 }

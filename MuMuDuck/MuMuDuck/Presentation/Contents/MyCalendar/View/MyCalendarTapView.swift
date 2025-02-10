@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct MyCalendarTapView: View {
-    @EnvironmentObject var coordinator: Coordinator
-    let myCalendarVM: MyCalendarTapViewModel = MyCalendarTapViewModel()
-    @State var month: Date = Date()
-    @State var selectedDate: Date = Date()
-    
+    @EnvironmentObject private var coordinator: Coordinator
+    private let myCalendarVM: MyCalendarTapViewModel = MyCalendarTapViewModel()
+    @State private var month: Date = Date()
+    @State private var selectedDate: Date = Date()
+    let width = UIScreen.main.bounds.width * 0.9
     var body: some View {
         VStack {
             Divider()
@@ -48,7 +48,7 @@ struct MyCalendarTapView: View {
     }
 }
 
-extension MyCalendarTapView {
+private extension MyCalendarTapView {
     @ViewBuilder
     func toggleOutspreadButton() -> some View {
         // 접기 버튼
@@ -85,11 +85,69 @@ extension MyCalendarTapView {
     }
     
     @ViewBuilder
-    func miniCalendarEventListView() -> some View {
-        ScrollView {
-            HStack {
+    func eventListHeaderView() -> some View {
+        HStack {
+            Text(dateToString(date: selectedDate, format: "M.d (E)"))
+            
+            Spacer()
+            
+            Button {
                 
+            } label: {
+                HStack {
+                    Image(systemName: "plus")
+                    Text("일정추가")
+                }
             }
         }
+        .font(.title2)
+        .foregroundStyle(.black)
+        .padding(.horizontal, 20)
+    }
+    
+    @ViewBuilder
+    func eventListItemView(event: any Event) -> some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 20)
+                .foregroundStyle(Color(uiColor: .systemGray3))
+            
+            HStack(alignment: .center) {
+                Text(event.title)
+                
+                Spacer()
+                
+                Image(systemName: "chevron.right")
+            }
+            .padding(.horizontal, 20)
+        }
+        .frame(height: 80)
+        .padding(.horizontal, 20)
+    }
+    
+    @ViewBuilder
+    func miniCalendarEventListView() -> some View {
+        let events = myCalendarVM.getDayEvents(date: selectedDate)
+        
+        ScrollView {
+            eventListHeaderView()
+            
+            if events.isEmpty {
+                Text("등록된 일정이 없습니다.")
+                    .padding(.top, 50)
+            } else {
+                ForEach(events, id:\.id) { event in
+                    eventListItemView(event: event)
+                }
+            }
+        }
+        .padding(.top, 20)
+    }
+    
+    func dateToString(date:Date, format: String) -> String {
+        var formatter = DateFormatter()
+        formatter.dateFormat = format
+        formatter.locale = Locale(identifier: "ko_KR")
+        
+        return formatter.string(from: date)
     }
 }
