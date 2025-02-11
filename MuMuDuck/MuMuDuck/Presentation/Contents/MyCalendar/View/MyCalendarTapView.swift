@@ -19,29 +19,34 @@ struct MyCalendarTapView: View {
             
             if myCalendarVM.isCalendarOutspread() { // 달력 펼친 상태
                 
-                toggleOutspreadButton()
-                
-                
-                Spacer()
             } else { // 달력 접힌 상태
-                MiniCalendarView(month: $month, selectedDate: $selectedDate)
-                
-                toggleOutspreadButton()
-                
-                miniCalendarEventListView()
-                
-                Spacer()
+                ScrollView {
+                    MiniCalendarView(month: $month, selectedDate: $selectedDate)
+                    
+                    toggleOutspreadButton()
+                    
+                    miniCalendarEventListView()
+                }
+                .scrollDisabled(myCalendarVM.getDayEvents(date: selectedDate).count < 3)
             }
+            
+            Spacer()
         }
         .navigationTitle("내 캘린더")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarItem(placement: .confirmationAction) {
-                Button {
-                    
-                } label: {
-                    Image(systemName: "plus")
-                        .foregroundStyle(.black)
+            if !myCalendarVM.isCalendarOutspread() {
+                ToolbarItem(placement: .confirmationAction) {
+                    Button {
+                        
+                    } label: {
+                        Image(systemName: "plus")
+                            .foregroundStyle(.black)
+                    }
+                }
+            } else {
+                ToolbarItem(placement: .bottomBar) {
+                    toggleOutspreadButton()
                 }
             }
         }
@@ -128,7 +133,7 @@ private extension MyCalendarTapView {
     func miniCalendarEventListView() -> some View {
         let events = myCalendarVM.getDayEvents(date: selectedDate)
         
-        ScrollView {
+        VStack {
             eventListHeaderView()
             
             if events.isEmpty {
