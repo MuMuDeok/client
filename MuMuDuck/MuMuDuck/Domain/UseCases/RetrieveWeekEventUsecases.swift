@@ -14,14 +14,14 @@ class RetrieveWeekEventUsecase {
         let calendar = Calendar.current
         let events: [any Event] = eventRepository.fetchEvents()
         
-        let wsd = Calendar.current.dateComponents([.year, .month, .day], from: date[0])
-        let wed = Calendar.current.dateComponents([.year, .month, .day], from: date[6])
+        let wsd = calendar.dateComponents([.year, .month, .day], from: date[0])
+        let wed = calendar.dateComponents([.year, .month, .day], from: date[6])
         var filterdEvents: [any Event] = []
         let forMatter = "yyyy-MM-dd"
         
         events.forEach { event in
-            let esd = Calendar.current.dateComponents([.year, .month, .day], from: event.startDate)
-            let eed = Calendar.current.dateComponents([.year, .month, .day], from: event.endDate)
+            let esd = calendar.dateComponents([.year, .month, .day], from: event.startDate)
+            let eed = calendar.dateComponents([.year, .month, .day], from: event.endDate)
             
             if (compareDateComponents(esd, wsd) && compareDateComponents(wsd, eed)) || (compareDateComponents(esd, wed) && compareDateComponents(wed, eed) || (compareDateComponents(wsd, esd) && compareDateComponents(esd, wed))) {
                 filterdEvents.append(event)

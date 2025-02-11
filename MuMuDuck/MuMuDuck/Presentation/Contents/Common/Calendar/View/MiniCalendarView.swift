@@ -31,7 +31,6 @@ private extension MiniCalendarView {
                     month = calendarVM.changeMonth(month: month, value: 1)
                     self.isGestured = true
                 }
-                print(gesture.location.x - gesture.startLocation.x)
             }
             .onEnded { _ in
                 self.isGestured = false
