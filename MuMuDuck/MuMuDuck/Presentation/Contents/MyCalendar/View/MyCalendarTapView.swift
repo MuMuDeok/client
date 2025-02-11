@@ -12,6 +12,7 @@ struct MyCalendarTapView: View {
     let myCalendarVM: MyCalendarTapViewModel = MyCalendarTapViewModel()
     @State private var month: Date = Date()
     @State private var selectedDate: Date = Date()
+    @State var isCreatingEvent: Bool = false
     let width = UIScreen.main.bounds.width * 0.9
     
     var body: some View {
@@ -34,13 +35,16 @@ struct MyCalendarTapView: View {
                 .scrollDisabled(myCalendarVM.getDayEvents(date: selectedDate).count < 3)
             }
         }
+        .sheet(isPresented: $isCreatingEvent, content: {
+            CreateEventView(myCalendarVM: myCalendarVM, selectedDate: selectedDate)
+        })
         .navigationTitle("내 캘린더")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             if myCalendarVM.isCalendarOutspread() {
                 ToolbarItem(placement: .confirmationAction) {
                     Button {
-                        
+                        self.isCreatingEvent.toggle()
                     } label: {
                         Image(systemName: "plus")
                             .foregroundStyle(.black)
@@ -99,7 +103,7 @@ private extension MyCalendarTapView {
             Spacer()
             
             Button {
-                
+                self.isCreatingEvent.toggle()
             } label: {
                 HStack {
                     Image(systemName: "plus")

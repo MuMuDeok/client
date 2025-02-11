@@ -45,4 +45,8 @@ class DefaultEventRepository: EventRepository {
     func fetchEvents() -> [any Event] {
         return self.events
     }
+    
+    func createEvent(event: any Event) {
+        self.events.append(event)
+    }
 }

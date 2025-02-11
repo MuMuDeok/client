@@ -11,6 +11,7 @@ import Foundation
 class MyCalendarTapViewModel {
     private let retrieveDateEventUsecase: RetrieveDateEventUsecase = RetrieveDateEventUsecase()
     private let retrieveWeekEventUsecase: RetrieveWeekEventUsecase  = RetrieveWeekEventUsecase()
+    private let createEventUsecase: CreateEventUsecase = CreateEventUsecase()
     private var isOutspread: Bool = false
     
     func isCalendarOutspread() -> Bool {
@@ -27,6 +28,10 @@ class MyCalendarTapViewModel {
     
     func getWeekEvents(date: [Date]) -> [any Event] {
         return retrieveWeekEventUsecase.execute(date: date)
+    }
+    
+    func createPersonalEvent(title: String, isAllDay: Bool, startDate: Date, endDate: Date, isAlert: Bool, memo: String = "") {
+        createEventUsecase.execute(title: title, isAllDay: isAllDay, startDate: startDate, endDate: endDate, isAlert: isAlert, memo: memo)
     }
     
     func changeMonth(month: Date, value: Int) -> Date {

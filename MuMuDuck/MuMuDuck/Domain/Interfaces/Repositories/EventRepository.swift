@@ -9,4 +9,5 @@ import Foundation
 
 protocol EventRepository {
     func fetchEvents() -> [any Event]
+    func createEvent(event: any Event)
 }
