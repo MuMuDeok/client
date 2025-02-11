@@ -88,7 +88,7 @@ private extension MiniCalendarView {
                         .frame(width: 5, height: 5)
                         .foregroundStyle(.clear)
                 } else {
-                    ForEach(0..<pointCount) { index in
+                    ForEach(0..<pointCount, id:\.self) { index in
                         Circle()
                             .frame(width: 5, height: 5)
                             .foregroundStyle(changeMonthValue == 0 ? .black : .gray)

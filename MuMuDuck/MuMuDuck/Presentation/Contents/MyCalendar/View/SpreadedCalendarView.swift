@@ -58,7 +58,7 @@ private extension SpreadedCalendarView {
             }
             
             VStack {
-                ForEach(0..<max(loopCount, 2)) { loopIndex in
+                ForEach(0..<max(loopCount, 2), id:\.self) { loopIndex in
                     HStack(spacing: 1) {
                         ForEach(Array(weekData.enumerated()), id:\.element.id) { index, datas in
                             if loopIndex < loopCount && skipData[index][loopIndex] == false {
