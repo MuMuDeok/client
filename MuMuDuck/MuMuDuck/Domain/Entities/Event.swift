@@ -85,3 +85,13 @@ struct PerformanceEvent: Event {
     }
 }
 
+struct CalendarDayEvents {
+    let id: UUID = UUID()
+    let date: Date
+    var events: [(any Event)?]
+    
+    init(date: Date, events: [(any Event)?]) {
+        self.date = date
+        self.events = events
+    }
+}

@@ -9,15 +9,19 @@ import SwiftUI
 
 struct MyCalendarTapView: View {
     @EnvironmentObject private var coordinator: Coordinator
-    private let myCalendarVM: MyCalendarTapViewModel = MyCalendarTapViewModel()
+    let myCalendarVM: MyCalendarTapViewModel = MyCalendarTapViewModel()
     @State private var month: Date = Date()
     @State private var selectedDate: Date = Date()
     let width = UIScreen.main.bounds.width * 0.9
+    
     var body: some View {
         VStack {
             Divider()
             
+            CalendarHeaderView(month: $month)
+            
             if myCalendarVM.isCalendarOutspread() { // 달력 펼친 상태
+                SpreadedCalendarView(myCalendarVM: myCalendarVM, month: $month, selectedDate: $selectedDate)
                 
             } else { // 달력 접힌 상태
                 ScrollView {
@@ -29,13 +33,11 @@ struct MyCalendarTapView: View {
                 }
                 .scrollDisabled(myCalendarVM.getDayEvents(date: selectedDate).count < 3)
             }
-            
-            Spacer()
         }
         .navigationTitle("내 캘린더")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            if !myCalendarVM.isCalendarOutspread() {
+            if myCalendarVM.isCalendarOutspread() {
                 ToolbarItem(placement: .confirmationAction) {
                     Button {
                         
@@ -44,7 +46,7 @@ struct MyCalendarTapView: View {
                             .foregroundStyle(.black)
                     }
                 }
-            } else {
+                
                 ToolbarItem(placement: .bottomBar) {
                     toggleOutspreadButton()
                 }
