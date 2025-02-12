@@ -43,7 +43,10 @@ class DefaultEventRepository: EventRepository {
     }
     
     func fetchEvents() -> [any Event] {
-        return self.events
+        let sortedEvents = self.events.sorted { (event1, event2) -> Bool in
+            return event1.startDate < event2.startDate
+        }
+        return sortedEvents
     }
     
     func createEvent(event: any Event) {
