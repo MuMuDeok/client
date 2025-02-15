@@ -8,7 +8,7 @@
 import SwiftUI
 
 enum Destination: Hashable{
-    
+    case personalEventDetail(event: PersonalEvent)
 }
 
 class Coordinator: ObservableObject {
@@ -73,6 +73,9 @@ class Coordinator: ObservableObject {
     
     @ViewBuilder
     func handleDestination(_ destination: Destination) -> some View {
-       
+        switch destination {
+        case .personalEventDetail(let event):
+            PersonalEventDetailView(event: event)
+        }
     }
 }

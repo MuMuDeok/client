@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MyCalendarTapView: View {
     @EnvironmentObject private var coordinator: Coordinator
-    let myCalendarVM: MyCalendarTapViewModel = MyCalendarTapViewModel()
+    @State var myCalendarVM: MyCalendarTapViewModel = MyCalendarTapViewModel()
     @State private var month: Date = Date()
     @State private var selectedDate: Date = Date()
     @State var isCreatingEvent: Bool = false
@@ -118,21 +118,31 @@ private extension MyCalendarTapView {
     
     @ViewBuilder
     func eventListItemView(event: any Event) -> some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 20)
-                .foregroundStyle(Color(uiColor: .systemGray3))
-            
-            HStack(alignment: .center) {
-                Text(event.title)
-                
-                Spacer()
-                
-                Image(systemName: "chevron.right")
+        Button {
+            switch event.type {
+            case .musical: break
+            case .performance: break
+            case .personal:
+                coordinator.push(.personalEventDetail(event: event as! PersonalEvent))
             }
+        } label: {
+            ZStack {
+                RoundedRectangle(cornerRadius: 20)
+                    .foregroundStyle(Color(uiColor: .systemGray3))
+                
+                HStack(alignment: .center) {
+                    Text(event.title)
+                    
+                    Spacer()
+                    
+                    Image(systemName: "chevron.right")
+                }
+                .foregroundStyle(.black)
+                .padding(.horizontal, 20)
+            }
+            .frame(height: 80)
             .padding(.horizontal, 20)
         }
-        .frame(height: 80)
-        .padding(.horizontal, 20)
     }
     
     @ViewBuilder
