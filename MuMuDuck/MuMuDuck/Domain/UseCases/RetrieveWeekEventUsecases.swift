@@ -23,7 +23,7 @@ class RetrieveWeekEventUsecase {
             let esd = calendar.dateComponents([.year, .month, .day], from: event.startDate)
             let eed = calendar.dateComponents([.year, .month, .day], from: event.endDate)
             
-            if (compareDateComponents(esd, wsd) && compareDateComponents(wsd, eed)) || (compareDateComponents(esd, wed) && compareDateComponents(wed, eed) || (compareDateComponents(wsd, esd) && compareDateComponents(esd, wed))) {
+            if (isLateOrSameDate(esd, wsd) && isLateOrSameDate(wsd, eed)) || (isLateOrSameDate(esd, wed) && isLateOrSameDate(wed, eed) || (isLateOrSameDate(wsd, esd) && isLateOrSameDate(esd, wed))) {
                 filterdEvents.append(event)
             }
         }
@@ -31,13 +31,13 @@ class RetrieveWeekEventUsecase {
         return filterdEvents
     }
     
-    private func compareDateComponents(_ date1: DateComponents, _ date2: DateComponents) -> Bool {
-        let y1 = date1.year!
-        let y2 = date2.year!
-        let m1 = date1.month!
-        let m2 = date2.month!
-        let d1 = date1.day!
-        let d2 = date2.day!
+    private func isLateOrSameDate(_ earlyDateCompoents: DateComponents, _ lateDateComponents: DateComponents) -> Bool {
+        let y1 = earlyDateCompoents.year!
+        let y2 = lateDateComponents.year!
+        let m1 = earlyDateCompoents.month!
+        let m2 = lateDateComponents.month!
+        let d1 = earlyDateCompoents.day!
+        let d2 = lateDateComponents.day!
         
         if y1 == y2 {
             if m1 == m2 {
