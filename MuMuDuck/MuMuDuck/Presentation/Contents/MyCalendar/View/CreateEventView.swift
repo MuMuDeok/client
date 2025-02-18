@@ -19,6 +19,11 @@ struct CreateEventView: View {
     @State var isAlert: Bool = false
     @State var memo: String = ""
     @State var eventType: EventType
+    @FocusState private var focusField: FocusField?
+    @State private var focusComponent: FocusComponent?
+    
+    let width: CGFloat = UIScreen.main.bounds.width
+    let height: CGFloat = UIScreen.main.bounds.height
     
     init(myCalendarVM: MyCalendarTapViewModel, selectedDate: Date, title: String = "", isAllDay: Bool = false, startDate: Date? = nil, endDate: Date? = nil, isAlert: Bool = false, memo: String = "", eventType: EventType = .personal) {
         self.myCalendarVM = myCalendarVM
@@ -52,34 +57,62 @@ struct CreateEventView: View {
         VStack(spacing: 40) {
             ToorbarView()
             
-            TitleView()
-            
-            EventOptionSettingView()
-            
-            MemoView()
-            
-            Spacer()
+            ScrollView {
+                    TitleView()
+                    
+                    EventOptionSettingView()
+                    
+                    MemoView()
+                    
+                    Spacer()
+            }
+            .scrollDisabled(focusComponent == nil)
+            .scrollIndicators(.hidden)
         }
-        .padding(.horizontal, 20)
+        .padding(.horizontal, 15)
+        .onAppear {
+            self.focusField = .title
+        }
     }
 }
 
-private extension CreateEventView{
+private extension CreateEventView {
+    enum FocusField: Hashable {
+        case title
+        case memo
+    }
+    
+    enum FocusComponent: Hashable {
+        case startDate
+        case startTime
+        case endDate
+        case endTime
+    }
+    
+    func dateToString(date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy.MM.dd."
+        return formatter.string(from: date)
+    }
+    
+    func timeToString(date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "a h:mm"
+        formatter.locale = Locale(identifier: "ko_KR")
+        return formatter.string(from: date)
+    }
+}
+
+private extension CreateEventView {
     @ViewBuilder
     func ToorbarView() -> some View {
         HStack {
-            Button {
-                dismiss()
-            } label: {
-                Image(systemName: "multiply")
-                    .foregroundStyle(.black)
-            }
-            
             Spacer()
             
             Button {
                 // 나중에 뮤지컬 일정, 공연 일정 추가할 때 switch case와 eventType을 이용해서 어떤 이벤트인지 구별
                 myCalendarVM.createPersonalEvent(title: title, isAllDay: isAllDay, startDate: startDate, endDate: endDate, isAlert: isAlert, memo: memo)
+                
                 dismiss()
             } label: {
                 Text("저장")
@@ -93,26 +126,95 @@ private extension CreateEventView{
         VStack(spacing: 5) {
             TextField("제목", text: $title)
                 .font(.title)
+                .focused($focusField, equals: .title)
+            
             Divider()
         }
     }
     
     @ViewBuilder
     func EventOptionSettingView() -> some View {
-        VStack(spacing: 25) {
+        VStack(spacing: 15) {
             Toggle("종일", isOn: $isAllDay)
+                .tint(.accent)
+                .padding(.trailing, 1.5)
             
-            DatePicker("시작", selection: $startDate, displayedComponents: [.date, .hourAndMinute])
-                .environment(\.locale, Locale(identifier: "ko"))
+            dateView(title: "시작", date: $startDate, focusDate: .startDate, focusTime: .startTime)
             
-            DatePicker("종료", selection: $endDate, displayedComponents: [.date, .hourAndMinute])
-                .environment(\.locale, Locale(identifier: "ko"))
+            dateView(title: "종료", date: $endDate, focusDate: .endDate, focusTime: .endTime)
             
             Toggle("알림설정", isOn: $isAlert)
+                .tint(.accent)
+                .padding(.trailing, 1.5)
             
             Divider()
         }
         .font(.title3)
+        .padding(.vertical, 20)
+    }
+    
+    @ViewBuilder // 시작 시간, 종료 시간 지정하는 뷰
+    func dateView(title: String, date: Binding<Date>, focusDate: FocusComponent, focusTime: FocusComponent) -> some View {
+        let isFocusDate = self.focusComponent == focusDate
+        let isFocusTime = self.focusComponent == focusTime
+        
+        VStack {
+            HStack(spacing: 5) {
+                Text(title)
+                
+                Spacer()
+                
+                
+                RoundedRectangle(cornerRadius: 10)
+                    .frame(width: width * 0.27, height: height * 0.04)
+                    .foregroundStyle(isFocusDate ? .accent : .accent.opacity(0.15))
+                    .overlay {
+                        Text(dateToString(date: date.wrappedValue))
+                            .font(.system(size: 16))
+                            .foregroundStyle(isFocusDate ? .white : Color(uiColor: .systemGray3))
+                    }
+                    .onTapGesture {
+                        self.focusField = nil
+                        withAnimation {
+                            if self.focusComponent == focusDate {
+                                self.focusComponent = nil
+                            } else {
+                                self.focusComponent = focusDate
+                            }
+                        }
+                    }
+                
+                RoundedRectangle(cornerRadius: 10)
+                    .frame(width: width * 0.27, height: height * 0.04)
+                    .foregroundStyle(isFocusTime ? .accent : .accent.opacity(0.15))
+                    .overlay {
+                        Text(timeToString(date: date.wrappedValue))
+                            .font(.system(size: 16))
+                            .foregroundStyle(isFocusTime ? .white : Color(uiColor: .systemGray3))
+                    }
+                    .onTapGesture {
+                        self.focusField = nil
+                        withAnimation {
+                            if self.focusComponent == focusTime {
+                                self.focusComponent = nil
+                            } else {
+                                self.focusComponent = focusTime
+                            }
+                        }
+                    }
+            }
+            
+            // 달력이 나타나는 애니메이션을 위해 isFocusDate, isFocusTime 변수 대신 focusComponent 사용
+            if self.focusComponent == focusDate {
+                DatePicker("", selection: date, displayedComponents: [.date])
+                    .datePickerStyle(.graphical)
+                    .environment(\.locale, Locale(identifier: "ko"))
+            } else if self.focusComponent == focusTime {
+                DatePicker("", selection: date, displayedComponents: [.hourAndMinute])
+                    .datePickerStyle(.wheel)
+                    .environment(\.locale, Locale(identifier: "ko"))
+            }
+        }
     }
     
     @ViewBuilder
@@ -122,6 +224,7 @@ private extension CreateEventView{
                 .font(.title2)
             
             TextField("메모를 입력해주세요.", text: $memo, axis: .vertical)
+                .focused($focusField, equals: .memo)
         }
     }
 }
