@@ -17,6 +17,8 @@ struct MyCalendarTapView: View {
     
     var body: some View {
         VStack {
+            hearderView()
+            
             Divider()
             
             CalendarHeaderView(month: $month)
@@ -26,11 +28,13 @@ struct MyCalendarTapView: View {
                 
             } else { // 달력 접힌 상태
                 ScrollView {
-                    MiniCalendarView(month: $month, selectedDate: $selectedDate)
-                    
-                    toggleOutspreadButton()
-                    
-                    miniCalendarEventListView()
+                    VStack { 
+                        MiniCalendarView(month: $month, selectedDate: $selectedDate)
+                        
+                        toggleOutspreadButton()
+                        
+                        miniCalendarEventListView()
+                    }
                 }
                 .scrollDisabled(myCalendarVM.getDayEvents(date: selectedDate).count < 3)
             }
@@ -38,19 +42,9 @@ struct MyCalendarTapView: View {
         .sheet(isPresented: $isCreatingEvent, content: {
             CreateEventView(myCalendarVM: myCalendarVM, selectedDate: selectedDate)
         })
-        .navigationTitle("내 캘린더")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             if myCalendarVM.isCalendarOutspread() {
-                ToolbarItem(placement: .confirmationAction) {
-                    Button {
-                        self.isCreatingEvent.toggle()
-                    } label: {
-                        Image(systemName: "plus")
-                            .foregroundStyle(.black)
-                    }
-                }
-                
                 ToolbarItem(placement: .bottomBar) {
                     toggleOutspreadButton()
                 }
@@ -60,6 +54,26 @@ struct MyCalendarTapView: View {
 }
 
 private extension MyCalendarTapView {
+    @ViewBuilder
+    func hearderView() -> some View {
+        ZStack {
+            Text("내 캘린더")
+            
+            HStack {
+                Spacer()
+                
+                Button {
+                    self.isCreatingEvent.toggle()
+                } label: {
+                    Image(systemName: "plus.app")
+                        .foregroundStyle(.black)
+                        .font(.system(size: 20))
+                }
+            }
+        }
+        .padding(.horizontal, 20)
+    }
+    
     @ViewBuilder
     func toggleOutspreadButton() -> some View {
         // 접기 버튼
@@ -101,15 +115,6 @@ private extension MyCalendarTapView {
             Text(dateToString(date: selectedDate, format: "M.d (E)"))
             
             Spacer()
-            
-            Button {
-                self.isCreatingEvent.toggle()
-            } label: {
-                HStack {
-                    Image(systemName: "plus")
-                    Text("일정추가")
-                }
-            }
         }
         .font(.title2)
         .foregroundStyle(.black)
@@ -165,7 +170,7 @@ private extension MyCalendarTapView {
     }
     
     func dateToString(date:Date, format: String) -> String {
-        var formatter = DateFormatter()
+        let formatter = DateFormatter()
         formatter.dateFormat = format
         formatter.locale = Locale(identifier: "ko_KR")
         

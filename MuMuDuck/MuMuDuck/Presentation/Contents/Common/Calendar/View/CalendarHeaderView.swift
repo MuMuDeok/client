@@ -13,15 +13,16 @@ struct CalendarHeaderView: View {
     
     var body: some View {
         VStack {
-            monthAndArrowView()
+            monthView()
             
             dateHeaderView()
         }
+        .padding(.horizontal, 20)
     }
     
     private func dateToMonth(date: Date) -> String {
         let dateFormmatter = DateFormatter()
-        dateFormmatter.dateFormat = "M월"
+        dateFormmatter.dateFormat = "yyyy년 M월"
         return dateFormmatter.string(from: date)
     }
     
@@ -43,33 +44,20 @@ private extension CalendarHeaderView {
         LazyVGrid(columns: Array(repeating: GridItem(), count: 7)) {
             ForEach(weekends, id:\.self) { weekend in
                 Text(weekend)
-                    .foregroundStyle(Color(uiColor: .systemGray3))
+                    .font(.system(size: 14))
+                    .foregroundStyle(.black)
             }
         }
-        .padding(.bottom, 5)
     }
     
     @ViewBuilder
-    func monthAndArrowView() -> some View {
+    func monthView() -> some View {
         HStack {
-            Button {
-                month = changeMonth(month: month, value: -1)
-            } label: {
-                Image(systemName: "arrow.left")
-            }
-            
-            Spacer()
-            
             Text(dateToMonth(date: month))
             
-            Spacer()
-            
-            Button {
-                month = changeMonth(month: month, value: 1)
-            } label: {
-                Image(systemName: "arrow.right")
-            }
+            Image(systemName: "chevron.down")
         }
-        .padding(.horizontal, 20)
+        .padding(.top, 5)
+        .padding(.bottom, 10)
     }
 }

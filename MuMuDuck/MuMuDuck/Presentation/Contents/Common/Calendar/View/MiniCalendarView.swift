@@ -53,27 +53,40 @@ private extension MiniCalendarView {
     func dayView(day: Int, changeMonthValue: Int = 0) -> some View {
         let newMonth = calendarVM.changeMonth(month: month, value: changeMonthValue)
         
-        VStack(spacing: 10) {
+        VStack(spacing: 18) {
             Button {
                 self.month = newMonth
                 self.selectedDate = calendarVM.clickDate(month: newMonth, day: day)
             } label: {
-                if calendarVM.isSelectedDay(month: newMonth, day: day, selectedDate: selectedDate) {
+                if calendarVM.isSelectedDay(month: newMonth, day: day, selectedDate: selectedDate) { // 선택한 날짜인지
                     Text(String(day))
                         .foregroundStyle(.white)
                         .font(.system(size: 14, weight: .bold))
-                        .padding(5)
                         .background {
                             Circle()
-                                .frame(width: 24, height: 24)
-                                .foregroundStyle(.gray)
+                                .frame(width: 40, height: 40)
+                                .foregroundStyle(changeMonthValue == 0 ? .accent : Color(uiColor: .systemGray3))
+                        }
+                    
+                } else if calendarVM.isSelectedDay(month: newMonth, day: day, selectedDate: Date()) { // 오늘 날짜
+                    Text(String(day))
+                        .foregroundStyle(.accent)
+                        .font(.system(size: 14, weight: .bold))
+                        .background {
+                            Circle()
+                                .frame(width: 40, height: 40)
+                                .foregroundStyle(.clear)
                         }
                     
                 } else {
                     Text(String(day))
                         .foregroundStyle(changeMonthValue == 0 ? .black : .gray)
                         .font(.system(size: 14))
-                        .padding(5)
+                        .background {
+                            Circle()
+                                .frame(width: 40, height: 40)
+                                .foregroundStyle(.clear)
+                        }
                 }
             }
             
@@ -84,17 +97,18 @@ private extension MiniCalendarView {
                 
                 if pointCount == 0 {
                     Circle()
-                        .frame(width: 5, height: 5)
+                        .frame(width: 4, height: 4)
                         .foregroundStyle(.clear)
                 } else {
                     ForEach(0..<pointCount, id:\.self) { index in
                         Circle()
-                            .frame(width: 5, height: 5)
-                            .foregroundStyle(changeMonthValue == 0 ? .black : .gray)
+                            .frame(width: 4, height: 4)
+                            .foregroundStyle(changeMonthValue == 0 ? .accent.opacity(1 - Double(index) * 0.3) : .gray.opacity(1 - Double(index) * 0.3))
                     }
                 }
             }
         }
+        .frame(height: 56)
     }
     
     @ViewBuilder
@@ -105,7 +119,7 @@ private extension MiniCalendarView {
         let weekCount: Int = Int(ceil(Double(firstWeekDayOfMonth + currentMonthDays) / 7)) // 해당 달의 행의 갯 수
         let previousMonth = calendarVM.changeMonth(month: month, value: -1)
         
-        LazyVGrid(columns: Array(repeating: GridItem(), count: 7), spacing: 10) {
+        LazyVGrid(columns: Array(repeating: GridItem(), count: 7), spacing: 0) {
             ForEach(0 ..< weekCount * 7, id: \.self) { index in
                 if index < firstWeekDayOfMonth {
                     let previousMonthDays: Int = calendarVM.numberOfDays(month: previousMonth)
@@ -121,5 +135,6 @@ private extension MiniCalendarView {
                 }
             }
         }
+        .padding(.horizontal, 20)
     }
 }

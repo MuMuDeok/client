@@ -13,7 +13,7 @@ struct SpreadedCalendarView: View {
     @Binding var month: Date
     @Binding var selectedDate: Date
     @State var isGestured: Bool = false
-    let width: CGFloat = UIScreen.main.bounds.width / 7
+    let width: CGFloat = (UIScreen.main.bounds.width - 50) / 7
     
     var body: some View {
         ScrollView {
@@ -47,13 +47,20 @@ private extension SpreadedCalendarView {
     @ViewBuilder
     func weekView(weekData: [CalendarDayEvents], skipData: [[Bool]], loopCount: Int) -> some View {
         VStack {
-            HStack(spacing: 1) {
+            LazyVGrid(columns: Array(repeating: GridItem(), count: 7), spacing: 0) {
                 ForEach(weekData, id:\.id) { data in
-                    Text("\(myCalendarVM.getDay(date: data.date))")
-                        .font(.system(size: 14))
-                        .foregroundStyle(myCalendarVM.isSameMonth(month: month, date: data.date) ? .black : .gray)
-                        .frame(width: width)
-                        .padding(.vertical, 5)
+                    VStack() {
+                        Text("\(myCalendarVM.getDay(date: data.date))")
+                            .font(.system(size: 14))
+                            .foregroundStyle(myCalendarVM.isSameMonth(month: month, date: data.date) ? .black : .gray)
+                            .background {
+                                Circle()
+                                    .frame(width: 40, height: 40)
+                                    .foregroundStyle(.clear)
+                            }
+                            .padding(.bottom, 22)
+                    }
+                    .frame(height: 56)
                 }
             }
             
@@ -114,5 +121,6 @@ private extension SpreadedCalendarView {
                 weekView(weekData: weekData, skipData: skipData, loopCount: loopCount)
             }
         }
+        .padding(.horizontal, 20)
     }
 }
