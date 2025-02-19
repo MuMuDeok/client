@@ -11,8 +11,8 @@ class RetrieveDateEventUsecase {
     let eventRepository: EventRepository = DefaultEventRepository.shared
     
     func execute(date: Date) -> [any Event] {
-        let calendar = Calendar.current
-        let timezone = TimeZone(identifier: "Asia/Seoul")!
+        var calendar = Calendar.current
+        calendar.timeZone = TimeZone(identifier: "Asia/Seoul")!
         let events: [any Event] = eventRepository.fetchEvents()
         
         let filteredEvents = events.filter { event in

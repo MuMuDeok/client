@@ -12,7 +12,6 @@ struct MiniCalendarWeeklyEventView: View {
     @Binding var month: Date
     @Binding var selectedDate: Date
     let weeklyDate: [Date]
-    @State var hideView: Bool = true
     
     var body: some View {
         LazyVGrid(columns: Array(repeating: GridItem(), count: 7), spacing: 0) {

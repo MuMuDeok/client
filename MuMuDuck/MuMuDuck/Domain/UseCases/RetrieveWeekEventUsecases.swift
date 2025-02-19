@@ -17,7 +17,6 @@ class RetrieveWeekEventUsecase {
         let wsd = calendar.dateComponents([.year, .month, .day], from: date[0])
         let wed = calendar.dateComponents([.year, .month, .day], from: date[6])
         var filterdEvents: [any Event] = []
-        let forMatter = "yyyy-MM-dd"
         
         events.forEach { event in
             let esd = calendar.dateComponents([.year, .month, .day], from: event.startDate)

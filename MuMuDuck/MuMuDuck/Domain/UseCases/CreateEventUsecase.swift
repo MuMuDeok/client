@@ -11,7 +11,7 @@ class CreateEventUsecase {
     
     func execute(title: String, isAllDay: Bool, startDate: Date, endDate: Date, isAlert: Bool, memo: String = "") {
         let calendar = Calendar.current
-        var endDateComponenets = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: endDate)
+        let endDateComponenets = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: endDate)
         var newEndDate: Date
         
         // 종료 날짜가 00:00인 경우 1분을 뺌 -> 12일 00:00에 끝난다 했을 때 12일의 이벤트로 포함시키지 않기 위함
@@ -21,7 +21,7 @@ class CreateEventUsecase {
             newEndDate = endDate
         }
         
-        var newEvent = PersonalEvent(title: title, isAllDay: isAllDay, startDate: startDate, endDate: newEndDate, isAlert: isAlert, memo: memo)
+        let newEvent = PersonalEvent(title: title, isAllDay: isAllDay, startDate: startDate, endDate: newEndDate, isAlert: isAlert, memo: memo)
         
         eventRepository.createEvent(event: newEvent)
     }
