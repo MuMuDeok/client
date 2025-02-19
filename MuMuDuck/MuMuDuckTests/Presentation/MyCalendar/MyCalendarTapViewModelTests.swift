@@ -72,6 +72,24 @@ final class MyCalendarTapViewModelTests: XCTestCase {
         XCTAssertEqual(dayCount, 2)
     }
     
+    func test_whenGiveTwoDate_thenReturnTrueIfSecondDateLateThanFirstDate() {
+        // given
+        let myCalendarVM = MyCalendarTapViewModel()
+        
+        let firstDate1 = getDate(year: 2025, month: 2, day: 13)
+        let secondDate1 = getDate(year: 2025, month: 2, day: 18)
+        let firstDate2 = getDate(year: 2025, month: 3, day: 2)
+        let secondDate2 = getDate(year: 2025, month: 2, day: 18)
+        
+        // when
+        let result1 = myCalendarVM.isLateDate(date1: firstDate1, date2: secondDate1)
+        let result2 = myCalendarVM.isLateDate(date1: firstDate2, date2: secondDate2)
+        
+        // then
+        XCTAssertEqual(result1, true)
+        XCTAssertEqual(result2, false)
+    }
+    
     func getDate(year: Int, month: Int, day: Int) -> Date {
         var dateComponents = DateComponents()
         dateComponents.year = year
