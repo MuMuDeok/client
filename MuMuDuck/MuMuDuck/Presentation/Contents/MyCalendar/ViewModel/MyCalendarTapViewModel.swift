@@ -12,15 +12,6 @@ class MyCalendarTapViewModel {
     private let retrieveDateEventUsecase: RetrieveDateEventUsecase = RetrieveDateEventUsecase()
     private let retrieveWeekEventUsecase: RetrieveWeekEventUsecase  = RetrieveWeekEventUsecase()
     private let createEventUsecase: CreateEventUsecase = CreateEventUsecase()
-    private var isOutspread: Bool = false
-    
-    func isCalendarOutspread() -> Bool {
-        return isOutspread
-    }
-    
-    func toggleCalendarOutspread() {
-        isOutspread.toggle()
-    }
     
     func getDayEvents(date: Date) -> [any Event] {
         return retrieveDateEventUsecase.execute(date: date)
@@ -57,19 +48,20 @@ class MyCalendarTapViewModel {
     }
     
     // date2가 date1보다 같거나 뒤에 있는 날인지 확인하는 함수
-    func compareDate(date1: Date, date2: Date) -> Bool {
-        let calendar = Calendar.current
+    func isLateDate(date1: Date, date2: Date) -> Bool {
+        var calendar = Calendar.current
+        calendar.timeZone = TimeZone(identifier: "Asia/Seoul")!
         let result = calendar.dateComponents([.day], from: date1, to: date2).day ?? 0
+        
         return result >= 0
     }
     
     func getDayDiff(date1: Date, date2: Date) -> Int {
         // 한국 시간대 설정
-        let calendar = Calendar.current
-        let timezone = TimeZone(identifier: "Asia/Seoul")!
+        var calendar = Calendar.current
+        calendar.timeZone = TimeZone(identifier: "Asia/Seoul")!
         
         // 두 날짜를 한국 시간대에 맞춰 날짜만 추출
-//        let newDate = calendar.date(byAdding: .day, value: -1, to: date2)
         let startOfDate1 = calendar.startOfDay(for: date1)
         let startOfDate2 = calendar.startOfDay(for: date2)
         
@@ -87,8 +79,8 @@ class MyCalendarTapViewModel {
         var weekEventsCount = Array(repeating: 0, count: 7)
         
         events.forEach { event in
-            let startDate = compareDate(date1: event.startDate, date2: date[0]) ? date[0] : event.startDate
-            let endDate = compareDate(date1: date[6], date2: event.endDate) ? date[6] : event.endDate
+            let startDate = isLateDate(date1: event.startDate, date2: date[0]) ? date[0] : event.startDate
+            let endDate = isLateDate(date1: date[6], date2: event.endDate) ? date[6] : event.endDate
             
             let index = getDayDiff(date1: startDate, date2: date[0])
             let continueDays = getDayDiff(date1: startDate, date2: endDate)
@@ -162,7 +154,7 @@ class MyCalendarTapViewModel {
         }
         for dateIndex in 0...6 {
             let dateEvents: [any Event] = events.filter { event in
-                let startDate = compareDate(date1: event.startDate, date2: date[0]) ? date[0] : event.startDate
+                let startDate = isLateDate(date1: event.startDate, date2: date[0]) ? date[0] : event.startDate
                 
                 return getDayDiff(date1: startDate, date2: date[dateIndex]) == 0
             }
@@ -173,8 +165,8 @@ class MyCalendarTapViewModel {
                 if skipArray[dateIndex][loopIndex] == false && eventIndex < dateEvents.count {
                     dayInfoes[dateIndex].events[loopIndex] = dateEvents[eventIndex]
                     
-                    let startDate = compareDate(date1: dateEvents[eventIndex].startDate, date2: date[0]) ? date[0] : dateEvents[eventIndex].startDate
-                    let endDate = compareDate(date1: date[6], date2: dateEvents[eventIndex].endDate) ? date[6] : dateEvents[eventIndex].endDate
+                    let startDate = isLateDate(date1: dateEvents[eventIndex].startDate, date2: date[0]) ? date[0] : dateEvents[eventIndex].startDate
+                    let endDate = isLateDate(date1: date[6], date2: dateEvents[eventIndex].endDate) ? date[6] : dateEvents[eventIndex].endDate
                     
                     let continueDays = getDayDiff(date1: startDate, date2: endDate)
                     
@@ -193,16 +185,10 @@ class MyCalendarTapViewModel {
     
     // 이벤트와 주말의 처음과 끝을 비교한 후 변환된 값을 기준으로 시작 날짜와 종료 날짜의 차이를 계산해주는 함수
     func getContinueDay(eventStartDate: Date, eventEndDate: Date, weekStartDate: Date, weekEndDate: Date) -> Int {
-        let startDate = compareDate(date1: eventStartDate, date2: weekStartDate) ? weekStartDate : eventStartDate
-        let endDate = compareDate(date1: weekEndDate, date2: eventEndDate) ? weekEndDate : eventEndDate
+        let startDate = isLateDate(date1: eventStartDate, date2: weekStartDate) ? weekStartDate : eventStartDate
+        let endDate = isLateDate(date1: weekEndDate, date2: eventEndDate) ? weekEndDate : eventEndDate
         
         return getDayDiff(date1: startDate, date2: endDate)
-    }
-    
-    // Date -> Date의 일자
-    func getDay(date: Date) -> Int {
-        let component = Calendar.current.dateComponents([.day], from: date)
-        return component.day!
     }
     
     // 인자로 넘긴 date 변수와 현재 달력이 보여주는 월이 같은지 확인하는 함수

@@ -10,6 +10,7 @@ import SwiftUI
 struct WeeklyDayView: View {
     @Binding var month: Date
     @Binding var selectedDate: Date
+    @Binding var isOutspread: Bool
     let weeklyDate: [Date]
     
     var body: some View {
@@ -20,7 +21,7 @@ struct WeeklyDayView: View {
                         .font(.system(size: 14))
                         .foregroundStyle(fetchColor(date: date))
                         .background {
-                            if isSameDate(date1: selectedDate, date2: date) {
+                            if isOutspread == false && isSameDate(date1: selectedDate, date2: date) {
                                 Circle()
                                     .frame(width: 40, height: 40)
                                     .foregroundStyle(Color(uiColor: .accent))
@@ -29,6 +30,7 @@ struct WeeklyDayView: View {
                 }
                 .frame(height: 40)
                 .onTapGesture {
+                    self.month = date
                     self.selectedDate = date
                 }
             }
@@ -45,7 +47,7 @@ private extension WeeklyDayView {
     }
     
     func fetchColor(date: Date) -> Color {
-        if isSameDate(date1: date, date2: selectedDate) { // 선택한 날짜와 같은 경우
+        if isSameDate(date1: date, date2: selectedDate) && self.isOutspread == false{ // 선택한 날짜와 같은 경우
             return .white
         } else if isSameDate(date1: date, date2: Date()) { // 오늘 날짜와 같은 경우
             return .accent

@@ -207,7 +207,7 @@ private extension CreateEventView {
             // 달력이 나타나는 애니메이션을 위해 isFocusDate, isFocusTime 변수 대신 focusComponent 사용
             if self.focusComponent == focusDate {
                 DatePicker("", selection: date, displayedComponents: [.date])
-                    .datePickerStyle(/*.graphical*/.wheel)
+                    .datePickerStyle(.graphical)
                     .environment(\.locale, Locale(identifier: "ko"))
             } else if self.focusComponent == focusTime {
                 DatePicker("", selection: date, displayedComponents: [.hourAndMinute])

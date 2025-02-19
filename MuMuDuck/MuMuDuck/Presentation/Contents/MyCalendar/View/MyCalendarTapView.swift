@@ -13,43 +13,69 @@ struct MyCalendarTapView: View {
     @State private var month: Date = Date()
     @State private var selectedDate: Date = Date()
     @State var isCreatingEvent: Bool = false
+    @State var isOutspread: Bool = false
+    @State var isGestured: Bool = false
     let width = UIScreen.main.bounds.width * 0.9
+    var currentMonthDays: [[Date]] { myCalendarVM.getCurrentMonthAllDate(month: month) }
     
     var body: some View {
         VStack {
-            hearderView()
+            hearderView() // 타이틀, 일정 추가 버튼
             
             Divider()
             
-            CalendarHeaderView(month: $month)
-            
-            if myCalendarVM.isCalendarOutspread() { // 달력 펼친 상태
-                SpreadedCalendarView(myCalendarVM: myCalendarVM, month: $month, selectedDate: $selectedDate)
+            ScrollView {
                 
-            } else { // 달력 접힌 상태
-                ScrollView {
-                    VStack { 
-                        MiniCalendarView(month: $month, selectedDate: $selectedDate)
+                CalendarHeaderView(month: $month) // 월
+                
+                ForEach(currentMonthDays, id: \.self) { weeklyDate in
+                    VStack {
+                        WeeklyDayView(month: $month, selectedDate: $selectedDate, isOutspread: $isOutspread, weeklyDate: weeklyDate)
                         
-                        toggleOutspreadButton()
-                        
-                        miniCalendarEventListView()
+                        if self.isOutspread { // 달력 펼친 상태
+                            BigCalendarWeeklyEventView(myCalendarVM: myCalendarVM, weekyleyDate: weeklyDate)
+                        } else { // 달력 접힌 상태
+                            MiniCalendarWeeklyEventView(calendarVM: myCalendarVM, month: $month, selectedDate: $selectedDate, weeklyDate: weeklyDate)
+                        }
                     }
                 }
-                .scrollDisabled(myCalendarVM.getDayEvents(date: selectedDate).count < 3)
+                .gesture(dragGesture)
+                
+                if self.isOutspread == false {
+                    toggleOutspreadButton()
+                    
+                    MiniCalendarBottomEventView(myCalendarVM: myCalendarVM, selectedDate: $selectedDate)
+                }
             }
         }
         .sheet(isPresented: $isCreatingEvent, content: {
-            CreateEventView(myCalendarVM: myCalendarVM, selectedDate: selectedDate)
+            CreateEventView(myCalendarVM: myCalendarVM, selectedDate: self.isOutspread ? Date() : selectedDate)
         })
-        .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            if myCalendarVM.isCalendarOutspread() {
+            if self.isOutspread {
                 ToolbarItem(placement: .bottomBar) {
                     toggleOutspreadButton()
                 }
             }
         }
+    }
+}
+
+private extension MyCalendarTapView {
+    var dragGesture: some Gesture {
+        DragGesture()
+            .onChanged { gesture in
+                if gesture.location.x - gesture.startLocation.x > 100 && isGestured == false {
+                    month = myCalendarVM.changeMonth(month: month, value: -1)
+                    self.isGestured = true
+                } else if gesture.location.x - gesture.startLocation.x < -100 && isGestured == false {
+                    month = myCalendarVM.changeMonth(month: month, value: 1)
+                    self.isGestured = true
+                }
+            }
+            .onEnded { _ in
+                self.isGestured = false
+            }
     }
 }
 
@@ -70,20 +96,22 @@ private extension MyCalendarTapView {
                         .font(.system(size: 20))
                 }
             }
+            .padding(.horizontal, 20)
         }
-        .padding(.horizontal, 20)
     }
     
     @ViewBuilder
     func toggleOutspreadButton() -> some View {
         // 접기 버튼
-        if myCalendarVM.isCalendarOutspread() {
+        if self.isOutspread {
             ZStack {
                 Rectangle()
                     .foregroundStyle(.white)
                 
                 Button {
-                    myCalendarVM.toggleCalendarOutspread()
+                    withAnimation {
+                        self.isOutspread.toggle()
+                    }
                 } label: {
                     Image(systemName: "chevron.up")
                         .foregroundStyle(.black)
@@ -98,7 +126,9 @@ private extension MyCalendarTapView {
                     .shadow(color: Color(uiColor: .systemGray4), radius: 1, y:3)
                 
                 Button {
-                    myCalendarVM.toggleCalendarOutspread()
+                    withAnimation {
+                        self.isOutspread.toggle()
+                    }
                 } label: {
                     Image(systemName: "chevron.down")
                         .foregroundStyle(.black)
@@ -107,73 +137,5 @@ private extension MyCalendarTapView {
             .frame(height: 40)
             .frame(maxWidth: .infinity)
         }
-    }
-    
-    @ViewBuilder
-    func eventListHeaderView() -> some View {
-        HStack {
-            Text(dateToString(date: selectedDate, format: "M.d (E)"))
-            
-            Spacer()
-        }
-        .font(.title2)
-        .foregroundStyle(.black)
-        .padding(.horizontal, 20)
-    }
-    
-    @ViewBuilder
-    func eventListItemView(event: any Event) -> some View {
-        Button {
-            switch event.type {
-            case .musical: break
-            case .performance: break
-            case .personal:
-                coordinator.push(.personalEventDetail(event: event as! PersonalEvent))
-            }
-        } label: {
-            ZStack {
-                RoundedRectangle(cornerRadius: 20)
-                    .foregroundStyle(Color(uiColor: .systemGray3))
-                
-                HStack(alignment: .center) {
-                    Text(event.title)
-                    
-                    Spacer()
-                    
-                    Image(systemName: "chevron.right")
-                }
-                .foregroundStyle(.black)
-                .padding(.horizontal, 20)
-            }
-            .frame(height: 80)
-            .padding(.horizontal, 20)
-        }
-    }
-    
-    @ViewBuilder
-    func miniCalendarEventListView() -> some View {
-        let events = myCalendarVM.getDayEvents(date: selectedDate)
-        
-        VStack {
-            eventListHeaderView()
-            
-            if events.isEmpty {
-                Text("등록된 일정이 없습니다.")
-                    .padding(.top, 50)
-            } else {
-                ForEach(events, id:\.id) { event in
-                    eventListItemView(event: event)
-                }
-            }
-        }
-        .padding(.top, 20)
-    }
-    
-    func dateToString(date:Date, format: String) -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = format
-        formatter.locale = Locale(identifier: "ko_KR")
-        
-        return formatter.string(from: date)
     }
 }
