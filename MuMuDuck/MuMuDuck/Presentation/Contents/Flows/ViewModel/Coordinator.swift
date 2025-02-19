@@ -12,11 +12,12 @@ enum Destination: Hashable{
 }
 
 class Coordinator: ObservableObject {
-    @Published var todayPath: NavigationPath = NavigationPath()
-    @Published var interestPath: NavigationPath = NavigationPath()
-    @Published var myCalendarPath: NavigationPath = NavigationPath()
-    @Published var historyPath: NavigationPath = NavigationPath()
+    @Published var todayPath: NavigationPath = NavigationPath() // 메인(?) 뷰 탭 이름이 변경되면 변수명도 수정할 것 같아요
+    @Published var interestPath: NavigationPath = NavigationPath() // 관심 탭
+    @Published var myCalendarPath: NavigationPath = NavigationPath() // 내 캘린더 탭
+    @Published var historyPath: NavigationPath = NavigationPath() // 관극 기록 탭
     @Published var selection: Int = 0
+    // 탭 별로 별도의 네비게이션 스택을 사용하는데 selection 값으로 현재 무슨 탭을 사용하고 있는지 구분해서 탭에 해당하는 스택을 관리합니다.
     
     func push(_ view: Destination) {
         switch selection {
