@@ -207,7 +207,7 @@ private extension CreateEventView {
             // 달력이 나타나는 애니메이션을 위해 isFocusDate, isFocusTime 변수 대신 focusComponent 사용
             if self.focusComponent == focusDate {
                 DatePicker("", selection: date, displayedComponents: [.date])
-                    .datePickerStyle(.graphical)
+                    .datePickerStyle(/*.graphical*/.wheel)
                     .environment(\.locale, Locale(identifier: "ko"))
             } else if self.focusComponent == focusTime {
                 DatePicker("", selection: date, displayedComponents: [.hourAndMinute])
@@ -223,8 +223,18 @@ private extension CreateEventView {
             Text("메모")
                 .font(.title2)
             
-            TextField("메모를 입력해주세요.", text: $memo, axis: .vertical)
-                .focused($focusField, equals: .memo)
+            ZStack(alignment: .top) {
+                RoundedRectangle(cornerRadius: 10)
+                    .foregroundStyle(Color(uiColor: .systemGray6))
+                    .frame(height: height * 0.25)
+                    .onTapGesture {
+                        focusField = .memo
+                    }
+                    
+                TextField("메모를 입력해주세요.", text: $memo, axis: .vertical)
+                    .focused($focusField, equals: .memo)
+                    .padding([.top, .leading], 10)
+            }
         }
     }
 }
