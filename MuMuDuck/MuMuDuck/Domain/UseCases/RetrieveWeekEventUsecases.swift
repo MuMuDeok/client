@@ -31,19 +31,19 @@ class RetrieveWeekEventUsecase {
     }
     
     private func isLateOrSameDate(_ earlyDateCompoents: DateComponents, _ lateDateComponents: DateComponents) -> Bool {
-        let y1 = earlyDateCompoents.year!
-        let y2 = lateDateComponents.year!
-        let m1 = earlyDateCompoents.month!
-        let m2 = lateDateComponents.month!
-        let d1 = earlyDateCompoents.day!
-        let d2 = lateDateComponents.day!
+        let earlyDateYear = earlyDateCompoents.year!
+        let lateDateYear = lateDateComponents.year!
+        let earlyDateMonth = earlyDateCompoents.month!
+        let lateDateMonth = lateDateComponents.month!
+        let ealryDateDay = earlyDateCompoents.day!
+        let lateDateDay = lateDateComponents.day!
         
-        if y1 == y2 {
-            if m1 == m2 {
-                return d1 <= d2
+        if earlyDateYear == lateDateYear {
+            if earlyDateMonth == lateDateMonth {
+                return ealryDateDay <= lateDateDay
             }
-            return m1 < m2
+            return earlyDateMonth < lateDateMonth
         }
-        return y1 < y2
+        return earlyDateYear < lateDateYear
     }
 }
