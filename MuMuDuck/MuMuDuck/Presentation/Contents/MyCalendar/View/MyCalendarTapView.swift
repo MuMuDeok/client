@@ -11,7 +11,8 @@ struct MyCalendarTapView: View {
     @EnvironmentObject private var coordinator: Coordinator
     @State var myCalendarVM: MyCalendarTapViewModel = MyCalendarTapViewModel()
     @State private var month: Date = Date()
-    @State private var selectedDate: Date = Date()
+    @State private var selectedDate: Date? = Date()
+    @State private var selectedWeek: [Date] = []
     @State var isCreatingEvent: Bool = false
     @State var isOutspread: Bool = false
     @State var isGestured: Bool = false
@@ -25,21 +26,25 @@ struct MyCalendarTapView: View {
             Divider()
             
             ScrollView {
-                
-                CalendarHeaderView(month: $month) // 월
+                CalendarHeaderView(month: $month, isSelectWeek: self.selectedWeek.isEmpty == false) // 월
                 
                 ForEach(currentMonthDays, id: \.self) { weeklyDate in
-                    VStack {
-                        WeeklyDayView(month: $month, selectedDate: $selectedDate, isOutspread: $isOutspread, weeklyDate: weeklyDate)
-                        
-                        if self.isOutspread { // 달력 펼친 상태
-                            BigCalendarWeeklyEventView(myCalendarVM: myCalendarVM, weekyleyDate: weeklyDate)
-                        } else { // 달력 접힌 상태
-                            MiniCalendarWeeklyEventView(calendarVM: myCalendarVM, month: $month, selectedDate: $selectedDate, weeklyDate: weeklyDate)
+                    if selectedWeek.isEmpty || selectedWeek == weeklyDate {
+                        VStack {
+                            WeeklyDayView(month: $month, selectedDate: $selectedDate, selectedWeek: $selectedWeek, isOutspread: $isOutspread, weeklyDate: weeklyDate)
+                            
+                            if self.isOutspread { // 달력 펼친 상태
+                                if self.selectedWeek.isEmpty { // 전체 달력을 보여줄 때
+                                    BigCalendarWeeklyEventView(myCalendarVM: myCalendarVM, weekyleyDate: weeklyDate)
+                                }
+                            } else { // 달력 접힌 상태
+                                MiniCalendarWeeklyEventView(calendarVM: myCalendarVM, month: $month, selectedDate: $selectedDate, weeklyDate: weeklyDate)
+                            }
                         }
                     }
                 }
                 .gesture(dragGesture)
+                .animation(.easeInOut, value: self.selectedWeek)
                 
                 if self.isOutspread == false {
                     toggleOutspreadButton()
@@ -49,10 +54,11 @@ struct MyCalendarTapView: View {
             }
         }
         .sheet(isPresented: $isCreatingEvent, content: {
-            CreateEventView(myCalendarVM: myCalendarVM, selectedDate: self.isOutspread ? Date() : selectedDate)
+            CreateEventView(myCalendarVM: myCalendarVM, selectedDate: self.selectedDate ?? Date())
         })
+        .scrollDisabled(self.selectedWeek.isEmpty == false)
         .toolbar {
-            if self.isOutspread {
+            if self.isOutspread && self.selectedWeek.isEmpty {
                 ToolbarItem(placement: .bottomBar) {
                     toggleOutspreadButton()
                 }
@@ -65,6 +71,10 @@ private extension MyCalendarTapView {
     var dragGesture: some Gesture {
         DragGesture()
             .onChanged { gesture in
+                if self.selectedWeek.isEmpty == false {
+                    isGestured = true
+                }
+                
                 if gesture.location.x - gesture.startLocation.x > 100 && isGestured == false {
                     month = myCalendarVM.changeMonth(month: month, value: -1)
                     self.isGestured = true
@@ -86,6 +96,19 @@ private extension MyCalendarTapView {
             Text("내 캘린더")
             
             HStack {
+                if self.selectedWeek.isEmpty == false {
+                    Button {
+                        self.selectedDate = nil
+                        
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                            self.selectedWeek.removeAll()
+                        }
+                    } label: {
+                        Image(systemName: "chevron.left")
+                            .foregroundStyle(.black)
+                    }
+                }
+                
                 Spacer()
                 
                 Button {
@@ -109,6 +132,8 @@ private extension MyCalendarTapView {
                     .foregroundStyle(.white)
                 
                 Button {
+                    self.selectedDate = Date()
+                    
                     withAnimation {
                         self.isOutspread.toggle()
                     }
@@ -126,6 +151,8 @@ private extension MyCalendarTapView {
                     .shadow(color: Color(uiColor: .systemGray4), radius: 1, y:3)
                 
                 Button {
+                    self.selectedDate = nil
+                    
                     withAnimation {
                         self.isOutspread.toggle()
                     }

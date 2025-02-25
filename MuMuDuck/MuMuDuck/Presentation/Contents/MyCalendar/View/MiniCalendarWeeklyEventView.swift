@@ -10,7 +10,7 @@ import SwiftUI
 struct MiniCalendarWeeklyEventView: View {
     let calendarVM: MyCalendarTapViewModel
     @Binding var month: Date
-    @Binding var selectedDate: Date
+    @Binding var selectedDate: Date?
     let weeklyDate: [Date]
     
     var body: some View {

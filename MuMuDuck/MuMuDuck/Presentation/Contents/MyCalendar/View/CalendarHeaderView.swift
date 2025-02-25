@@ -10,6 +10,7 @@ import SwiftUI
 // 달력 상단 월, 월 변경 화살표
 struct CalendarHeaderView: View {
     @Binding var month: Date
+    let isSelectWeek: Bool
     
     var body: some View {
         VStack {
@@ -22,7 +23,12 @@ struct CalendarHeaderView: View {
     
     private func dateToMonth(date: Date) -> String {
         let dateFormmatter = DateFormatter()
-        dateFormmatter.dateFormat = "yyyy년 M월"
+        
+        if self.isSelectWeek {
+            dateFormmatter.dateFormat = "M월"
+        } else {
+            dateFormmatter.dateFormat = "yyyy년 M월"
+        }
         return dateFormmatter.string(from: date)
     }
     
@@ -54,8 +60,10 @@ private extension CalendarHeaderView {
     func monthView() -> some View {
         HStack {
             Text(dateToMonth(date: month))
-            
-            Image(systemName: "chevron.down")
+                
+            if self.isSelectWeek == false {
+                Image(systemName: "chevron.down")
+            }
         }
         .padding(.top, 5)
         .padding(.bottom, 10)
