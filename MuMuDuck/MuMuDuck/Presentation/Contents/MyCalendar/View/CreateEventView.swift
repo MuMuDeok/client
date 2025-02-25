@@ -58,13 +58,13 @@ struct CreateEventView: View {
             ToorbarView()
             
             ScrollView {
-                    TitleView()
-                    
-                    EventOptionSettingView()
-                    
-                    MemoView()
-                    
-                    Spacer()
+                TitleView()
+                
+                EventOptionSettingView()
+                
+                MemoView()
+                
+                Spacer()
             }
             .scrollDisabled(focusComponent == nil)
             .scrollIndicators(.hidden)
@@ -184,24 +184,27 @@ private extension CreateEventView {
                         }
                     }
                 
-                RoundedRectangle(cornerRadius: 10)
-                    .frame(width: width * 0.27, height: height * 0.04)
-                    .foregroundStyle(isFocusTime ? .accent : .accent.opacity(0.15))
-                    .overlay {
-                        Text(timeToString(date: date.wrappedValue))
-                            .font(.system(size: 16))
-                            .foregroundStyle(isFocusTime ? .white : Color(uiColor: .systemGray3))
-                    }
-                    .onTapGesture {
-                        self.focusField = nil
-                        withAnimation {
-                            if self.focusComponent == focusTime {
-                                self.focusComponent = nil
-                            } else {
-                                self.focusComponent = focusTime
+                if isAllDay == false {
+                    RoundedRectangle(cornerRadius: 10)
+                        .frame(width: width * 0.27, height: height * 0.04)
+                        .foregroundStyle(isFocusTime ? .accent : .accent.opacity(0.15))
+                        .overlay {
+                            Text(timeToString(date: date.wrappedValue))
+                                .font(.system(size: 16))
+                                .foregroundStyle(isFocusTime ? .white : Color(uiColor: .systemGray3))
+                        }
+                        .onTapGesture {
+                            self.focusField = nil
+                            withAnimation {
+                                if self.focusComponent == focusTime {
+                                    self.focusComponent = nil
+                                } else {
+                                    self.focusComponent = focusTime
+                                }
+                                
                             }
                         }
-                    }
+                }
             }
             
             // 달력이 나타나는 애니메이션을 위해 isFocusDate, isFocusTime 변수 대신 focusComponent 사용
@@ -230,7 +233,7 @@ private extension CreateEventView {
                     .onTapGesture {
                         focusField = .memo
                     }
-                    
+                
                 TextField("메모를 입력해주세요.", text: $memo, axis: .vertical)
                     .focused($focusField, equals: .memo)
                     .padding([.top, .leading], 10)
