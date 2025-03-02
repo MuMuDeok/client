@@ -73,6 +73,13 @@ struct CreateEventView: View {
         .onAppear {
             self.focusField = .title
         }
+        .onChange(of: self.isAllDay) {
+            if focusComponent == .startTime || focusComponent == .endTime {
+                withAnimation {
+                    focusComponent = nil
+                }
+            }
+        }
     }
 }
 
