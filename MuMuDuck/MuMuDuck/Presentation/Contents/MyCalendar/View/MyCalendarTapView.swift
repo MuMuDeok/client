@@ -25,38 +25,45 @@ struct MyCalendarTapView: View {
             
             Divider()
             
-            ScrollView {
-                CalendarHeaderView(month: $month, isSelectWeek: self.selectedWeek.isEmpty == false) // 월
-                
-                ForEach(currentMonthDays, id: \.self) { weeklyDate in
-                    if selectedWeek.isEmpty || selectedWeek == weeklyDate {
-                        VStack {
-                            WeeklyDayView(month: $month, selectedDate: $selectedDate, selectedWeek: $selectedWeek, isOutspread: $isOutspread, weeklyDate: weeklyDate)
-                            
-                            if self.isOutspread { // 달력 펼친 상태
-                                if self.selectedWeek.isEmpty { // 전체 달력을 보여줄 때
-                                    BigCalendarWeeklyEventView(myCalendarVM: myCalendarVM, weekyleyDate: weeklyDate)
+            // 주간 캘린더
+            if self.selectedWeek.isEmpty == false && self.selectedDate != nil {
+                WeeklyCalendarView(myCalendarVM: myCalendarVM, month: self.$month, selectedDate: self.$selectedDate, selectedWeek: self.$selectedWeek)
+            } else { // 월간 캘린더
+                ScrollView {
+                    CalendarHeaderView(month: $month, isSelectWeek: self.selectedWeek.isEmpty == false) // 월
+                    
+                    // 애니메이션을 위해 2번째 조건인 펼친 달력에서 주말을 선택한 경우를 조건으로 둠
+                    ForEach(currentMonthDays, id: \.self) { weeklyDate in
+                        if selectedWeek.isEmpty || (selectedWeek == weeklyDate && self.selectedDate == nil) {
+                            VStack {
+                                WeeklyDayView(month: $month, selectedDate: $selectedDate, selectedWeek: $selectedWeek, isOutspread: isOutspread, weeklyDate: weeklyDate)
+                                    .padding(.horizontal, 20)
+                                
+                                if self.isOutspread { // 달력 펼친 상태
+                                    if self.selectedWeek.isEmpty { // 전체 달력을 보여줄 때
+                                        BigCalendarWeeklyEventView(myCalendarVM: myCalendarVM, weekyleyDate: weeklyDate)
+                                    }
+                                } else { // 달력 접힌 상태
+                                    MiniCalendarWeeklyEventView(calendarVM: myCalendarVM, month: $month, selectedDate: $selectedDate, weeklyDate: weeklyDate)
                                 }
-                            } else { // 달력 접힌 상태
-                                MiniCalendarWeeklyEventView(calendarVM: myCalendarVM, month: $month, selectedDate: $selectedDate, weeklyDate: weeklyDate)
                             }
                         }
                     }
-                }
-                .gesture(dragGesture)
-                .animation(.easeInOut, value: self.selectedWeek)
-                
-                if self.isOutspread == false {
-                    toggleOutspreadButton()
+                    .gesture(dragGesture)
+                    .animation(.easeInOut, value: self.selectedWeek)
                     
-                    MiniCalendarBottomEventView(myCalendarVM: myCalendarVM, selectedDate: $selectedDate)
+                    if self.isOutspread == false {
+                        toggleOutspreadButton()
+                        
+                        MiniCalendarBottomEventView(myCalendarVM: myCalendarVM, selectedDate: $selectedDate)
+                    }
                 }
+                .scrollDisabled(self.selectedWeek.isEmpty == false)
             }
         }
         .sheet(isPresented: $isCreatingEvent, content: {
             CreateEventView(myCalendarVM: myCalendarVM, selectedDate: self.selectedDate ?? Date())
         })
-        .scrollDisabled(self.selectedWeek.isEmpty == false)
         .toolbar {
             if self.isOutspread && self.selectedWeek.isEmpty {
                 ToolbarItem(placement: .bottomBar) {

@@ -11,6 +11,13 @@ import SwiftUI
 struct CalendarHeaderView: View {
     @Binding var month: Date
     let isSelectWeek: Bool
+    let canChangeMonth: Bool
+    
+    init(month: Binding<Date>, isSelectWeek: Bool, canChangeMonth: Bool = true) {
+        self._month = month
+        self.isSelectWeek = isSelectWeek
+        self.canChangeMonth = canChangeMonth
+    }
     
     var body: some View {
         VStack {
@@ -23,12 +30,8 @@ struct CalendarHeaderView: View {
     
     private func dateToMonth(date: Date) -> String {
         let dateFormmatter = DateFormatter()
+        dateFormmatter.dateFormat = "yyyy년 M월"
         
-        if self.isSelectWeek {
-            dateFormmatter.dateFormat = "M월"
-        } else {
-            dateFormmatter.dateFormat = "yyyy년 M월"
-        }
         return dateFormmatter.string(from: date)
     }
     
@@ -61,7 +64,7 @@ private extension CalendarHeaderView {
         HStack {
             Text(dateToMonth(date: month))
                 
-            if self.isSelectWeek == false {
+            if self.canChangeMonth {
                 Image(systemName: "chevron.down")
             }
         }

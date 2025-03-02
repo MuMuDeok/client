@@ -22,6 +22,9 @@
 		FB46D9792D662610004D75B0 /* MiniCalendarWeeklyEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB46D9782D662605004D75B0 /* MiniCalendarWeeklyEventView.swift */; };
 		FB46D97B2D6628C2004D75B0 /* BigCalendarWeeklyEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB46D97A2D6628BA004D75B0 /* BigCalendarWeeklyEventView.swift */; };
 		FB46D97D2D662D2D004D75B0 /* MiniCalendarBottomEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB46D97C2D662D22004D75B0 /* MiniCalendarBottomEventView.swift */; };
+		FB46D9892D6DC440004D75B0 /* WeeklyCalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB46D9882D6DC430004D75B0 /* WeeklyCalendarView.swift */; };
+		FB46D98B2D6F5145004D75B0 /* WeeklyCalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB46D98A2D6F5140004D75B0 /* WeeklyCalendarViewModel.swift */; };
+		FB46D9C72D74972A004D75B0 /* WeeklyCalendarViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB46D9C62D749725004D75B0 /* WeeklyCalendarViewModelTests.swift */; };
 		FB48A19C2D61007B002AAB05 /* RetrieveWeekEventUsecases.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB48A19B2D61007B002AAB05 /* RetrieveWeekEventUsecases.swift */; };
 		FB48A19D2D61007B002AAB05 /* CreateEventUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB48A19A2D61007B002AAB05 /* CreateEventUsecase.swift */; };
 		FB48A1A02D6100A1002AAB05 /* CreateEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB48A19E2D6100A1002AAB05 /* CreateEventView.swift */; };
@@ -76,6 +79,9 @@
 		FB46D9782D662605004D75B0 /* MiniCalendarWeeklyEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniCalendarWeeklyEventView.swift; sourceTree = "<group>"; };
 		FB46D97A2D6628BA004D75B0 /* BigCalendarWeeklyEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BigCalendarWeeklyEventView.swift; sourceTree = "<group>"; };
 		FB46D97C2D662D22004D75B0 /* MiniCalendarBottomEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniCalendarBottomEventView.swift; sourceTree = "<group>"; };
+		FB46D9882D6DC430004D75B0 /* WeeklyCalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyCalendarView.swift; sourceTree = "<group>"; };
+		FB46D98A2D6F5140004D75B0 /* WeeklyCalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyCalendarViewModel.swift; sourceTree = "<group>"; };
+		FB46D9C62D749725004D75B0 /* WeeklyCalendarViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyCalendarViewModelTests.swift; sourceTree = "<group>"; };
 		FB48A19A2D61007B002AAB05 /* CreateEventUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEventUsecase.swift; sourceTree = "<group>"; };
 		FB48A19B2D61007B002AAB05 /* RetrieveWeekEventUsecases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetrieveWeekEventUsecases.swift; sourceTree = "<group>"; };
 		FB48A19E2D6100A1002AAB05 /* CreateEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEventView.swift; sourceTree = "<group>"; };
@@ -369,6 +375,7 @@
 				FB46D9782D662605004D75B0 /* MiniCalendarWeeklyEventView.swift */,
 				FB46D97C2D662D22004D75B0 /* MiniCalendarBottomEventView.swift */,
 				FB46D97A2D6628BA004D75B0 /* BigCalendarWeeklyEventView.swift */,
+				FB46D9882D6DC430004D75B0 /* WeeklyCalendarView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -440,6 +447,7 @@
 		FB48A1A92D610124002AAB05 /* MyCalendar */ = {
 			isa = PBXGroup;
 			children = (
+				FB46D9C62D749725004D75B0 /* WeeklyCalendarViewModelTests.swift */,
 				FB48A1A82D610124002AAB05 /* MyCalendarTapViewModelTests.swift */,
 			);
 			path = MyCalendar;
@@ -449,6 +457,7 @@
 			isa = PBXGroup;
 			children = (
 				FB48A1AB2D610137002AAB05 /* MyCalendarTapViewModel.swift */,
+				FB46D98A2D6F5140004D75B0 /* WeeklyCalendarViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -645,6 +654,7 @@
 				FBB7A9242D5A56AB0047FE69 /* TodayTapView.swift in Sources */,
 				FB48A1AD2D610137002AAB05 /* MyCalendarTapViewModel.swift in Sources */,
 				FB22BFC02D564B5B003DBF28 /* RetrieveDateEventUsecase.swift in Sources */,
+				FB46D98B2D6F5145004D75B0 /* WeeklyCalendarViewModel.swift in Sources */,
 				FB46D97B2D6628C2004D75B0 /* BigCalendarWeeklyEventView.swift in Sources */,
 				FB22BFB62D553989003DBF28 /* EventRepository.swift in Sources */,
 				FB48A1A02D6100A1002AAB05 /* CreateEventView.swift in Sources */,
@@ -656,6 +666,7 @@
 				FB22BF772D53A3AF003DBF28 /* MuMuDuckApp.swift in Sources */,
 				FB22BFB82D563BA6003DBF28 /* DefaultEventRepository.swift in Sources */,
 				FB46D97D2D662D2D004D75B0 /* MiniCalendarBottomEventView.swift in Sources */,
+				FB46D9892D6DC440004D75B0 /* WeeklyCalendarView.swift in Sources */,
 				FBB7A9222D5A54290047FE69 /* Coordinator.swift in Sources */,
 				FB48A1B32D610148002AAB05 /* PersonalEventDetailView.swift in Sources */,
 				FB48A1B42D610148002AAB05 /* EventDetailViewModel.swift in Sources */,
@@ -672,6 +683,7 @@
 				FB48A1A62D610114002AAB05 /* RetrieveWeekEventUsecaseTests.swift in Sources */,
 				FB48A1A72D610114002AAB05 /* CreateEventUsecaseTests.swift in Sources */,
 				FB22BF7A2D53A3B6003DBF28 /* MuMuDuckTests.swift in Sources */,
+				FB46D9C72D74972A004D75B0 /* WeeklyCalendarViewModelTests.swift in Sources */,
 				FB22BFC22D564BE8003DBF28 /* RetrieveDateEventUsecaseTests.swift in Sources */,
 				FB48A1AA2D610124002AAB05 /* MyCalendarTapViewModelTests.swift in Sources */,
 			);
