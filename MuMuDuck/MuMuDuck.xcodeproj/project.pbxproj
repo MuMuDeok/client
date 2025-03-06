@@ -18,7 +18,7 @@
 		FB22BFB82D563BA6003DBF28 /* DefaultEventRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB22BFB72D563B9F003DBF28 /* DefaultEventRepository.swift */; };
 		FB22BFC02D564B5B003DBF28 /* RetrieveDateEventUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB22BFBF2D5648F4003DBF28 /* RetrieveDateEventUsecase.swift */; };
 		FB22BFC22D564BE8003DBF28 /* RetrieveDateEventUsecaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB22BFC12D564BD2003DBF28 /* RetrieveDateEventUsecaseTests.swift */; };
-		FB46D9772D661FF0004D75B0 /* WeeklyDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB46D9762D661FE3004D75B0 /* WeeklyDayView.swift */; };
+		FB46D9772D661FF0004D75B0 /* MonthCalendarWeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB46D9762D661FE3004D75B0 /* MonthCalendarWeekView.swift */; };
 		FB46D9792D662610004D75B0 /* MiniCalendarWeeklyEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB46D9782D662605004D75B0 /* MiniCalendarWeeklyEventView.swift */; };
 		FB46D97B2D6628C2004D75B0 /* BigCalendarWeeklyEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB46D97A2D6628BA004D75B0 /* BigCalendarWeeklyEventView.swift */; };
 		FB46D97D2D662D2D004D75B0 /* MiniCalendarBottomEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB46D97C2D662D22004D75B0 /* MiniCalendarBottomEventView.swift */; };
@@ -26,10 +26,14 @@
 		FB46D98B2D6F5145004D75B0 /* WeeklyCalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB46D98A2D6F5140004D75B0 /* WeeklyCalendarViewModel.swift */; };
 		FB46D9C72D74972A004D75B0 /* WeeklyCalendarViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB46D9C62D749725004D75B0 /* WeeklyCalendarViewModelTests.swift */; };
 		FB46D9F72D7884BF004D75B0 /* ChangeMonthAndYearView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB46D9F62D7884B9004D75B0 /* ChangeMonthAndYearView.swift */; };
+		FB46D9F92D79EF45004D75B0 /* MonthCalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB46D9F82D79EF3F004D75B0 /* MonthCalendarView.swift */; };
+		FB46D9FB2D79F387004D75B0 /* MonthCalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB46D9FA2D79F382004D75B0 /* MonthCalendarViewModel.swift */; };
+		FB46D9FD2D79F65F004D75B0 /* MonthCalendarHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB46D9FC2D79F65A004D75B0 /* MonthCalendarHeaderView.swift */; };
+		FB46DA012D7A01C1004D75B0 /* WeeklyCalendarWeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB46DA002D7A01BD004D75B0 /* WeeklyCalendarWeekView.swift */; };
 		FB48A19C2D61007B002AAB05 /* RetrieveWeekEventUsecases.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB48A19B2D61007B002AAB05 /* RetrieveWeekEventUsecases.swift */; };
 		FB48A19D2D61007B002AAB05 /* CreateEventUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB48A19A2D61007B002AAB05 /* CreateEventUsecase.swift */; };
 		FB48A1A02D6100A1002AAB05 /* CreateEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB48A19E2D6100A1002AAB05 /* CreateEventView.swift */; };
-		FB48A1A32D6100E4002AAB05 /* CalendarHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB48A1A22D6100E4002AAB05 /* CalendarHeaderView.swift */; };
+		FB48A1A32D6100E4002AAB05 /* WeeklyCalendarHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB48A1A22D6100E4002AAB05 /* WeeklyCalendarHeaderView.swift */; };
 		FB48A1A62D610114002AAB05 /* RetrieveWeekEventUsecaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB48A1A52D610114002AAB05 /* RetrieveWeekEventUsecaseTests.swift */; };
 		FB48A1A72D610114002AAB05 /* CreateEventUsecaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB48A1A42D610114002AAB05 /* CreateEventUsecaseTests.swift */; };
 		FB48A1AA2D610124002AAB05 /* MyCalendarTapViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB48A1A82D610124002AAB05 /* MyCalendarTapViewModelTests.swift */; };
@@ -76,7 +80,7 @@
 		FB22BFB72D563B9F003DBF28 /* DefaultEventRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultEventRepository.swift; sourceTree = "<group>"; };
 		FB22BFBF2D5648F4003DBF28 /* RetrieveDateEventUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetrieveDateEventUsecase.swift; sourceTree = "<group>"; };
 		FB22BFC12D564BD2003DBF28 /* RetrieveDateEventUsecaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetrieveDateEventUsecaseTests.swift; sourceTree = "<group>"; };
-		FB46D9762D661FE3004D75B0 /* WeeklyDayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyDayView.swift; sourceTree = "<group>"; };
+		FB46D9762D661FE3004D75B0 /* MonthCalendarWeekView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthCalendarWeekView.swift; sourceTree = "<group>"; };
 		FB46D9782D662605004D75B0 /* MiniCalendarWeeklyEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniCalendarWeeklyEventView.swift; sourceTree = "<group>"; };
 		FB46D97A2D6628BA004D75B0 /* BigCalendarWeeklyEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BigCalendarWeeklyEventView.swift; sourceTree = "<group>"; };
 		FB46D97C2D662D22004D75B0 /* MiniCalendarBottomEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniCalendarBottomEventView.swift; sourceTree = "<group>"; };
@@ -84,10 +88,14 @@
 		FB46D98A2D6F5140004D75B0 /* WeeklyCalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyCalendarViewModel.swift; sourceTree = "<group>"; };
 		FB46D9C62D749725004D75B0 /* WeeklyCalendarViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyCalendarViewModelTests.swift; sourceTree = "<group>"; };
 		FB46D9F62D7884B9004D75B0 /* ChangeMonthAndYearView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeMonthAndYearView.swift; sourceTree = "<group>"; };
+		FB46D9F82D79EF3F004D75B0 /* MonthCalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthCalendarView.swift; sourceTree = "<group>"; };
+		FB46D9FA2D79F382004D75B0 /* MonthCalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthCalendarViewModel.swift; sourceTree = "<group>"; };
+		FB46D9FC2D79F65A004D75B0 /* MonthCalendarHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthCalendarHeaderView.swift; sourceTree = "<group>"; };
+		FB46DA002D7A01BD004D75B0 /* WeeklyCalendarWeekView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyCalendarWeekView.swift; sourceTree = "<group>"; };
 		FB48A19A2D61007B002AAB05 /* CreateEventUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEventUsecase.swift; sourceTree = "<group>"; };
 		FB48A19B2D61007B002AAB05 /* RetrieveWeekEventUsecases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetrieveWeekEventUsecases.swift; sourceTree = "<group>"; };
 		FB48A19E2D6100A1002AAB05 /* CreateEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEventView.swift; sourceTree = "<group>"; };
-		FB48A1A22D6100E4002AAB05 /* CalendarHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarHeaderView.swift; sourceTree = "<group>"; };
+		FB48A1A22D6100E4002AAB05 /* WeeklyCalendarHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyCalendarHeaderView.swift; sourceTree = "<group>"; };
 		FB48A1A42D610114002AAB05 /* CreateEventUsecaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEventUsecaseTests.swift; sourceTree = "<group>"; };
 		FB48A1A52D610114002AAB05 /* RetrieveWeekEventUsecaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetrieveWeekEventUsecaseTests.swift; sourceTree = "<group>"; };
 		FB48A1A82D610124002AAB05 /* MyCalendarTapViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCalendarTapViewModelTests.swift; sourceTree = "<group>"; };
@@ -371,14 +379,9 @@
 			isa = PBXGroup;
 			children = (
 				FBB7A9272D5A57150047FE69 /* MyCalendarTapView.swift */,
-				FB46D9F62D7884B9004D75B0 /* ChangeMonthAndYearView.swift */,
 				FB48A19E2D6100A1002AAB05 /* CreateEventView.swift */,
-				FB48A1A22D6100E4002AAB05 /* CalendarHeaderView.swift */,
-				FB46D9762D661FE3004D75B0 /* WeeklyDayView.swift */,
-				FB46D9782D662605004D75B0 /* MiniCalendarWeeklyEventView.swift */,
-				FB46D97C2D662D22004D75B0 /* MiniCalendarBottomEventView.swift */,
-				FB46D97A2D6628BA004D75B0 /* BigCalendarWeeklyEventView.swift */,
-				FB46D9882D6DC430004D75B0 /* WeeklyCalendarView.swift */,
+				FB46D9FF2D7A009C004D75B0 /* WeekCalendar */,
+				FB46D9FE2D7A0096004D75B0 /* MonthCalendar */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -447,6 +450,30 @@
 			path = Calendar;
 			sourceTree = "<group>";
 		};
+		FB46D9FE2D7A0096004D75B0 /* MonthCalendar */ = {
+			isa = PBXGroup;
+			children = (
+				FB46D9F82D79EF3F004D75B0 /* MonthCalendarView.swift */,
+				FB46D9FC2D79F65A004D75B0 /* MonthCalendarHeaderView.swift */,
+				FB46D9762D661FE3004D75B0 /* MonthCalendarWeekView.swift */,
+				FB46D9782D662605004D75B0 /* MiniCalendarWeeklyEventView.swift */,
+				FB46D97C2D662D22004D75B0 /* MiniCalendarBottomEventView.swift */,
+				FB46D97A2D6628BA004D75B0 /* BigCalendarWeeklyEventView.swift */,
+				FB46D9F62D7884B9004D75B0 /* ChangeMonthAndYearView.swift */,
+			);
+			path = MonthCalendar;
+			sourceTree = "<group>";
+		};
+		FB46D9FF2D7A009C004D75B0 /* WeekCalendar */ = {
+			isa = PBXGroup;
+			children = (
+				FB46D9882D6DC430004D75B0 /* WeeklyCalendarView.swift */,
+				FB48A1A22D6100E4002AAB05 /* WeeklyCalendarHeaderView.swift */,
+				FB46DA002D7A01BD004D75B0 /* WeeklyCalendarWeekView.swift */,
+			);
+			path = WeekCalendar;
+			sourceTree = "<group>";
+		};
 		FB48A1A92D610124002AAB05 /* MyCalendar */ = {
 			isa = PBXGroup;
 			children = (
@@ -460,6 +487,7 @@
 			isa = PBXGroup;
 			children = (
 				FB48A1AB2D610137002AAB05 /* MyCalendarTapViewModel.swift */,
+				FB46D9FA2D79F382004D75B0 /* MonthCalendarViewModel.swift */,
 				FB46D98A2D6F5140004D75B0 /* WeeklyCalendarViewModel.swift */,
 			);
 			path = ViewModel;
@@ -661,18 +689,22 @@
 				FB46D97B2D6628C2004D75B0 /* BigCalendarWeeklyEventView.swift in Sources */,
 				FB22BFB62D553989003DBF28 /* EventRepository.swift in Sources */,
 				FB48A1A02D6100A1002AAB05 /* CreateEventView.swift in Sources */,
-				FB46D9772D661FF0004D75B0 /* WeeklyDayView.swift in Sources */,
+				FB46D9FD2D79F65F004D75B0 /* MonthCalendarHeaderView.swift in Sources */,
+				FB46D9772D661FF0004D75B0 /* MonthCalendarWeekView.swift in Sources */,
 				FB48A19C2D61007B002AAB05 /* RetrieveWeekEventUsecases.swift in Sources */,
 				FB48A19D2D61007B002AAB05 /* CreateEventUsecase.swift in Sources */,
-				FB48A1A32D6100E4002AAB05 /* CalendarHeaderView.swift in Sources */,
+				FB48A1A32D6100E4002AAB05 /* WeeklyCalendarHeaderView.swift in Sources */,
 				FB22BF9C2D55108B003DBF28 /* Event.swift in Sources */,
+				FB46DA012D7A01C1004D75B0 /* WeeklyCalendarWeekView.swift in Sources */,
 				FB22BF772D53A3AF003DBF28 /* MuMuDuckApp.swift in Sources */,
 				FB46D9F72D7884BF004D75B0 /* ChangeMonthAndYearView.swift in Sources */,
 				FB22BFB82D563BA6003DBF28 /* DefaultEventRepository.swift in Sources */,
 				FB46D97D2D662D2D004D75B0 /* MiniCalendarBottomEventView.swift in Sources */,
+				FB46D9F92D79EF45004D75B0 /* MonthCalendarView.swift in Sources */,
 				FB46D9892D6DC440004D75B0 /* WeeklyCalendarView.swift in Sources */,
 				FBB7A9222D5A54290047FE69 /* Coordinator.swift in Sources */,
 				FB48A1B32D610148002AAB05 /* PersonalEventDetailView.swift in Sources */,
+				FB46D9FB2D79F387004D75B0 /* MonthCalendarViewModel.swift in Sources */,
 				FB48A1B42D610148002AAB05 /* EventDetailViewModel.swift in Sources */,
 				FB46D9792D662610004D75B0 /* MiniCalendarWeeklyEventView.swift in Sources */,
 				FBB7A9202D5A54170047FE69 /* CoordinatorView.swift in Sources */,

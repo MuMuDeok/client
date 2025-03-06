@@ -1,27 +1,16 @@
 //
-//  WeeklyDayView.swift
+//  WeeklyCalendarDayView.swift
 //  MuMuDuck
 //
-//  Created by 강승우 on 2/19/25.
+//  Created by 강승우 on 3/7/25.
 //
 
 import SwiftUI
 
-struct WeeklyDayView: View {
-    @Binding var month: Date
-    @Binding var selectedDate: Date?
-    @Binding var selectedWeek: [Date]
-    var isOutspread: Bool
+struct WeeklyCalendarWeekView: View {
+    let myCalendarVM: MyCalendarTapViewModel
     let weeklyDate: [Date]
-    
-    init(month: Binding<Date>, selectedDate: Binding<Date?>, selectedWeek: Binding<[Date]>, isOutspread: Bool, weeklyDate: [Date]) {
-        self._month = month
-        self._selectedDate = selectedDate
-        self._selectedWeek = selectedWeek
-        self.isOutspread = isOutspread
-        self.weeklyDate = weeklyDate
-    }
-    
+   
     var body: some View {
         LazyVGrid(columns: Array(repeating: GridItem(), count: 7), spacing: 0) {
             ForEach(weeklyDate, id:\.self) { date in
@@ -31,7 +20,7 @@ struct WeeklyDayView: View {
                         .foregroundStyle(fetchColor(date: date))
                         .background {
                             // 접힌 달력 or 주간 캘린더에서 날짜가 같은 경우에만 표시
-                            if ((isOutspread == false || self.selectedWeek.isEmpty == false) && isSameDate(date1: date, date2: self.selectedDate)) {
+                            if (isSameDate(date1: date, date2: myCalendarVM.selectedDate)) {
                                 Circle()
                                     .frame(width: 40, height: 40)
                                     .foregroundStyle(Color(uiColor: .accent))
@@ -40,21 +29,8 @@ struct WeeklyDayView: View {
                 }
                 .frame(height: 40)
                 .onTapGesture {
-                    self.month = date
-                    
-                    if isOutspread {
-                        if self.selectedWeek.isEmpty {
-                            self.selectedWeek = weeklyDate
-                            // 선택한 주가 위로 올라가는 애니메이션을 위해 0.5초의 딜레이 주기
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                self.selectedDate = date
-                            }
-                        } else {
-                            self.selectedDate = date
-                        }
-                    } else {
-                        self.selectedDate = date
-                    }
+                    myCalendarVM.changeMonth(newMonth: date)
+                    myCalendarVM.changeSelectedDate(newSelectedDate: date)
                 }
             }
         }
@@ -62,7 +38,7 @@ struct WeeklyDayView: View {
     }
 }
 
-private extension WeeklyDayView {
+private extension WeeklyCalendarWeekView {
     func fetchDay(date: Date) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "d"
@@ -70,15 +46,15 @@ private extension WeeklyDayView {
     }
     
     func fetchColor(date: Date) -> Color {
-        // 접힌 달력 또는 주력이면서 선택한 날짜와 같은 경우
-        if isSameDate(date1: date, date2: self.selectedDate) && (self.isOutspread == false || self.selectedWeek.isEmpty == false) {
+        // 선택한 날짜와 같은 경우
+        if isSameDate(date1: date, date2: myCalendarVM.selectedDate) {
             return .white
-        } else if isSameDate(date1: date, date2: Date()) { // 펼친 달력 && 오늘인 경우
+        } else if isSameDate(date1: date, date2: Date()) {
             return .accent
         }
         
         let dateComponents = Calendar.current.dateComponents([.year, .month, .day], from: date)
-        let currentMonthComponents = Calendar.current.dateComponents([.year, .month, .day], from: self.month)
+        let currentMonthComponents = Calendar.current.dateComponents([.year, .month, .day], from: myCalendarVM.month)
         
         if dateComponents.year == currentMonthComponents.year &&
             dateComponents.month == currentMonthComponents.month { // 달력에 표기되는 달에 해당하는 경우

@@ -7,9 +7,13 @@
 
 import SwiftUI
 
+@Observable
 class WeeklyCalendarViewModel {
     // 주간 캘린더에서 보여줄 달력의 제한치 임의로 1년으로 잡아둠
     let weekRange: Int = 52
+    var isChangeDayByScroll: Bool = false
+    var isChangeSelectionScroll: Bool = false
+    var isChangeScrollByDay: Bool = false
     
     // 두 날짜 비교 함수
     // first == second -> 0, first > second -> 1, first < second -> 2

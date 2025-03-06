@@ -11,37 +11,38 @@ struct WeeklyCalendarView: View {
     @EnvironmentObject private var coordinator: Coordinator
     let myCalendarVM: MyCalendarTapViewModel
     let weeklyCalendarVM: WeeklyCalendarViewModel
-    @Binding var month: Date
-    @Binding var selectedDate: Date?
-    @Binding var selectedWeek: [Date]
-    @Binding var isChangingMonthAndYear: Bool
+    @Binding var isCreatingEvent: Bool
+    
+    let weeks: [[Date]]
     @State var selection: Int
     @State var scrollID: Date?
-    let weeks: [[Date]]
     @State var weeksToShow: [Date]
     @State var isChangeDayByScroll: Bool = false
     @State var isChangeSelectionScroll: Bool = false
     @State var isChangeScrollByDay: Bool = false
     
-    init(myCalendarVM: MyCalendarTapViewModel, month: Binding<Date>, isChangingMonthAndYear: Binding<Bool>, selectedDate: Binding<Date?>, selectedWeek: Binding<[Date]>) {
+    init(myCalendarVM: MyCalendarTapViewModel, weeklyCalendarVM: WeeklyCalendarViewModel, isCreatingEvent: Binding<Bool>) {
         self.myCalendarVM = myCalendarVM
-        self.weeklyCalendarVM = WeeklyCalendarViewModel()
-        self._month = month
-        self._isChangingMonthAndYear = isChangingMonthAndYear
-        self._selectedWeek = selectedWeek
-        self.weeks = weeklyCalendarVM.getDaysPerWeek(week: selectedWeek.wrappedValue)
-        self.weeksToShow = weeklyCalendarVM.getDays(week: selectedWeek.wrappedValue)
+        self.weeklyCalendarVM = weeklyCalendarVM
+        self._isCreatingEvent = isCreatingEvent
+        
+        let selectWeek = myCalendarVM.selectedWeek
+        self.weeks = weeklyCalendarVM.getDaysPerWeek(week: selectWeek)
+        self.weeksToShow = weeklyCalendarVM.getDays(week: selectWeek)
         self.selection = 52 // 선택한 날짜가 포함된 주의 index
-        self._selectedDate = selectedDate
     }
     
     var body: some View {
         VStack {
-            CalendarHeaderView(month: $month, isChangingMonthAndYear: $isChangingMonthAndYear, isSelectWeek: true, canChangeMonth: false)
+            topToolbarView()
+            
+            Divider()
+            
+            WeeklyCalendarHeaderView(myCalendarVM: myCalendarVM)
             
             TabView(selection: $selection) {
                 ForEach(weeks.indices, id:\.self) { index in
-                    WeeklyDayView(month: $month, selectedDate: $selectedDate, selectedWeek: $selectedWeek, isOutspread: true, weeklyDate: weeks[index])
+                    WeeklyCalendarWeekView(myCalendarVM: myCalendarVM, weeklyDate: weeks[index])
                         .tag(index)
                 }
             }
@@ -69,41 +70,42 @@ struct WeeklyCalendarView: View {
             .scrollPosition(id:$scrollID, anchor: .top)
         }
         .onAppear {
-            guard let selectedDate = self.selectedDate else { return }
+            guard let selectedDate = myCalendarVM.selectedDate else { return }
             
             scrollID = selectedDate
         }
-        .onChange(of: self.selectedDate) {
+        .onChange(of: myCalendarVM.selectedDate) {
             if isChangeDayByScroll {
                 isChangeDayByScroll = false
             } else {
                 isChangeScrollByDay = true
                 
                 withAnimation {
-                    scrollID = self.selectedDate
+                    scrollID = myCalendarVM.selectedDate
                 }
             }
         }
         .onChange(of: selection) { oldValue, newValue in
-            guard let selectDate = self.selectedDate else { return }
+            guard let selectDate = myCalendarVM.selectedDate else { return }
             
             if isChangeSelectionScroll {
                 isChangeSelectionScroll = false
             } else {
                 let changeValue = newValue - oldValue
                 
-                self.selectedDate = Calendar.current.date(byAdding: .day, value: 7 * changeValue, to: selectDate)
-                self.month = self.selectedDate!
+                let newDate = Calendar.current.date(byAdding: .day, value: 7 * changeValue, to: selectDate)
+                myCalendarVM.changeSelectedDate(newSelectedDate: newDate)
+                myCalendarVM.changeMonth(newMonth: newDate!)
             }
         }
         .onChange(of: scrollID) {
             if isChangeScrollByDay {
                 isChangeScrollByDay = false
             } else {
-                if let date = scrollID, date != self.selectedDate {
+                if let date = scrollID, date != myCalendarVM.selectedDate {
                     isChangeDayByScroll = true
-                    self.selectedDate = date
-                    self.month = date
+                    myCalendarVM.changeSelectedDate(newSelectedDate: date)
+                    myCalendarVM.changeMonth(newMonth: date)
                     
                     // scroll 포지션이 가리키는 날짜가 현재 보여주는 주의 첫 번째 날보다 빠른 날인 경우
                     if weeklyCalendarVM.compareFirstAndSecond(first: date, second: weeks[selection][0]) == 2 {
@@ -128,6 +130,40 @@ struct WeeklyCalendarView: View {
 }
 
 private extension WeeklyCalendarView {
+    @ViewBuilder
+    func topToolbarView() -> some View {
+        ZStack {
+            Text("내 캘린더")
+            
+            HStack {
+                Button {
+                    myCalendarVM.changeSelectedDate(newSelectedDate: nil)
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                        withAnimation {
+                            myCalendarVM.changeSelectedWeek(newSelectedWeek: [])
+                        }
+                    }
+                } label: {
+                    Image(systemName: "chevron.left")
+                        .foregroundStyle(.black)
+                        .font(.system(size: 20))
+                }
+                
+                Spacer()
+                
+                Button {
+                    self.isCreatingEvent = true
+                } label: {
+                    Image(systemName: "plus")
+                        .foregroundStyle(.black)
+                        .font(.system(size: 20))
+                }
+            }
+            .padding(.horizontal, 20)
+        }
+    }
+    
     @ViewBuilder
     func dayView(date: Date) -> some View {
         let events = myCalendarVM.getDayEvents(date: date)

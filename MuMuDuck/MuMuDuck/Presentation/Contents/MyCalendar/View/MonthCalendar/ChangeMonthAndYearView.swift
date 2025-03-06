@@ -8,10 +8,8 @@
 import SwiftUI
 
 struct ChangeMonthAndYearView: View {
-    @Binding var month: Date
-    @Binding var isChangingMonthAndYear: Bool
-    let width: CGFloat = UIScreen.main.bounds.width
-    let height: CGFloat = UIScreen.main.bounds.height
+    let myCalendarVM: MyCalendarTapViewModel
+    let monthCalendarVM: MonthCalendarViewModel
     let monthArray: [[Int]] = [[1,2,3,4], [5,6,7,8], [9,10,11,12]]
     
     var body: some View {
@@ -33,15 +31,17 @@ private extension ChangeMonthAndYearView {
     func yearSelectView() -> some View {
         HStack {
             Button {
-                self.month = getChangedYearDate(addValue: -1)
+                let newMonth = getChangedYearDate(addValue: -1)
+                myCalendarVM.changeMonth(newMonth: newMonth)
             } label: {
                 Image(systemName: "arrow.left")
             }
             
-            Text(getYearFromDate(date: self.month))
+            Text(getYearFromDate(date: myCalendarVM.month))
             
             Button {
-                self.month = getChangedYearDate(addValue: 1)
+                let newMonth = getChangedYearDate(addValue: 1)
+                myCalendarVM.changeMonth(newMonth: newMonth)
             } label: {
                 Image(systemName: "arrow.right")
             }
@@ -65,7 +65,7 @@ private extension ChangeMonthAndYearView {
     
     @ViewBuilder
     func monthView(number: Int) -> some View {
-        let isSameMonth: Bool = String(number) == getMonthFromDate(date: self.month)
+        let isSameMonth: Bool = String(number) == getMonthFromDate(date: myCalendarVM.month)
         
         ZStack {
             RoundedRectangle(cornerRadius: 10)
@@ -76,8 +76,10 @@ private extension ChangeMonthAndYearView {
                 .foregroundStyle(isSameMonth ? .white : Color(uiColor: .systemGray2))
         }
         .onTapGesture {
-            self.month = getChangedMonthDate(newMonth: number)
-            self.isChangingMonthAndYear = false
+            let newMonth = getChangedMonthDate(newMonth: number)
+            myCalendarVM.changeMonth(newMonth: newMonth)
+            
+            monthCalendarVM.toggleIsChangingMonthAndYear()
         }
     }
     
@@ -96,22 +98,24 @@ private extension ChangeMonthAndYearView {
     }
     
     func getChangedYearDate(addValue: Int) -> Date {
+        let previousMonth = myCalendarVM.month
         let calendar = Calendar.current
-        var dateComponents = calendar.dateComponents([.year, .month, .day], from: self.month)
+        var dateComponents = calendar.dateComponents([.year, .month, .day], from: previousMonth)
         
-        guard let year = dateComponents.year else { return self.month}
+        guard let year = dateComponents.year else { return previousMonth}
         dateComponents.year = year + addValue
         
-        guard let newDate = calendar.date(from: dateComponents) else { return self.month}
+        guard let newDate = calendar.date(from: dateComponents) else { return previousMonth}
         return newDate
     }
     
     func getChangedMonthDate(newMonth: Int) -> Date {
+        let previousMonth = myCalendarVM.month
         let calendar = Calendar.current
-        var dateComponents = calendar.dateComponents([.year, .month, .day], from: self.month)
+        var dateComponents = calendar.dateComponents([.year, .month, .day], from: previousMonth)
         dateComponents.month = newMonth
         
-        guard let newDate = calendar.date(from: dateComponents) else { return self.month }
+        guard let newDate = calendar.date(from: dateComponents) else { return previousMonth}
         return newDate
     }
 }

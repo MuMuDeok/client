@@ -10,9 +10,9 @@ import SwiftUI
 struct MiniCalendarBottomEventView: View {
     @EnvironmentObject private var coordinator: Coordinator
     let myCalendarVM: MyCalendarTapViewModel
-    @Binding var selectedDate: Date?
+    
     var events: [any Event] {
-        if let selectDate = self.selectedDate {
+        if let selectDate = myCalendarVM.selectedDate {
             return myCalendarVM.getDayEvents(date: selectDate)
         } else {
             return []
@@ -20,8 +20,8 @@ struct MiniCalendarBottomEventView: View {
     }
     
     var body: some View {
-        if self.selectedDate != nil {
-            VStack {
+        VStack {
+            if myCalendarVM.selectedDate != nil {
                 eventListHeaderView()
                 
                 if events.isEmpty {
@@ -33,8 +33,8 @@ struct MiniCalendarBottomEventView: View {
                     }
                 }
             }
-            .padding(.top, 20)
         }
+        .padding(.top, 20)
     }
 }
 
@@ -42,7 +42,7 @@ extension MiniCalendarBottomEventView {
     @ViewBuilder
     func eventListHeaderView() -> some View {
         HStack {
-            Text(dateToString(date: selectedDate!, format: "M.d (E)"))
+            Text(dateToString(date: myCalendarVM.selectedDate!, format: "M.d (E)"))
             
             Spacer()
         }

@@ -8,9 +8,7 @@
 import SwiftUI
 
 struct MiniCalendarWeeklyEventView: View {
-    let calendarVM: MyCalendarTapViewModel
-    @Binding var month: Date
-    @Binding var selectedDate: Date?
+    let myCalendarVM: MyCalendarTapViewModel
     let weeklyDate: [Date]
     
     var body: some View {
@@ -18,7 +16,7 @@ struct MiniCalendarWeeklyEventView: View {
             ForEach(weeklyDate, id: \.self) { date in
                 HStack(alignment: .center, spacing: 2) {
                     let maxPointCount: Int = 3
-                    let filteredEvents = calendarVM.getDayEvents(date: date)
+                    let filteredEvents = myCalendarVM.getDayEvents(date: date)
                     let pointCount: Int = min(filteredEvents.count, maxPointCount)
                     
                     if pointCount == 0 {
@@ -34,8 +32,8 @@ struct MiniCalendarWeeklyEventView: View {
                     }
                 }
                 .onTapGesture {
-                    self.month = date
-                    self.selectedDate = date
+                    myCalendarVM.changeMonth(newMonth: date)
+                    myCalendarVM.changeSelectedDate(newSelectedDate: date)
                 }
             }
         }
@@ -46,7 +44,7 @@ struct MiniCalendarWeeklyEventView: View {
 private extension MiniCalendarWeeklyEventView {
     func fetchColor(date: Date, index: Int) -> Color {
         let dateComponents = Calendar.current.dateComponents([.year, .month, .day], from: date)
-        let currentMonthComponents = Calendar.current.dateComponents([.year, .month, .day], from: self.month)
+        let currentMonthComponents = Calendar.current.dateComponents([.year, .month, .day], from: myCalendarVM.month)
         
         if dateComponents.year == currentMonthComponents.year &&
             dateComponents.month == currentMonthComponents.month { // 달력에 표기되는 달에 해당하는 경우
