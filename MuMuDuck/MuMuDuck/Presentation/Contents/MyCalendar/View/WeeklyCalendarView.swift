@@ -14,6 +14,7 @@ struct WeeklyCalendarView: View {
     @Binding var month: Date
     @Binding var selectedDate: Date?
     @Binding var selectedWeek: [Date]
+    @Binding var isChangingMonthAndYear: Bool
     @State var selection: Int
     @State var scrollID: Date?
     let weeks: [[Date]]
@@ -22,10 +23,11 @@ struct WeeklyCalendarView: View {
     @State var isChangeSelectionScroll: Bool = false
     @State var isChangeScrollByDay: Bool = false
     
-    init(myCalendarVM: MyCalendarTapViewModel, month: Binding<Date>, selectedDate: Binding<Date?>, selectedWeek: Binding<[Date]>) {
+    init(myCalendarVM: MyCalendarTapViewModel, month: Binding<Date>, isChangingMonthAndYear: Binding<Bool>, selectedDate: Binding<Date?>, selectedWeek: Binding<[Date]>) {
         self.myCalendarVM = myCalendarVM
         self.weeklyCalendarVM = WeeklyCalendarViewModel()
         self._month = month
+        self._isChangingMonthAndYear = isChangingMonthAndYear
         self._selectedWeek = selectedWeek
         self.weeks = weeklyCalendarVM.getDaysPerWeek(week: selectedWeek.wrappedValue)
         self.weeksToShow = weeklyCalendarVM.getDays(week: selectedWeek.wrappedValue)
@@ -35,7 +37,7 @@ struct WeeklyCalendarView: View {
     
     var body: some View {
         VStack {
-            CalendarHeaderView(month: $month, isSelectWeek: true, canChangeMonth: false)
+            CalendarHeaderView(month: $month, isChangingMonthAndYear: $isChangingMonthAndYear, isSelectWeek: true, canChangeMonth: false)
             
             TabView(selection: $selection) {
                 ForEach(weeks.indices, id:\.self) { index in

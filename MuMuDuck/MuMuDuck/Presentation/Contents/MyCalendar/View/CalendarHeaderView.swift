@@ -10,11 +10,13 @@ import SwiftUI
 // 달력 상단 월, 월 변경 화살표
 struct CalendarHeaderView: View {
     @Binding var month: Date
+    @Binding var isChangingMonthAndYear: Bool
     let isSelectWeek: Bool
     let canChangeMonth: Bool
     
-    init(month: Binding<Date>, isSelectWeek: Bool, canChangeMonth: Bool = true) {
+    init(month: Binding<Date>, isChangingMonthAndYear: Binding<Bool>, isSelectWeek: Bool, canChangeMonth: Bool = true) {
         self._month = month
+        self._isChangingMonthAndYear = isChangingMonthAndYear
         self.isSelectWeek = isSelectWeek
         self.canChangeMonth = canChangeMonth
     }
@@ -70,5 +72,10 @@ private extension CalendarHeaderView {
         }
         .padding(.top, 5)
         .padding(.bottom, 10)
+        .onTapGesture {
+            if self.canChangeMonth {
+                self.isChangingMonthAndYear = true
+            }
+        }
     }
 }
