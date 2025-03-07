@@ -20,6 +20,7 @@ struct WeeklyCalendarView: View {
     @State var isChangeDayByScroll: Bool = false
     @State var isChangeSelectionScroll: Bool = false
     @State var isChangeScrollByDay: Bool = false
+    @State var isClickTodayButton: Bool = false
     
     init(myCalendarVM: MyCalendarTapViewModel, weeklyCalendarVM: WeeklyCalendarViewModel, isCreatingEvent: Binding<Bool>) {
         self.myCalendarVM = myCalendarVM
@@ -27,9 +28,9 @@ struct WeeklyCalendarView: View {
         self._isCreatingEvent = isCreatingEvent
         
         let selectWeek = myCalendarVM.selectedWeek
-        self.weeks = weeklyCalendarVM.getDaysPerWeek(week: selectWeek)
-        self.weeksToShow = weeklyCalendarVM.getDays(week: selectWeek)
-        self.selection = 52 // 선택한 날짜가 포함된 주의 index
+        self.weeks = weeklyCalendarVM.getDaysPerWeek(week: myCalendarVM.weekIncludeToday)
+        self.weeksToShow = self.weeks.flatMap{$0}
+        self.selection = weeklyCalendarVM.getSelection(weeks: weeks, selectWeek: selectWeek)
     }
     
     var body: some View {
@@ -71,8 +72,15 @@ struct WeeklyCalendarView: View {
         }
         .onAppear {
             guard let selectedDate = myCalendarVM.selectedDate else { return }
+            isChangeScrollByDay = true
             
-            scrollID = selectedDate
+            if weeklyCalendarVM.compareFirstAndSecond(first: selectedDate, second: weeksToShow[0]) == 2 {
+                scrollID = weeksToShow[0]
+            } else if weeklyCalendarVM.compareFirstAndSecond(first: selectedDate, second: weeksToShow.last!) == 1 {
+                scrollID = weeksToShow.last!
+            } else {
+                scrollID = selectedDate
+            }
         }
         .onChange(of: myCalendarVM.selectedDate) {
             if isChangeDayByScroll {
@@ -83,9 +91,17 @@ struct WeeklyCalendarView: View {
                 withAnimation {
                     scrollID = myCalendarVM.selectedDate
                 }
+                
+                if isClickTodayButton {
+                    isClickTodayButton = false
+                }
             }
         }
         .onChange(of: selection) { oldValue, newValue in
+            if isClickTodayButton {
+                return // 오늘 버튼을 눌렀을 때 selection이 수정되서 발생하는 이벤트를 막기 위해
+            }
+            
             guard let selectDate = myCalendarVM.selectedDate else { return }
             
             if isChangeSelectionScroll {
@@ -130,12 +146,24 @@ struct WeeklyCalendarView: View {
 }
 
 private extension WeeklyCalendarView {
+    func getTodayIndex() -> Int? {
+        let todayDate = Date()
+        
+        let todayIndex = weeksToShow.firstIndex { date in
+            return weeklyCalendarVM.compareFirstAndSecond(first: todayDate, second: date) == 0
+        }
+        
+        return todayIndex
+    }
+}
+
+private extension WeeklyCalendarView {
     @ViewBuilder
     func topToolbarView() -> some View {
         ZStack {
             Text("내 캘린더")
             
-            HStack {
+            HStack(spacing: 28) {
                 Button {
                     myCalendarVM.changeSelectedDate(newSelectedDate: nil)
                     
@@ -151,6 +179,20 @@ private extension WeeklyCalendarView {
                 }
                 
                 Spacer()
+                
+                if let todayIndex = getTodayIndex(), !myCalendarVM.isSelectToday(){
+                    Button {
+                        let today = weeksToShow[todayIndex]
+                        let newSelection: Int = todayIndex / 7
+                        
+                        self.isClickTodayButton = true
+                        self.selection = newSelection
+                        myCalendarVM.changeMonth(newMonth: today)
+                        myCalendarVM.changeSelectedDate(newSelectedDate: today)
+                    } label: {
+                        Text("오늘")
+                    }
+                }
                 
                 Button {
                     self.isCreatingEvent = true

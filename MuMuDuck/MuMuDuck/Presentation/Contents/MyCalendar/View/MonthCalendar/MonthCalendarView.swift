@@ -33,8 +33,10 @@ struct MonthCalendarView: View {
                                 MonthCalendarWeekView(myCalendarVM: myCalendarVM, monthCalendarVM: monthCalendarVM, weeklyDate: weeklyDate)
                                     .padding(.horizontal, 20)
                                 
-                                if monthCalendarVM.isOutspread && myCalendarVM.selectedWeek.isEmpty { // 달력 펼친 상태
-                                    BigCalendarWeeklyEventView(myCalendarVM: myCalendarVM, monthCalendarVM: monthCalendarVM, weekyleyDate: weeklyDate)
+                                if monthCalendarVM.isOutspread {
+                                    if myCalendarVM.selectedWeek.isEmpty { // 달력 펼친 상태
+                                        BigCalendarWeeklyEventView(myCalendarVM: myCalendarVM, monthCalendarVM: monthCalendarVM, weekyleyDate: weeklyDate)
+                                    }
                                 } else { // 달력 접힌 상태
                                     MiniCalendarWeeklyEventView(myCalendarVM: myCalendarVM, weeklyDate: weeklyDate)
                                 }
@@ -109,15 +111,22 @@ private extension MonthCalendarView {
         ZStack {
             Text("내 캘린더")
             
-            HStack {
+            HStack(spacing: 28) {
                 Spacer()
+                
+                if !myCalendarVM.isSelectToday() {
+                    Button {
+                        myCalendarVM.changeSelectedDate(newSelectedDate: Date())
+                        myCalendarVM.changeMonth(newMonth: Date())
+                    } label: {
+                        Text("오늘")
+                    }
+                }
                 
                 Button {
                     self.isCreatingEvent = true
                 } label: {
                     Image(systemName: "plus")
-                        .foregroundStyle(.black)
-                        .font(.system(size: 20))
                 }
             }
             .padding(.horizontal, 20)

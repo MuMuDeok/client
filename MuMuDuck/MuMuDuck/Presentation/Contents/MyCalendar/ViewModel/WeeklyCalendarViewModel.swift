@@ -10,7 +10,7 @@ import SwiftUI
 @Observable
 class WeeklyCalendarViewModel {
     // 주간 캘린더에서 보여줄 달력의 제한치 임의로 1년으로 잡아둠
-    let weekRange: Int = 52
+    let weekRange: Int = 76
     var isChangeDayByScroll: Bool = false
     var isChangeSelectionScroll: Bool = false
     var isChangeScrollByDay: Bool = false
@@ -60,20 +60,20 @@ class WeeklyCalendarViewModel {
         return weeks
     }
     
-    // 선택한 주말을 기준으로 앞으로 1년, 뒤로 1년간의 Date 정보 일 단위로 반환
-    func getDays(week: [Date]) -> [Date] {
-        var calendar = Calendar.current
-        calendar.timeZone = TimeZone(identifier: "Asia/Seoul")!
-        
-        var weeks: [Date] = []
-        
-        for i in -weekRange...weekRange {
-            weeks = weeks + week.map({ date in
-                calendar.date(byAdding: .day, value: 7 * i, to: date)!
-            })
+    func getSelection(weeks: [[Date]], selectWeek: [Date]) -> Int {
+        if compareFirstAndSecond(first: selectWeek[6], second: weeks[0][0]) == 2 { // 주간 캘린더 범위보다 앞에 있는 경우 첫 번째 주의 index 반환
+            return 0
+        } else if compareFirstAndSecond(first: selectWeek[0], second: weeks.last![6]) == 1 { // 주간 캘린더 범위보다 뒤에 있는 경우 마지막 주의 index 반환
+            return weeks.count - 1
+        } else {
+            for index in 0..<weeks.count {
+                if compareFirstAndSecond(first: weeks[index][0], second: selectWeek[0]) == 0 {
+                    return index
+                }
+            }
+            
+            return weekRange // 오늘이 포함된 주의 index
         }
-        
-        return weeks
     }
     
     func dateToString(date: Date) -> String {
