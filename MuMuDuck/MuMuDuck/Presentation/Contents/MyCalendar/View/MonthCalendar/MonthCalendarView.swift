@@ -127,6 +127,7 @@ private extension MonthCalendarView {
                     self.isCreatingEvent = true
                 } label: {
                     Image(systemName: "plus")
+                        .font(.system(size: 20))
                 }
             }
             .padding(.horizontal, 20)

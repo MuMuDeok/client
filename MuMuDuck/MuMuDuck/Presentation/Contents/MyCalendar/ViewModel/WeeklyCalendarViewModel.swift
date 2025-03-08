@@ -43,7 +43,7 @@ class WeeklyCalendarViewModel {
         return -1 // 잘못된 변수가 전달된 경우로 예외처리 필요
     }
     
-    // 선택한 주말을 기준으로 앞으로 1년, 뒤로 1년간의 Date 정보 주 단위로 반환
+    // 선택한 주말을 기준으로 앞뒤로 weekRange주 만큼의 Date 정보 주 단위로 반환
     func getDaysPerWeek(week: [Date]) -> [[Date]] {
         var calendar = Calendar.current
         calendar.timeZone = TimeZone(identifier: "Asia/Seoul")!

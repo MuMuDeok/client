@@ -10,7 +10,12 @@ import SwiftUI
 struct WeeklyCalendarWeekView: View {
     let myCalendarVM: MyCalendarTapViewModel
     let weeklyDate: [Date]
-   
+    private let formatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "d"
+        return formatter
+    }()
+    
     var body: some View {
         LazyVGrid(columns: Array(repeating: GridItem(), count: 7), spacing: 0) {
             ForEach(weeklyDate, id:\.self) { date in
@@ -40,8 +45,6 @@ struct WeeklyCalendarWeekView: View {
 
 private extension WeeklyCalendarWeekView {
     func fetchDay(date: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "d"
         return formatter.string(from: date)
     }
     

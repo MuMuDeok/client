@@ -68,8 +68,6 @@ class MonthCalendarViewModel {
     
     // 해당 주에서 이벤트가 가장 많은 날의 이벤트 갯수
     func getLoopCount(date: [Date], events: [any Event]) -> Int {
-//        let events = retrieveWeekEventUsecase.execute(date: date)
-        
         var loopCount = 0
         var weekEventsCount = Array(repeating: 0, count: 7)
         
@@ -138,7 +136,6 @@ class MonthCalendarViewModel {
     
     // 1주일의 날짜 정보를 받아서 새로운 모델, 뷰를 그려야하는 배열 정보, 1주일간 이벤트가 가장 많은 날의 이벤트 수(해당 주의 이벤트 행의 수)를 반환
     func getWeekData(date: [Date], events: [any Event]) -> ([CalendarDayEvents], [[Bool]], Int) {
-//        let events: [any Event] = getWeekEvents(date: date)
         let loopCount: Int = getLoopCount(date: date, events: events)
         
         let emptyArray: [(any Event)?] = Array(repeating: nil, count: loopCount)

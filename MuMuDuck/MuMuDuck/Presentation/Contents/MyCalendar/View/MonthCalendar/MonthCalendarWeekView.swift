@@ -36,7 +36,7 @@ struct MonthCalendarWeekView: View {
                         if myCalendarVM.selectedWeek.isEmpty {
                             myCalendarVM.changeSelectedWeek(newSelectedWeek: weeklyDate)
                             // 선택한 주가 위로 올라가는 애니메이션을 위해 0.5초의 딜레이 주기
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                                 myCalendarVM.changeSelectedDate(newSelectedDate: date)
                             }
                         } else {
@@ -60,7 +60,7 @@ private extension MonthCalendarWeekView {
     }
     
     func fetchColor(date: Date) -> Color {
-        // 접힌 달력 또는 주력이면서 선택한 날짜와 같은 경우
+        // 접힌 달력 또는 주간 달력이면서 선택한 날짜와 같은 경우
         if isSameDate(date1: date, date2: myCalendarVM.selectedDate) && (monthCalendarVM.isOutspread == false || myCalendarVM.selectedWeek.isEmpty == false) {
             return .white
         } else if isSameDate(date1: date, date2: Date()) { // 펼친 달력 && 오늘인 경우

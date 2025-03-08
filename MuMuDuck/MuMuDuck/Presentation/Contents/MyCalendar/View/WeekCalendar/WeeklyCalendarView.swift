@@ -16,11 +16,13 @@ struct WeeklyCalendarView: View {
     let weeks: [[Date]]
     @State var selection: Int
     @State var scrollID: Date?
-    @State var weeksToShow: [Date]
     @State var isChangeDayByScroll: Bool = false
     @State var isChangeSelectionScroll: Bool = false
     @State var isChangeScrollByDay: Bool = false
     @State var isClickTodayButton: Bool = false
+    var weeksToShow: [Date] {
+        weeks.flatMap{$0}
+    }
     
     init(myCalendarVM: MyCalendarTapViewModel, weeklyCalendarVM: WeeklyCalendarViewModel, isCreatingEvent: Binding<Bool>) {
         self.myCalendarVM = myCalendarVM
@@ -29,7 +31,6 @@ struct WeeklyCalendarView: View {
         
         let selectWeek = myCalendarVM.selectedWeek
         self.weeks = weeklyCalendarVM.getDaysPerWeek(week: myCalendarVM.weekIncludeToday)
-        self.weeksToShow = self.weeks.flatMap{$0}
         self.selection = weeklyCalendarVM.getSelection(weeks: weeks, selectWeek: selectWeek)
     }
     
@@ -42,7 +43,7 @@ struct WeeklyCalendarView: View {
             WeeklyCalendarHeaderView(myCalendarVM: myCalendarVM)
             
             TabView(selection: $selection) {
-                ForEach(weeks.indices, id:\.self) { index in
+                ForEach(weeks.indices, id:\.hashValue) { index in
                     WeeklyCalendarWeekView(myCalendarVM: myCalendarVM, weeklyDate: weeks[index])
                         .tag(index)
                 }
@@ -88,8 +89,10 @@ struct WeeklyCalendarView: View {
             } else {
                 isChangeScrollByDay = true
                 
-                withAnimation {
-                    scrollID = myCalendarVM.selectedDate
+                DispatchQueue.main.async {
+                    withAnimation {
+                        scrollID = myCalendarVM.selectedDate
+                    }
                 }
                 
                 if isClickTodayButton {
@@ -198,7 +201,6 @@ private extension WeeklyCalendarView {
                     self.isCreatingEvent = true
                 } label: {
                     Image(systemName: "plus")
-                        .foregroundStyle(.black)
                         .font(.system(size: 20))
                 }
             }
