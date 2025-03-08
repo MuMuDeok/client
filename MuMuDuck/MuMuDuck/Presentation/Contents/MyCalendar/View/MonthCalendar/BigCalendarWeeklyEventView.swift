@@ -10,16 +10,19 @@ import SwiftUI
 struct BigCalendarWeeklyEventView: View {
     @EnvironmentObject private var coordinator: Coordinator
     let myCalendarVM: MyCalendarTapViewModel
+    let monthCalendarVM: MonthCalendarViewModel
     
     let width: CGFloat = (UIScreen.main.bounds.width - 50) / 7
     let weekData: [CalendarDayEvents]
     let skipData: [[Bool]]
     let loopCount: Int
     
-    init(myCalendarVM: MyCalendarTapViewModel, weekyleyDate: [Date]) {
+    init(myCalendarVM: MyCalendarTapViewModel, monthCalendarVM: MonthCalendarViewModel, weekyleyDate: [Date]) {
         self.myCalendarVM = myCalendarVM
+        self.monthCalendarVM = monthCalendarVM
         
-        let (weekData, skipData, loopCount) = myCalendarVM.getWeekData(date: weekyleyDate)
+        let events = myCalendarVM.getWeekEvents(date: weekyleyDate)
+        let (weekData, skipData, loopCount) = monthCalendarVM.getWeekData(date: weekyleyDate, events: events)
         self.weekData = weekData
         self.skipData = skipData
         self.loopCount = loopCount
@@ -44,9 +47,9 @@ struct BigCalendarWeeklyEventView: View {
                                 } label: {
                                     // event가 원본 상태라서 시작날짜와 종료날짜가 해당 주 밖에 있을 수 있어서 몇일동안 진행되는지 새로운 startDate, endDate를 구해서 계산해야함
                                     RoundedRectangle(cornerRadius: 10)
-                                        .frame(width: width * CGFloat(myCalendarVM.getContinueDay(
+                                        .frame(width: width * CGFloat(monthCalendarVM.getContinueDay(
                                             eventStartDate: event.startDate, eventEndDate: event.endDate, weekStartDate: weekData[0].date, weekEndDate: weekData[6].date
-                                        ) + 1) + CGFloat(myCalendarVM.getContinueDay(
+                                        ) + 1) + CGFloat(monthCalendarVM.getContinueDay(
                                             eventStartDate: event.startDate, eventEndDate: event.endDate, weekStartDate: weekData[0].date, weekEndDate: weekData[6].date
                                         )), height: 16)
                                         .foregroundStyle(Color.accentColor.opacity(0.7))

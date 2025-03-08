@@ -10,19 +10,27 @@ import SwiftUI
 struct MiniCalendarBottomEventView: View {
     @EnvironmentObject private var coordinator: Coordinator
     let myCalendarVM: MyCalendarTapViewModel
-    @Binding var selectedDate: Date
-    var events: [any Event] { myCalendarVM.getDayEvents(date: selectedDate) }
+    
+    var events: [any Event] {
+        if let selectDate = myCalendarVM.selectedDate {
+            return myCalendarVM.getDayEvents(date: selectDate)
+        } else {
+            return []
+        }
+    }
     
     var body: some View {
         VStack {
-            eventListHeaderView()
-            
-            if events.isEmpty {
-                Text("등록된 일정이 없습니다.")
-                    .padding(.top, 50)
-            } else {
-                ForEach(events, id:\.id) { event in
-                    eventListItemView(event: event)
+            if myCalendarVM.selectedDate != nil {
+                eventListHeaderView()
+                
+                if events.isEmpty {
+                    Text("등록된 일정이 없습니다.")
+                        .padding(.top, 50)
+                } else {
+                    ForEach(events, id:\.id) { event in
+                        eventListItemView(event: event)
+                    }
                 }
             }
         }
@@ -34,7 +42,7 @@ extension MiniCalendarBottomEventView {
     @ViewBuilder
     func eventListHeaderView() -> some View {
         HStack {
-            Text(dateToString(date: selectedDate, format: "M.d (E)"))
+            Text(dateToString(date: myCalendarVM.selectedDate!, format: "M.d (E)"))
             
             Spacer()
         }
