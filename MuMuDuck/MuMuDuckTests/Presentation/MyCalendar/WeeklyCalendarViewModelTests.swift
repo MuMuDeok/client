@@ -31,6 +31,60 @@ final class WeeklyCalendarViewModelTests: XCTestCase {
         XCTAssertEqual(result4, 1) // first의 날짜가 second의 날짜보다 늦으므로 1
     }
     
+    func test_whenGiveDateArray_thenReturnTwoWeekRangePlusOneDateArraysBasedOnGivenDateArray() {
+        // given
+        let weeklyCalendarVM = WeeklyCalendarViewModel()
+        let dates: [Date] = [
+            getDate(year: 2025, month: 12, day: 1),
+            getDate(year: 2025, month: 12, day: 2),
+            getDate(year: 2025, month: 12, day: 3),
+            getDate(year: 2025, month: 12, day: 4),
+            getDate(year: 2025, month: 12, day: 5),
+            getDate(year: 2025, month: 12, day: 6),
+            getDate(year: 2025, month: 12, day: 7),
+        ]
+        
+        // when
+        let resultDateArray = weeklyCalendarVM.getDaysPerWeek(week: dates)
+        let weekRange = weeklyCalendarVM.weekRange
+        
+        // then
+        XCTAssertEqual(resultDateArray.count, weekRange * 2 + 1)
+        for i in 0..<weekRange {
+            for j in 0...6 {
+                XCTAssertEqual(getAddedDate(date:dates[j], value: -abs(weekRange - i)), resultDateArray[i][j])
+            }
+        }
+        
+        for i in (weekRange + 1)...(2 * weekRange) {
+            for j in 0...6 {
+                XCTAssertEqual(getAddedDate(date:dates[j], value: abs(i - weekRange)), resultDateArray[i][j])
+            }
+        }
+    }
+    
+    func test_whenGiveWeekDateArrayAndTwoDimensionDateArray_thenReturnWeekDateArrayIndex() {
+        // given
+        let weeklyCalendarVM = WeeklyCalendarViewModel()
+        let dates: [Date] = [
+            getDate(year: 2025, month: 12, day: 1),
+            getDate(year: 2025, month: 12, day: 2),
+            getDate(year: 2025, month: 12, day: 3),
+            getDate(year: 2025, month: 12, day: 4),
+            getDate(year: 2025, month: 12, day: 5),
+            getDate(year: 2025, month: 12, day: 6),
+            getDate(year: 2025, month: 12, day: 7),
+        ]
+        let resultDateArray = weeklyCalendarVM.getDaysPerWeek(week: dates)
+        let weekArray = dates.map { getAddedDate(date: $0, value: 5)}
+        
+        // when
+        let index = weeklyCalendarVM.getSelection(weeks: resultDateArray, selectWeek: weekArray)
+        
+        // then
+        XCTAssertEqual(index, weeklyCalendarVM.weekRange + 5)
+    }
+    
     func getDate(year: Int, month: Int, day: Int) -> Date {
         var dateComponents = DateComponents()
         dateComponents.year = year
@@ -41,5 +95,9 @@ final class WeeklyCalendarViewModelTests: XCTestCase {
         } else {
             return Date()
         }
+    }
+    
+    func getAddedDate(date: Date, value: Int) -> Date {
+       return Calendar.current.date(byAdding: .day, value: value * 7, to: date)!
     }
 }
