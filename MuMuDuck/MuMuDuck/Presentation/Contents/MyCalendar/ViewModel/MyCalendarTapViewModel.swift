@@ -40,8 +40,8 @@ class MyCalendarTapViewModel {
         return retrieveWeekEventUsecase.execute(date: date)
     }
     
-    func createPersonalEvent(title: String, isAllDay: Bool, startDate: Date, endDate: Date, isAlert: Bool, memo: String = "") {
-        createEventUsecase.execute(title: title, isAllDay: isAllDay, startDate: startDate, endDate: endDate, isAlert: isAlert, memo: memo)
+    func createPersonalEvent(title: String, isAllDay: Bool, startDate: Date, endDate: Date, alertTime: Int?, memo: String = "") {
+        createEventUsecase.execute(title: title, isAllDay: isAllDay, startDate: startDate, endDate: endDate, alertTime: alertTime, memo: memo)
     }
     
     func changeMonth(newMonth: Date) {

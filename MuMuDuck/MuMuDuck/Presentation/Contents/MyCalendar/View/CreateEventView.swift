@@ -11,12 +11,13 @@ struct CreateEventView: View {
     @Environment(\.dismiss) var dismiss
     
     let myCalendarVM: MyCalendarTapViewModel
+    var alertTimes: [Int?] = [nil, 0, 5, 10, 15, 30, 60, 120]
     
     @State var title: String = ""
     @State var isAllDay: Bool = false
     @State var startDate: Date
     @State var endDate: Date
-    @State var isAlert: Bool = false
+    @State var alertTime: Int? = nil
     @State var memo: String = ""
     @State var eventType: EventType
     @FocusState private var focusField: FocusField?
@@ -25,11 +26,11 @@ struct CreateEventView: View {
     let width: CGFloat = UIScreen.main.bounds.width
     let height: CGFloat = UIScreen.main.bounds.height
     
-    init(myCalendarVM: MyCalendarTapViewModel, selectedDate: Date, title: String = "", isAllDay: Bool = false, startDate: Date? = nil, endDate: Date? = nil, isAlert: Bool = false, memo: String = "", eventType: EventType = .personal) {
+    init(myCalendarVM: MyCalendarTapViewModel, selectedDate: Date, title: String = "", isAllDay: Bool = false, startDate: Date? = nil, endDate: Date? = nil, alertTime: Int? = nil, memo: String = "", eventType: EventType = .personal) {
         self.myCalendarVM = myCalendarVM
         self.title = title
         self.isAllDay = isAllDay
-        self.isAlert = isAlert
+        self.alertTime = alertTime
         self.memo = memo
         self.eventType = eventType
         
@@ -69,9 +70,10 @@ struct CreateEventView: View {
             .scrollDisabled(focusComponent == nil)
             .scrollIndicators(.hidden)
         }
-        .padding(.horizontal, 15)
+        .padding(.horizontal, 16)
         .onAppear {
             self.focusField = .title
+//            UIDatePicker.appearance().minuteInterval = 5
         }
         .onChange(of: self.isAllDay) {
             if focusComponent == .startTime || focusComponent == .endTime {
@@ -108,6 +110,25 @@ private extension CreateEventView {
         formatter.locale = Locale(identifier: "ko_KR")
         return formatter.string(from: date)
     }
+    
+    func alertTimeToString(alertTime: Int?) -> String {
+        guard let time = alertTime else {
+            return "없음"
+        }
+        
+        if time == 0 {
+            return "시작"
+        }
+        
+        let hour = time / 60
+        let minute = time % 60
+        
+        if hour != 0 {
+            return "\(hour)시간 전"
+        }
+        
+        return "\(minute)분 전"
+    }
 }
 
 private extension CreateEventView {
@@ -118,12 +139,12 @@ private extension CreateEventView {
             
             Button {
                 // 나중에 뮤지컬 일정, 공연 일정 추가할 때 switch case와 eventType을 이용해서 어떤 이벤트인지 구별
-                myCalendarVM.createPersonalEvent(title: title, isAllDay: isAllDay, startDate: startDate, endDate: endDate, isAlert: isAlert, memo: memo)
-                
+                myCalendarVM.createPersonalEvent(title: title, isAllDay: isAllDay, startDate: startDate, endDate: endDate, alertTime: alertTime, memo: memo)
                 dismiss()
             } label: {
                 Text("저장")
             }
+            .disabled(title.isEmpty)
         }
         .padding(.top, 20)
     }
@@ -150,13 +171,21 @@ private extension CreateEventView {
             
             dateView(title: "종료", date: $endDate, focusDate: .endDate, focusTime: .endTime)
             
-            Toggle("알림설정", isOn: $isAlert)
-                .tint(.accent)
-                .padding(.trailing, 1.5)
+            HStack {
+                Text("알림설정")
+                
+                Spacer()
+                
+                Picker("", selection: $alertTime) {
+                    ForEach(alertTimes, id:\.self) { time in
+                        Text(alertTimeToString(alertTime: time))
+                    }
+                }
+                .tint(.black)
+            }
             
             Divider()
         }
-        .font(.title3)
         .padding(.vertical, 20)
     }
     
