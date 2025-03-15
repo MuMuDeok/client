@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct CreateEventView: View {
+struct CreatePersonalEventView: View {
     @Environment(\.dismiss) var dismiss
     
     let myCalendarVM: MyCalendarTapViewModel
@@ -73,7 +73,7 @@ struct CreateEventView: View {
         .padding(.horizontal, 16)
         .onAppear {
             self.focusField = .title
-//            UIDatePicker.appearance().minuteInterval = 5
+            UIDatePicker.appearance().minuteInterval = 5
         }
         .onChange(of: self.isAllDay) {
             if focusComponent == .startTime || focusComponent == .endTime {
@@ -85,7 +85,7 @@ struct CreateEventView: View {
     }
 }
 
-private extension CreateEventView {
+private extension CreatePersonalEventView {
     enum FocusField: Hashable {
         case title
         case memo
@@ -131,7 +131,7 @@ private extension CreateEventView {
     }
 }
 
-private extension CreateEventView {
+private extension CreatePersonalEventView {
     @ViewBuilder
     func ToorbarView() -> some View {
         HStack {
@@ -269,10 +269,29 @@ private extension CreateEventView {
                     .onTapGesture {
                         focusField = .memo
                     }
-                
-                TextField("메모를 입력해주세요.", text: $memo, axis: .vertical)
-                    .focused($focusField, equals: .memo)
-                    .padding([.top, .leading], 10)
+                    .overlay {
+                        VStack {
+                            TextField("메모를 입력해주세요.", text: $memo, axis: .vertical)
+                                .focused($focusField, equals: .memo)
+                                .padding([.top, .leading], 10)
+                                .onChange(of: memo) {
+                                    memo = String(memo.prefix(300))
+                                }
+                            
+                            Spacer()
+                            
+                            HStack {
+                                Spacer()
+                                
+                                Text("\(memo.count)")
+                                    .foregroundStyle(memo.count == 300 ? .red : Color(uiColor:.systemGray2))
+                                +
+                                Text(" / 300")
+                                    .foregroundStyle(Color(uiColor: .systemGray3))
+                            }
+                            .padding([.bottom, .trailing], 5)
+                        }
+                    }
             }
         }
     }

@@ -46,7 +46,7 @@ class NotificationManager: NSObject, UNUserNotificationCenterDelegate {
         let triggerDateComponents = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: triggerDate)
         
         let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDateComponents, repeats: false)
-        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+        let request = UNNotificationRequest(identifier: event.id.uuidString, content: content, trigger: trigger)
         
         UNUserNotificationCenter.current().add(request) { error in
             if let error = error {
@@ -55,6 +55,17 @@ class NotificationManager: NSObject, UNUserNotificationCenterDelegate {
                 print("알림이 예약됨")
             }
         }
+    }
+    
+    func updateEventAlert(event: any Event) {
+        removeEventAlert(id: event.id)
+        addEventAlert(event: event)
+    }
+    
+    func removeEventAlert(id: UUID) {
+        UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: [id.uuidString])
+        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [id.uuidString])
+        print("알림이 삭제됨")
     }
     
     // 포그라운드에서도 알림 표시 (필수)

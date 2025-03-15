@@ -24,7 +24,7 @@ struct MyCalendarTapView: View {
             }
         }
         .sheet(isPresented: $isCreatingEvent, content: {
-            CreateEventView(myCalendarVM: myCalendarVM, selectedDate: myCalendarVM.selectedDate ?? Date())
+            CreatePersonalEventView(myCalendarVM: myCalendarVM, selectedDate: myCalendarVM.selectedDate ?? Date())
         })
     }
 }

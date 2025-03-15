@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum EventType {
+enum EventType: String, CaseIterable {
     case personal
     case musical
     case performance
@@ -24,7 +24,7 @@ protocol Event: Equatable, Hashable {
 }
 
 struct PersonalEvent: Event {
-    let id: UUID = UUID()
+    let id: UUID
     let title: String
     let isAllDay: Bool
     let startDate: Date
@@ -33,7 +33,8 @@ struct PersonalEvent: Event {
     let memo: String
     let type: EventType = .personal
     
-    init(title: String, isAllDay: Bool, startDate: Date, endDate: Date, alertTime: Int?, memo: String = "") {
+    init(id: UUID, title: String, isAllDay: Bool, startDate: Date, endDate: Date, alertTime: Int?, memo: String = "") {
+        self.id = id
         self.title = title
         self.isAllDay = isAllDay
         self.startDate = startDate
@@ -44,7 +45,7 @@ struct PersonalEvent: Event {
 }
 
 struct MusicalEvent: Event {
-    let id: UUID = UUID()
+    let id: UUID
     let title: String
     let isAllDay: Bool
     let startDate: Date
@@ -54,7 +55,8 @@ struct MusicalEvent: Event {
     let url: String
     let type: EventType = .musical
     
-    init(title: String, isAllDay: Bool, startDate: Date, endDate: Date, alertTime: Int?, memo: String = "", url: String = "") {
+    init(id: UUID, title: String, isAllDay: Bool, startDate: Date, endDate: Date, alertTime: Int?, memo: String = "", url: String = "") {
+        self.id = id
         self.title = title
         self.isAllDay = isAllDay
         self.startDate = startDate
@@ -66,7 +68,7 @@ struct MusicalEvent: Event {
 }
 
 struct PerformanceEvent: Event {
-    let id: UUID = UUID()
+    let id: UUID
     let title: String
     let isAllDay: Bool
     let startDate: Date
@@ -75,7 +77,8 @@ struct PerformanceEvent: Event {
     let actors: [String]
     let type: EventType = .performance
     
-    init(title: String, isAllDay: Bool, startDate: Date, endDate: Date, alertTime: Int?, actors: [String]) {
+    init(id: UUID, title: String, isAllDay: Bool, startDate: Date, endDate: Date, alertTime: Int?, actors: [String]) {
+        self.id = id
         self.title = title
         self.isAllDay = isAllDay
         self.startDate = startDate

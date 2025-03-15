@@ -52,11 +52,11 @@ final class MonthCalendarTapViewModelTests: XCTestCase {
         
         // when
         let maximumEventCount = monthCalendarVM.getLoopCount(date: dates, events: [
-                PersonalEvent(title: "테스트A", isAllDay: true, startDate: getDate(year: 2025, month: 02, day: 13), endDate: getDate(year: 2025, month: 02, day: 19), alertTime: nil),
-                PersonalEvent(title: "테스트B", isAllDay: true, startDate: getDate(year: 2025, month: 02, day: 6), endDate: getDate(year: 2025, month: 02, day: 19), alertTime: nil),
-                PersonalEvent(title: "테스트C", isAllDay: true, startDate: getDate(year: 2025, month: 02, day: 12), endDate: getDate(year: 2025, month: 02, day: 14), alertTime: nil),
-                PersonalEvent(title: "테스트D", isAllDay: true, startDate: getDate(year: 2025, month: 02, day: 13), endDate: getDate(year: 2025, month: 02, day: 13), alertTime: nil),
-                PersonalEvent(title: "테스트E", isAllDay: true, startDate: getDate(year: 2025, month: 02, day: 15), endDate: getDate(year: 2025, month: 3, day: 1), alertTime: nil),
+            PersonalEvent(id: UUID(), title: "테스트A", isAllDay: true, startDate: getDate(year: 2025, month: 02, day: 13), endDate: getDate(year: 2025, month: 02, day: 19), alertTime: nil),
+                PersonalEvent(id: UUID(), title: "테스트B", isAllDay: true, startDate: getDate(year: 2025, month: 02, day: 6), endDate: getDate(year: 2025, month: 02, day: 19), alertTime: nil),
+                PersonalEvent(id: UUID(), title: "테스트C", isAllDay: true, startDate: getDate(year: 2025, month: 02, day: 12), endDate: getDate(year: 2025, month: 02, day: 14), alertTime: nil),
+                PersonalEvent(id: UUID(), title: "테스트D", isAllDay: true, startDate: getDate(year: 2025, month: 02, day: 13), endDate: getDate(year: 2025, month: 02, day: 13), alertTime: nil),
+                PersonalEvent(id: UUID(), title: "테스트E", isAllDay: true, startDate: getDate(year: 2025, month: 02, day: 15), endDate: getDate(year: 2025, month: 3, day: 1), alertTime: nil),
         ])
         
         // then

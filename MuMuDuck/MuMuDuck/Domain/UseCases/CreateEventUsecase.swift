@@ -9,6 +9,7 @@ import SwiftUI
 class CreateEventUsecase {
     private let eventRepository: EventRepository = DefaultEventRepository.shared
     private let notificationManager: NotificationManager = .shared
+    private let persistenceController = PersistenceController.shared
     
     func execute(title: String, isAllDay: Bool, startDate: Date, endDate: Date, alertTime: Int?, memo: String = "") {
         let calendar = Calendar.current
@@ -22,9 +23,10 @@ class CreateEventUsecase {
             newEndDate = endDate
         }
         
-        let newEvent = PersonalEvent(title: title, isAllDay: isAllDay, startDate: startDate, endDate: newEndDate, alertTime: alertTime, memo: memo)
+        let newEvent = PersonalEvent(id: UUID(), title: title, isAllDay: isAllDay, startDate: startDate, endDate: newEndDate, alertTime: alertTime, memo: memo)
         
         eventRepository.createEvent(event: newEvent)
         notificationManager.addEventAlert(event: newEvent)
+        persistenceController.addEvent(event: newEvent)
     }
 }

@@ -10,10 +10,14 @@ import SwiftUI
 struct PersonalEventDetailView: View {
     @EnvironmentObject private var coordinator: Coordinator
     let eventDetailVM: EventDetailViewModel = EventDetailViewModel()
-    let event: PersonalEvent
+    let id: UUID
+    var event: PersonalEvent {
+        self.eventDetailVM.fetchEvent(id: self.id) as! PersonalEvent
+    }
+    @State var isEditing: Bool = false
     
     init(event: PersonalEvent) {
-        self.event = event
+        self.id = event.id
     }
     
     var body: some View {
@@ -22,6 +26,9 @@ struct PersonalEventDetailView: View {
             
             Spacer()
         }
+        .sheet(isPresented: self.$isEditing, content: {
+            EditPersonalEventView(eventDetailVM: eventDetailVM, event: event)
+        })
         .navigationBarBackButtonHidden()
         .toolbar {
             ToolbarItem(placement: .cancellationAction) {
@@ -29,6 +36,14 @@ struct PersonalEventDetailView: View {
                     coordinator.pop()
                 } label: {
                     Image(systemName: "chevron.left")
+                }
+            }
+            
+            ToolbarItem(placement: .confirmationAction) {
+                Button {
+                    self.isEditing = true
+                } label: {
+                    Text("편집")
                 }
             }
         }
