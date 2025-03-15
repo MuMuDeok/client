@@ -36,7 +36,6 @@ struct PersistenceController {
         }
     }
     
-    // DIP 법칙을 통해 받아와서 memo처럼 타입별로 있는 부가적인 데이터는 별도의 인자로 전달해주기
     func addEvent(event: any Event) {
         let newEvent = CD_Event(context: context)
         newEvent.id = event.id
@@ -95,7 +94,7 @@ struct PersistenceController {
             
             try context.save()
         } catch {
-            print("❌ 삭제 실패: \(error.localizedDescription)")
+            print("❌ 수정 실패: \(error.localizedDescription)")
         }
     }
     

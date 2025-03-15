@@ -11,7 +11,7 @@ struct PersonalEventDetailView: View {
     @EnvironmentObject private var coordinator: Coordinator
     let eventDetailVM: EventDetailViewModel = EventDetailViewModel()
     let id: UUID
-    var event: PersonalEvent {
+    var event: PersonalEvent { // 편집했을 때 일정 디테일뷰가 변하기 위해 연산 프로퍼티로 변경
         self.eventDetailVM.fetchEvent(id: self.id) as! PersonalEvent
     }
     @State var isEditing: Bool = false

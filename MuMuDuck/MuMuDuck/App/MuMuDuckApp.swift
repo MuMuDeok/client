@@ -19,8 +19,8 @@ struct MuMuDuckApp: App {
                 .environment(\.managedObjectContext, persistenceController.context)
                 .environmentObject(coordinator)
                 .onAppear {
-                    notificationManager.requestPermission()
-                    notificationManager.registerDelegate()
+                    notificationManager.requestPermission() // 알림 권한 요청
+                    notificationManager.registerDelegate() // 앱이 포어그라운드 상태일 때도 알림이 오도록 설정
                 }
         }
     }

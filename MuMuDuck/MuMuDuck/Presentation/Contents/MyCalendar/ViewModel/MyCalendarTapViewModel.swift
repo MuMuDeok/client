@@ -15,7 +15,6 @@ class MyCalendarTapViewModel {
     var month: Date = Date()
     var selectedDate: Date? = Date()
     var selectedWeek: [Date] = []
-    var isShowWeeklyCalendar: Bool = false
     var weekIncludeToday: [Date] = []
     
     init() {
@@ -54,10 +53,6 @@ class MyCalendarTapViewModel {
     
     func changeSelectedWeek(newSelectedWeek: [Date]) {
         self.selectedWeek = newSelectedWeek
-    }
-    
-    func toggleIsShowWeeklyCalendar() {
-        self.isShowWeeklyCalendar.toggle()
     }
     
     func isSelectToday() -> Bool {
