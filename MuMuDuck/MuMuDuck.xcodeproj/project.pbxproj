@@ -26,7 +26,9 @@
 		FB450CD82D85DC5700FF4151 /* EditPersonalEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB450CD72D85DC5300FF4151 /* EditPersonalEventView.swift */; };
 		FB450CDA2D85E48D00FF4151 /* ReadEventUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB450CD92D85E48700FF4151 /* ReadEventUsecase.swift */; };
 		FB450CDC2D85EE3100FF4151 /* ReadEventUsecaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB450CDB2D85EE2800FF4151 /* ReadEventUsecaseTests.swift */; };
-		FB450CDE2D85EF5F00FF4151 /* UpdateEventUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB450CDD2D85EF5900FF4151 /* UpdateEventUsecase.swift */; };
+		FB450CDE2D85EF5F00FF4151 /* UpdateEventUsecaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB450CDD2D85EF5900FF4151 /* UpdateEventUsecaseTests.swift */; };
+		FB450CE02D86FA4D00FF4151 /* DeleteEventUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB450CDF2D86FA4A00FF4151 /* DeleteEventUsecase.swift */; };
+		FB450CE22D86FC5200FF4151 /* DeleteEventUsecaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB450CE12D86FC4E00FF4151 /* DeleteEventUsecaseTests.swift */; };
 		FB46D9772D661FF0004D75B0 /* MonthCalendarWeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB46D9762D661FE3004D75B0 /* MonthCalendarWeekView.swift */; };
 		FB46D9792D662610004D75B0 /* MiniCalendarWeeklyEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB46D9782D662605004D75B0 /* MiniCalendarWeeklyEventView.swift */; };
 		FB46D97B2D6628C2004D75B0 /* BigCalendarWeeklyEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB46D97A2D6628BA004D75B0 /* BigCalendarWeeklyEventView.swift */; };
@@ -98,7 +100,9 @@
 		FB450CD72D85DC5300FF4151 /* EditPersonalEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPersonalEventView.swift; sourceTree = "<group>"; };
 		FB450CD92D85E48700FF4151 /* ReadEventUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadEventUsecase.swift; sourceTree = "<group>"; };
 		FB450CDB2D85EE2800FF4151 /* ReadEventUsecaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadEventUsecaseTests.swift; sourceTree = "<group>"; };
-		FB450CDD2D85EF5900FF4151 /* UpdateEventUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateEventUsecase.swift; sourceTree = "<group>"; };
+		FB450CDD2D85EF5900FF4151 /* UpdateEventUsecaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateEventUsecaseTests.swift; sourceTree = "<group>"; };
+		FB450CDF2D86FA4A00FF4151 /* DeleteEventUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteEventUsecase.swift; sourceTree = "<group>"; };
+		FB450CE12D86FC4E00FF4151 /* DeleteEventUsecaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteEventUsecaseTests.swift; sourceTree = "<group>"; };
 		FB46D9762D661FE3004D75B0 /* MonthCalendarWeekView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthCalendarWeekView.swift; sourceTree = "<group>"; };
 		FB46D9782D662605004D75B0 /* MiniCalendarWeeklyEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniCalendarWeeklyEventView.swift; sourceTree = "<group>"; };
 		FB46D97A2D6628BA004D75B0 /* BigCalendarWeeklyEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BigCalendarWeeklyEventView.swift; sourceTree = "<group>"; };
@@ -341,6 +345,7 @@
 				FB48A19A2D61007B002AAB05 /* CreateEventUsecase.swift */,
 				FB450CD92D85E48700FF4151 /* ReadEventUsecase.swift */,
 				FB450CD52D85DAD700FF4151 /* UpdateEventUsecase.swift */,
+				FB450CDF2D86FA4A00FF4151 /* DeleteEventUsecase.swift */,
 				FB22BFBF2D5648F4003DBF28 /* RetrieveDateEventUsecase.swift */,
 				FB48A19B2D61007B002AAB05 /* RetrieveWeekEventUsecases.swift */,
 			);
@@ -454,7 +459,8 @@
 			children = (
 				FB48A1A42D610114002AAB05 /* CreateEventUsecaseTests.swift */,
 				FB450CDB2D85EE2800FF4151 /* ReadEventUsecaseTests.swift */,
-				FB450CDD2D85EF5900FF4151 /* UpdateEventUsecase.swift */,
+				FB450CDD2D85EF5900FF4151 /* UpdateEventUsecaseTests.swift */,
+				FB450CE12D86FC4E00FF4151 /* DeleteEventUsecaseTests.swift */,
 				FB48A1A52D610114002AAB05 /* RetrieveWeekEventUsecaseTests.swift */,
 				FB22BFC12D564BD2003DBF28 /* RetrieveDateEventUsecaseTests.swift */,
 			);
@@ -726,6 +732,7 @@
 				FB22BFC02D564B5B003DBF28 /* RetrieveDateEventUsecase.swift in Sources */,
 				FB46D98B2D6F5145004D75B0 /* WeeklyCalendarViewModel.swift in Sources */,
 				FB46D97B2D6628C2004D75B0 /* BigCalendarWeeklyEventView.swift in Sources */,
+				FB450CE02D86FA4D00FF4151 /* DeleteEventUsecase.swift in Sources */,
 				FB22BFB62D553989003DBF28 /* EventRepository.swift in Sources */,
 				FB48A1A02D6100A1002AAB05 /* CreatePersonalEventView.swift in Sources */,
 				FB46D9FD2D79F65F004D75B0 /* MonthCalendarHeaderView.swift in Sources */,
@@ -763,11 +770,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				FB48A1A62D610114002AAB05 /* RetrieveWeekEventUsecaseTests.swift in Sources */,
-				FB450CDE2D85EF5F00FF4151 /* UpdateEventUsecase.swift in Sources */,
+				FB450CDE2D85EF5F00FF4151 /* UpdateEventUsecaseTests.swift in Sources */,
 				FB48A1A72D610114002AAB05 /* CreateEventUsecaseTests.swift in Sources */,
 				FB22BF7A2D53A3B6003DBF28 /* MuMuDuckTests.swift in Sources */,
 				FB450CDC2D85EE3100FF4151 /* ReadEventUsecaseTests.swift in Sources */,
 				FB46D9C72D74972A004D75B0 /* WeeklyCalendarViewModelTests.swift in Sources */,
+				FB450CE22D86FC5200FF4151 /* DeleteEventUsecaseTests.swift in Sources */,
 				FB22BFC22D564BE8003DBF28 /* RetrieveDateEventUsecaseTests.swift in Sources */,
 				FB48A1AA2D610124002AAB05 /* MonthCalendarTapViewModelTests.swift in Sources */,
 			);

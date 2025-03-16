@@ -58,6 +58,7 @@ struct MonthCalendarView: View {
                 
                 if monthCalendarVM.isOutspread && myCalendarVM.selectedWeek.isEmpty {
                     toggleOutspreadButton()
+                        .padding(.vertical, 10)
                 }
             }
             .blur(radius: monthCalendarVM.isChangingMonthAndYear ? 5 : 0)

@@ -12,4 +12,5 @@ protocol EventRepository {
     func fetchEvents() -> [any Event]
     func createEvent(event: any Event)
     func updateEvent(id: UUID, event: any Event)
+    func deleteEvent(id: UUID)
 }

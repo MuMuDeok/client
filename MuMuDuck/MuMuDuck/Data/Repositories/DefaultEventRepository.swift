@@ -52,4 +52,8 @@ class DefaultEventRepository: EventRepository {
             self.events[index] = event
         }
     }
+    
+    func deleteEvent(id: UUID) {
+        self.events = self.events.filter { $0.id != id }
+    }
 }
