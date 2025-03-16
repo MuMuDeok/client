@@ -9,6 +9,7 @@ import CoreData
 
 struct PersistenceController {
     static let shared = PersistenceController()
+    private let apiService: APIService = .shared
 
     let container: NSPersistentContainer
 
@@ -111,6 +112,76 @@ struct PersistenceController {
             try context.save()
         } catch {
             print("❌ 삭제 실패: \(error.localizedDescription)")
+        }
+    }
+    
+    func addFailedEvent(event: any Event) {
+        let newEvent = Failed_Event(context: context)
+        newEvent.id = event.id
+        newEvent.title = event.title
+        newEvent.isAllDay = event.isAllDay
+        newEvent.startDate = event.startDate
+        newEvent.endDate = event.endDate
+        if let alertTime = event.alertTime {
+            newEvent.alertTime = Int16(alertTime)
+        }
+        newEvent.type = event.type.rawValue
+        
+        if event.type == .personal { // 나중에 다른 타입의 일정 생성시 switch case로 변경하기
+            newEvent.memo = (event as! PersonalEvent).memo
+        }
+        
+        do {
+            try context.save()
+            print("✅ 저장 완료: \(event.title)")
+        } catch {
+            print("❌ 저장 실패: \(error.localizedDescription)")
+        }
+    }
+    
+    func reTryFailedEvents() {
+        let fetchRequest: NSFetchRequest<Failed_Event> = Failed_Event.fetchRequest()
+        
+        Task {
+            do {
+                let failed_events = try context.fetch(fetchRequest)
+                print(failed_events)
+                for failed_event in failed_events {
+                    // 테스트용 userID 4404, 추후 일정별로 case로 나눠서 개발
+                    let event = EventToAPIEvent(userId: 4404, event: failed_event)
+                    
+                    let success = try await apiService.createEvent(event: event)
+                    
+                    if success {
+                        print("🎉 이벤트가 성공적으로 생성되었습니다!")
+                        context.delete(failed_event)
+                    } else {
+                        print("❗️이벤트 생성에 실패했습니다.")
+                    }
+                }
+                
+                try context.save()
+            } catch {
+                print("❌ API 호출 중 오류 발생: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    // 테스트용으로 추가한 이벤트 제거하기 위한 함수
+    func removeAllFailedEvents() {
+        let fetchRequest: NSFetchRequest<Failed_Event> = Failed_Event.fetchRequest()
+        
+        Task {
+            do {
+                let failed_events = try context.fetch(fetchRequest)
+                for failed_event in failed_events {
+                    context.delete(failed_event)
+                }
+                
+                try context.save()
+            } catch {
+                print("❌ 삭제 실패: \(error.localizedDescription)")
+            }
         }
     }
 }

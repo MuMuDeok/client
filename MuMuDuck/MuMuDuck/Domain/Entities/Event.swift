@@ -42,6 +42,16 @@ struct PersonalEvent: Event {
         self.alertTime = alertTime
         self.memo = memo
     }
+    
+    init(cd_event: CD_Event) {
+        self.id = cd_event.id
+        self.title = cd_event.title
+        self.isAllDay = cd_event.isAllDay
+        self.startDate = cd_event.startDate
+        self.endDate = cd_event.endDate
+        self.alertTime = Int(cd_event.alertTime)
+        self.memo = cd_event.memo ?? ""
+    }
 }
 
 struct MusicalEvent: Event {

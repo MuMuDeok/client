@@ -20,7 +20,7 @@ class DefaultEventRepository: EventRepository {
         var newEvents: [any Event] = []
         for cd_event in cd_events {
             if cd_event.type == "personal" { // 나중에 다른 타입의 일정이 생기면 switch case로 나누기
-                let event = PersonalEvent(id: cd_event.id, title: cd_event.title, isAllDay: cd_event.isAllDay, startDate: cd_event.startDate, endDate: cd_event.endDate, alertTime: Int(cd_event.alertTime), memo: cd_event.memo ?? "")
+                let event = PersonalEvent(cd_event: cd_event)
                 
                 newEvents.append(event)
             }

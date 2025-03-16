@@ -12,6 +12,7 @@ struct MuMuDuckApp: App {
     @StateObject var coordinator: Coordinator = Coordinator()
     let notificationManager: NotificationManager = NotificationManager.shared
     let persistenceController = PersistenceController.shared
+    @State var networkMonitor: NetworkMonitor = NetworkMonitor()
     
     var body: some Scene {
         WindowGroup {
