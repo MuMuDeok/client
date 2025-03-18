@@ -15,7 +15,6 @@ class MyCalendarTapViewModel {
     var month: Date = Date()
     var selectedDate: Date? = Date()
     var selectedWeek: [Date] = []
-    var isShowWeeklyCalendar: Bool = false
     var weekIncludeToday: [Date] = []
     
     init() {
@@ -40,8 +39,8 @@ class MyCalendarTapViewModel {
         return retrieveWeekEventUsecase.execute(date: date)
     }
     
-    func createPersonalEvent(title: String, isAllDay: Bool, startDate: Date, endDate: Date, isAlert: Bool, memo: String = "") {
-        createEventUsecase.execute(title: title, isAllDay: isAllDay, startDate: startDate, endDate: endDate, isAlert: isAlert, memo: memo)
+    func createPersonalEvent(title: String, isAllDay: Bool, startDate: Date, endDate: Date, alertTime: Int?, memo: String = "") {
+        createEventUsecase.execute(title: title, isAllDay: isAllDay, startDate: startDate, endDate: endDate, alertTime: alertTime, memo: memo)
     }
     
     func changeMonth(newMonth: Date) {
@@ -54,10 +53,6 @@ class MyCalendarTapViewModel {
     
     func changeSelectedWeek(newSelectedWeek: [Date]) {
         self.selectedWeek = newSelectedWeek
-    }
-    
-    func toggleIsShowWeeklyCalendar() {
-        self.isShowWeeklyCalendar.toggle()
     }
     
     func isSelectToday() -> Bool {

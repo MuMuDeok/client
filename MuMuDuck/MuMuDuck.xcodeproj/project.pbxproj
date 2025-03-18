@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		FB22BF752D53A3AF003DBF28 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FB22BF702D53A3AF003DBF28 /* Assets.xcassets */; };
 		FB22BF762D53A3AF003DBF28 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB22BF712D53A3AF003DBF28 /* ContentView.swift */; };
-		FB22BF772D53A3AF003DBF28 /* MuMuDuckApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB22BF722D53A3AF003DBF28 /* MuMuDuckApp.swift */; };
 		FB22BF7A2D53A3B6003DBF28 /* MuMuDuckTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB22BF782D53A3B6003DBF28 /* MuMuDuckTests.swift */; };
 		FB22BF7E2D53A3B8003DBF28 /* MuMuDuckUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB22BF7B2D53A3B8003DBF28 /* MuMuDuckUITests.swift */; };
 		FB22BF7F2D53A3B8003DBF28 /* MuMuDuckUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB22BF7C2D53A3B8003DBF28 /* MuMuDuckUITestsLaunchTests.swift */; };
@@ -18,6 +17,23 @@
 		FB22BFB82D563BA6003DBF28 /* DefaultEventRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB22BFB72D563B9F003DBF28 /* DefaultEventRepository.swift */; };
 		FB22BFC02D564B5B003DBF28 /* RetrieveDateEventUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB22BFBF2D5648F4003DBF28 /* RetrieveDateEventUsecase.swift */; };
 		FB22BFC22D564BE8003DBF28 /* RetrieveDateEventUsecaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB22BFC12D564BD2003DBF28 /* RetrieveDateEventUsecaseTests.swift */; };
+		FB450CA72D8491B900FF4151 /* MuMuDuck.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FB450CA52D8491B900FF4151 /* MuMuDuck.xcdatamodeld */; };
+		FB450CC02D8593F800FF4151 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB450CBF2D8593F100FF4151 /* PersistenceController.swift */; };
+		FB450CD32D85ABE300FF4151 /* CD_Event+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB450CD12D85ABE300FF4151 /* CD_Event+CoreDataClass.swift */; };
+		FB450CD42D85ABE300FF4151 /* CD_Event+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB450CD22D85ABE300FF4151 /* CD_Event+CoreDataProperties.swift */; };
+		FB450CD62D85DADC00FF4151 /* UpdateEventUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB450CD52D85DAD700FF4151 /* UpdateEventUsecase.swift */; };
+		FB450CD82D85DC5700FF4151 /* EditPersonalEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB450CD72D85DC5300FF4151 /* EditPersonalEventView.swift */; };
+		FB450CDA2D85E48D00FF4151 /* ReadEventUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB450CD92D85E48700FF4151 /* ReadEventUsecase.swift */; };
+		FB450CDC2D85EE3100FF4151 /* ReadEventUsecaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB450CDB2D85EE2800FF4151 /* ReadEventUsecaseTests.swift */; };
+		FB450CDE2D85EF5F00FF4151 /* UpdateEventUsecaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB450CDD2D85EF5900FF4151 /* UpdateEventUsecaseTests.swift */; };
+		FB450CE02D86FA4D00FF4151 /* DeleteEventUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB450CDF2D86FA4A00FF4151 /* DeleteEventUsecase.swift */; };
+		FB450CE22D86FC5200FF4151 /* DeleteEventUsecaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB450CE12D86FC4E00FF4151 /* DeleteEventUsecaseTests.swift */; };
+		FB450CE52D87011B00FF4151 /* Failed_Event+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB450CE32D87011B00FF4151 /* Failed_Event+CoreDataClass.swift */; };
+		FB450CE62D87011B00FF4151 /* Failed_Event+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB450CE42D87011B00FF4151 /* Failed_Event+CoreDataProperties.swift */; };
+		FB450CE82D8704F000FF4151 /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB450CE72D8704EC00FF4151 /* NetworkMonitor.swift */; };
+		FB450CEA2D87078100FF4151 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB450CE92D87077300FF4151 /* APIService.swift */; };
+		FB450CEC2D87094600FF4151 /* API_Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB450CEB2D87093F00FF4151 /* API_Event.swift */; };
+		FB450CF12D870F7600FF4151 /* MuMuDuckApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB450CF02D870F7600FF4151 /* MuMuDuckApp.swift */; };
 		FB46D9772D661FF0004D75B0 /* MonthCalendarWeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB46D9762D661FE3004D75B0 /* MonthCalendarWeekView.swift */; };
 		FB46D9792D662610004D75B0 /* MiniCalendarWeeklyEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB46D9782D662605004D75B0 /* MiniCalendarWeeklyEventView.swift */; };
 		FB46D97B2D6628C2004D75B0 /* BigCalendarWeeklyEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB46D97A2D6628BA004D75B0 /* BigCalendarWeeklyEventView.swift */; };
@@ -30,9 +46,10 @@
 		FB46D9FB2D79F387004D75B0 /* MonthCalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB46D9FA2D79F382004D75B0 /* MonthCalendarViewModel.swift */; };
 		FB46D9FD2D79F65F004D75B0 /* MonthCalendarHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB46D9FC2D79F65A004D75B0 /* MonthCalendarHeaderView.swift */; };
 		FB46DA012D7A01C1004D75B0 /* WeeklyCalendarWeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB46DA002D7A01BD004D75B0 /* WeeklyCalendarWeekView.swift */; };
+		FB46DA2A2D8323E7004D75B0 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB46DA292D8323E1004D75B0 /* NotificationManager.swift */; };
 		FB48A19C2D61007B002AAB05 /* RetrieveWeekEventUsecases.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB48A19B2D61007B002AAB05 /* RetrieveWeekEventUsecases.swift */; };
 		FB48A19D2D61007B002AAB05 /* CreateEventUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB48A19A2D61007B002AAB05 /* CreateEventUsecase.swift */; };
-		FB48A1A02D6100A1002AAB05 /* CreateEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB48A19E2D6100A1002AAB05 /* CreateEventView.swift */; };
+		FB48A1A02D6100A1002AAB05 /* CreatePersonalEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB48A19E2D6100A1002AAB05 /* CreatePersonalEventView.swift */; };
 		FB48A1A32D6100E4002AAB05 /* WeeklyCalendarHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB48A1A22D6100E4002AAB05 /* WeeklyCalendarHeaderView.swift */; };
 		FB48A1A62D610114002AAB05 /* RetrieveWeekEventUsecaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB48A1A52D610114002AAB05 /* RetrieveWeekEventUsecaseTests.swift */; };
 		FB48A1A72D610114002AAB05 /* CreateEventUsecaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB48A1A42D610114002AAB05 /* CreateEventUsecaseTests.swift */; };
@@ -71,7 +88,6 @@
 		FB22BF5B2D53A398003DBF28 /* MuMuDuckUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MuMuDuckUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB22BF702D53A3AF003DBF28 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FB22BF712D53A3AF003DBF28 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		FB22BF722D53A3AF003DBF28 /* MuMuDuckApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MuMuDuckApp.swift; sourceTree = "<group>"; };
 		FB22BF782D53A3B6003DBF28 /* MuMuDuckTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MuMuDuckTests.swift; sourceTree = "<group>"; };
 		FB22BF7B2D53A3B8003DBF28 /* MuMuDuckUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MuMuDuckUITests.swift; sourceTree = "<group>"; };
 		FB22BF7C2D53A3B8003DBF28 /* MuMuDuckUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MuMuDuckUITestsLaunchTests.swift; sourceTree = "<group>"; };
@@ -80,6 +96,24 @@
 		FB22BFB72D563B9F003DBF28 /* DefaultEventRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultEventRepository.swift; sourceTree = "<group>"; };
 		FB22BFBF2D5648F4003DBF28 /* RetrieveDateEventUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetrieveDateEventUsecase.swift; sourceTree = "<group>"; };
 		FB22BFC12D564BD2003DBF28 /* RetrieveDateEventUsecaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetrieveDateEventUsecaseTests.swift; sourceTree = "<group>"; };
+		FB450CA62D8491B900FF4151 /* MuMuDuck.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MuMuDuck.xcdatamodel; sourceTree = "<group>"; };
+		FB450CBF2D8593F100FF4151 /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
+		FB450CD12D85ABE300FF4151 /* CD_Event+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CD_Event+CoreDataClass.swift"; sourceTree = "<group>"; };
+		FB450CD22D85ABE300FF4151 /* CD_Event+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CD_Event+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		FB450CD52D85DAD700FF4151 /* UpdateEventUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateEventUsecase.swift; sourceTree = "<group>"; };
+		FB450CD72D85DC5300FF4151 /* EditPersonalEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPersonalEventView.swift; sourceTree = "<group>"; };
+		FB450CD92D85E48700FF4151 /* ReadEventUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadEventUsecase.swift; sourceTree = "<group>"; };
+		FB450CDB2D85EE2800FF4151 /* ReadEventUsecaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadEventUsecaseTests.swift; sourceTree = "<group>"; };
+		FB450CDD2D85EF5900FF4151 /* UpdateEventUsecaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateEventUsecaseTests.swift; sourceTree = "<group>"; };
+		FB450CDF2D86FA4A00FF4151 /* DeleteEventUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteEventUsecase.swift; sourceTree = "<group>"; };
+		FB450CE12D86FC4E00FF4151 /* DeleteEventUsecaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteEventUsecaseTests.swift; sourceTree = "<group>"; };
+		FB450CE32D87011B00FF4151 /* Failed_Event+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Failed_Event+CoreDataClass.swift"; sourceTree = "<group>"; };
+		FB450CE42D87011B00FF4151 /* Failed_Event+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Failed_Event+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		FB450CE72D8704EC00FF4151 /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
+		FB450CE92D87077300FF4151 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
+		FB450CEB2D87093F00FF4151 /* API_Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API_Event.swift; sourceTree = "<group>"; };
+		FB450CF02D870F7600FF4151 /* MuMuDuckApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MuMuDuckApp.swift; sourceTree = "<group>"; };
+		FB450CF22D871B6400FF4151 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Config.xcconfig; path = MuMuDuck/App/Config.xcconfig; sourceTree = "<group>"; };
 		FB46D9762D661FE3004D75B0 /* MonthCalendarWeekView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthCalendarWeekView.swift; sourceTree = "<group>"; };
 		FB46D9782D662605004D75B0 /* MiniCalendarWeeklyEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniCalendarWeeklyEventView.swift; sourceTree = "<group>"; };
 		FB46D97A2D6628BA004D75B0 /* BigCalendarWeeklyEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BigCalendarWeeklyEventView.swift; sourceTree = "<group>"; };
@@ -92,9 +126,10 @@
 		FB46D9FA2D79F382004D75B0 /* MonthCalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthCalendarViewModel.swift; sourceTree = "<group>"; };
 		FB46D9FC2D79F65A004D75B0 /* MonthCalendarHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthCalendarHeaderView.swift; sourceTree = "<group>"; };
 		FB46DA002D7A01BD004D75B0 /* WeeklyCalendarWeekView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyCalendarWeekView.swift; sourceTree = "<group>"; };
+		FB46DA292D8323E1004D75B0 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		FB48A19A2D61007B002AAB05 /* CreateEventUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEventUsecase.swift; sourceTree = "<group>"; };
 		FB48A19B2D61007B002AAB05 /* RetrieveWeekEventUsecases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetrieveWeekEventUsecases.swift; sourceTree = "<group>"; };
-		FB48A19E2D6100A1002AAB05 /* CreateEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEventView.swift; sourceTree = "<group>"; };
+		FB48A19E2D6100A1002AAB05 /* CreatePersonalEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePersonalEventView.swift; sourceTree = "<group>"; };
 		FB48A1A22D6100E4002AAB05 /* WeeklyCalendarHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyCalendarHeaderView.swift; sourceTree = "<group>"; };
 		FB48A1A42D610114002AAB05 /* CreateEventUsecaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEventUsecaseTests.swift; sourceTree = "<group>"; };
 		FB48A1A52D610114002AAB05 /* RetrieveWeekEventUsecaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetrieveWeekEventUsecaseTests.swift; sourceTree = "<group>"; };
@@ -138,6 +173,7 @@
 		FB22BF382D53A397003DBF28 = {
 			isa = PBXGroup;
 			children = (
+				FB450CF22D871B6400FF4151 /* Config.xcconfig */,
 				FB22BF732D53A3AF003DBF28 /* MuMuDuck */,
 				FB22BF792D53A3B6003DBF28 /* MuMuDuckTests */,
 				FB22BF7D2D53A3B8003DBF28 /* MuMuDuckUITests */,
@@ -189,7 +225,7 @@
 		FB22BF802D53A478003DBF28 /* App */ = {
 			isa = PBXGroup;
 			children = (
-				FB22BF722D53A3AF003DBF28 /* MuMuDuckApp.swift */,
+				FB450CF02D870F7600FF4151 /* MuMuDuckApp.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -205,8 +241,10 @@
 		FB22BF822D53A48D003DBF28 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				FB450CA52D8491B900FF4151 /* MuMuDuck.xcdatamodeld */,
 				FB22BF912D53A5AF003DBF28 /* Network */,
 				FB22BF922D53A5B7003DBF28 /* Repositories */,
+				FB450CA42D84919000FF4151 /* Persistence */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -263,6 +301,7 @@
 		FB22BF892D53A553003DBF28 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				FB46DA292D8323E1004D75B0 /* NotificationManager.swift */,
 				FB48A1B22D610148002AAB05 /* Event */,
 				FB22BF9D2D5511D0003DBF28 /* Calendar */,
 			);
@@ -316,6 +355,9 @@
 			isa = PBXGroup;
 			children = (
 				FB48A19A2D61007B002AAB05 /* CreateEventUsecase.swift */,
+				FB450CD92D85E48700FF4151 /* ReadEventUsecase.swift */,
+				FB450CD52D85DAD700FF4151 /* UpdateEventUsecase.swift */,
+				FB450CDF2D86FA4A00FF4151 /* DeleteEventUsecase.swift */,
 				FB22BFBF2D5648F4003DBF28 /* RetrieveDateEventUsecase.swift */,
 				FB48A19B2D61007B002AAB05 /* RetrieveWeekEventUsecases.swift */,
 			);
@@ -326,6 +368,7 @@
 			isa = PBXGroup;
 			children = (
 				FB22BF9B2D551089003DBF28 /* Event.swift */,
+				FB450CEB2D87093F00FF4151 /* API_Event.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -333,6 +376,8 @@
 		FB22BF912D53A5AF003DBF28 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				FB450CE72D8704EC00FF4151 /* NetworkMonitor.swift */,
+				FB450CE92D87077300FF4151 /* APIService.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -379,7 +424,7 @@
 			isa = PBXGroup;
 			children = (
 				FBB7A9272D5A57150047FE69 /* MyCalendarTapView.swift */,
-				FB48A19E2D6100A1002AAB05 /* CreateEventView.swift */,
+				FB48A19E2D6100A1002AAB05 /* CreatePersonalEventView.swift */,
 				FB46D9FF2D7A009C004D75B0 /* WeekCalendar */,
 				FB46D9FE2D7A0096004D75B0 /* MonthCalendar */,
 			);
@@ -428,6 +473,9 @@
 			isa = PBXGroup;
 			children = (
 				FB48A1A42D610114002AAB05 /* CreateEventUsecaseTests.swift */,
+				FB450CDB2D85EE2800FF4151 /* ReadEventUsecaseTests.swift */,
+				FB450CDD2D85EF5900FF4151 /* UpdateEventUsecaseTests.swift */,
+				FB450CE12D86FC4E00FF4151 /* DeleteEventUsecaseTests.swift */,
 				FB48A1A52D610114002AAB05 /* RetrieveWeekEventUsecaseTests.swift */,
 				FB22BFC12D564BD2003DBF28 /* RetrieveDateEventUsecaseTests.swift */,
 			);
@@ -448,6 +496,18 @@
 			children = (
 			);
 			path = Calendar;
+			sourceTree = "<group>";
+		};
+		FB450CA42D84919000FF4151 /* Persistence */ = {
+			isa = PBXGroup;
+			children = (
+				FB450CBF2D8593F100FF4151 /* PersistenceController.swift */,
+				FB450CD12D85ABE300FF4151 /* CD_Event+CoreDataClass.swift */,
+				FB450CD22D85ABE300FF4151 /* CD_Event+CoreDataProperties.swift */,
+				FB450CE32D87011B00FF4151 /* Failed_Event+CoreDataClass.swift */,
+				FB450CE42D87011B00FF4151 /* Failed_Event+CoreDataProperties.swift */,
+			);
+			path = Persistence;
 			sourceTree = "<group>";
 		};
 		FB46D9FE2D7A0096004D75B0 /* MonthCalendar */ = {
@@ -497,6 +557,7 @@
 			isa = PBXGroup;
 			children = (
 				FB48A1AE2D610148002AAB05 /* PersonalEventDetailView.swift */,
+				FB450CD72D85DC5300FF4151 /* EditPersonalEventView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -680,6 +741,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FB22BF762D53A3AF003DBF28 /* ContentView.swift in Sources */,
+				FB46DA2A2D8323E7004D75B0 /* NotificationManager.swift in Sources */,
 				FBB7A92A2D5A572F0047FE69 /* HistoryTapView.swift in Sources */,
 				FBB7A9282D5A57180047FE69 /* MyCalendarTapView.swift in Sources */,
 				FBB7A9242D5A56AB0047FE69 /* TodayTapView.swift in Sources */,
@@ -687,24 +749,37 @@
 				FB22BFC02D564B5B003DBF28 /* RetrieveDateEventUsecase.swift in Sources */,
 				FB46D98B2D6F5145004D75B0 /* WeeklyCalendarViewModel.swift in Sources */,
 				FB46D97B2D6628C2004D75B0 /* BigCalendarWeeklyEventView.swift in Sources */,
+				FB450CEC2D87094600FF4151 /* API_Event.swift in Sources */,
+				FB450CE02D86FA4D00FF4151 /* DeleteEventUsecase.swift in Sources */,
 				FB22BFB62D553989003DBF28 /* EventRepository.swift in Sources */,
-				FB48A1A02D6100A1002AAB05 /* CreateEventView.swift in Sources */,
+				FB48A1A02D6100A1002AAB05 /* CreatePersonalEventView.swift in Sources */,
 				FB46D9FD2D79F65F004D75B0 /* MonthCalendarHeaderView.swift in Sources */,
+				FB450CE82D8704F000FF4151 /* NetworkMonitor.swift in Sources */,
 				FB46D9772D661FF0004D75B0 /* MonthCalendarWeekView.swift in Sources */,
+				FB450CF12D870F7600FF4151 /* MuMuDuckApp.swift in Sources */,
+				FB450CEA2D87078100FF4151 /* APIService.swift in Sources */,
+				FB450CD62D85DADC00FF4151 /* UpdateEventUsecase.swift in Sources */,
 				FB48A19C2D61007B002AAB05 /* RetrieveWeekEventUsecases.swift in Sources */,
 				FB48A19D2D61007B002AAB05 /* CreateEventUsecase.swift in Sources */,
+				FB450CC02D8593F800FF4151 /* PersistenceController.swift in Sources */,
 				FB48A1A32D6100E4002AAB05 /* WeeklyCalendarHeaderView.swift in Sources */,
 				FB22BF9C2D55108B003DBF28 /* Event.swift in Sources */,
+				FB450CD32D85ABE300FF4151 /* CD_Event+CoreDataClass.swift in Sources */,
+				FB450CD42D85ABE300FF4151 /* CD_Event+CoreDataProperties.swift in Sources */,
 				FB46DA012D7A01C1004D75B0 /* WeeklyCalendarWeekView.swift in Sources */,
-				FB22BF772D53A3AF003DBF28 /* MuMuDuckApp.swift in Sources */,
+				FB450CD82D85DC5700FF4151 /* EditPersonalEventView.swift in Sources */,
 				FB46D9F72D7884BF004D75B0 /* ChangeMonthAndYearView.swift in Sources */,
 				FB22BFB82D563BA6003DBF28 /* DefaultEventRepository.swift in Sources */,
+				FB450CE52D87011B00FF4151 /* Failed_Event+CoreDataClass.swift in Sources */,
+				FB450CE62D87011B00FF4151 /* Failed_Event+CoreDataProperties.swift in Sources */,
 				FB46D97D2D662D2D004D75B0 /* MiniCalendarBottomEventView.swift in Sources */,
 				FB46D9F92D79EF45004D75B0 /* MonthCalendarView.swift in Sources */,
+				FB450CDA2D85E48D00FF4151 /* ReadEventUsecase.swift in Sources */,
 				FB46D9892D6DC440004D75B0 /* WeeklyCalendarView.swift in Sources */,
 				FBB7A9222D5A54290047FE69 /* Coordinator.swift in Sources */,
 				FB48A1B32D610148002AAB05 /* PersonalEventDetailView.swift in Sources */,
 				FB46D9FB2D79F387004D75B0 /* MonthCalendarViewModel.swift in Sources */,
+				FB450CA72D8491B900FF4151 /* MuMuDuck.xcdatamodeld in Sources */,
 				FB48A1B42D610148002AAB05 /* EventDetailViewModel.swift in Sources */,
 				FB46D9792D662610004D75B0 /* MiniCalendarWeeklyEventView.swift in Sources */,
 				FBB7A9202D5A54170047FE69 /* CoordinatorView.swift in Sources */,
@@ -717,9 +792,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				FB48A1A62D610114002AAB05 /* RetrieveWeekEventUsecaseTests.swift in Sources */,
+				FB450CDE2D85EF5F00FF4151 /* UpdateEventUsecaseTests.swift in Sources */,
 				FB48A1A72D610114002AAB05 /* CreateEventUsecaseTests.swift in Sources */,
 				FB22BF7A2D53A3B6003DBF28 /* MuMuDuckTests.swift in Sources */,
+				FB450CDC2D85EE3100FF4151 /* ReadEventUsecaseTests.swift in Sources */,
 				FB46D9C72D74972A004D75B0 /* WeeklyCalendarViewModelTests.swift in Sources */,
+				FB450CE22D86FC5200FF4151 /* DeleteEventUsecaseTests.swift in Sources */,
 				FB22BFC22D564BE8003DBF28 /* RetrieveDateEventUsecaseTests.swift in Sources */,
 				FB48A1AA2D610124002AAB05 /* MonthCalendarTapViewModelTests.swift in Sources */,
 			);
@@ -871,6 +949,7 @@
 		};
 		FB22BF662D53A398003DBF28 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FB450CF22D871B6400FF4151 /* Config.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -880,6 +959,7 @@
 				DEVELOPMENT_TEAM = 733A2RXB59;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MuMuDuck/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -910,6 +990,7 @@
 				DEVELOPMENT_TEAM = 733A2RXB59;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MuMuDuck/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -931,6 +1012,7 @@
 		};
 		FB22BF692D53A398003DBF28 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FB450CF22D871B6400FF4151 /* Config.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -1041,6 +1123,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		FB450CA52D8491B900FF4151 /* MuMuDuck.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				FB450CA62D8491B900FF4151 /* MuMuDuck.xcdatamodel */,
+			);
+			currentVersion = FB450CA62D8491B900FF4151 /* MuMuDuck.xcdatamodel */;
+			path = MuMuDuck.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = FB22BF392D53A397003DBF28 /* Project object */;
 }

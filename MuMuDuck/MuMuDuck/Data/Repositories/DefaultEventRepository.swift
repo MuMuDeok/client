@@ -10,36 +10,22 @@ import Foundation
 @Observable
 class DefaultEventRepository: EventRepository {
     static let shared: DefaultEventRepository = DefaultEventRepository()
+    private let persistenceController = PersistenceController.shared
     
     var events: [any Event]
     
-    init(events: [any Event] = []) {
-        // 목 데이터를 위한 임시 방편
-        if events.isEmpty {
-            func getDate(year: Int, month: Int, day: Int) -> Date {
-                var dateComponents = DateComponents()
-                dateComponents.year = year
-                dateComponents.month = month
-                dateComponents.day = day
-                if let date = Calendar.current.date(from: dateComponents) {
-                    return date
-                } else {
-                    return Date()
-                }
+    init() {
+        let cd_events = persistenceController.fetchEvents()
+        
+        var newEvents: [any Event] = []
+        for cd_event in cd_events {
+            if cd_event.type == "personal" { // 나중에 다른 타입의 일정이 생기면 switch case로 나누기
+                let event = PersonalEvent(cd_event: cd_event)
+                
+                newEvents.append(event)
             }
-            
-            self.events = [
-                PersonalEvent(title: "테스트A", isAllDay: true, startDate: getDate(year: 2025, month: 02, day: 13), endDate: getDate(year: 2025, month: 02, day: 19), isAlert: true, memo: "테스트 메모A"),
-                PersonalEvent(title: "테스트B", isAllDay: false, startDate: getDate(year: 2025, month: 01, day: 27), endDate: getDate(year: 2025, month: 01, day: 30), isAlert: true, memo: "테스트 메모B"),
-                PersonalEvent(title: "테스트C", isAllDay: true, startDate: getDate(year: 2025, month: 02, day: 19), endDate: getDate(year: 2025, month: 02, day: 25), isAlert: false, memo: "테스트 메모C"),
-                PersonalEvent(title: "테스트D", isAllDay: true, startDate: getDate(year: 2025, month: 02, day: 23), endDate: getDate(year: 2025, month: 02, day: 25), isAlert: false, memo: "테스트 메모D"),
-                PersonalEvent(title: "테스트E", isAllDay: true, startDate: getDate(year: 2025, month: 02, day: 19), endDate: getDate(year: 2025, month: 02, day: 28), isAlert: false, memo: "테스트 메모E"),
-                PersonalEvent(title: "테스트F", isAllDay: true, startDate: getDate(year: 2025, month: 02, day: 12), endDate: getDate(year: 2025, month: 02, day: 23), isAlert: false, memo: "테스트 메모F"),
-                PersonalEvent(title: "테스트G", isAllDay: true, startDate: getDate(year: 2025, month: 02, day: 25), endDate: getDate(year: 2025, month: 3, day: 1), isAlert: false, memo: "테스트 메모G"),
-            ]
-        } else {
-            self.events = events
         }
+        self.events = newEvents
     }
     
     func fetchEvents() -> [any Event] {
@@ -49,7 +35,25 @@ class DefaultEventRepository: EventRepository {
         return sortedEvents
     }
     
+    func fetchEvent(id: UUID) -> any Event {
+        if let index = self.events.firstIndex(where: { $0.id == id }) {
+            return self.events[index]
+        }
+        
+        return self.events[0]
+    }
+    
     func createEvent(event: any Event) {
         self.events.append(event)
+    }
+    
+    func updateEvent(id: UUID, event: any Event) {
+        if let index = self.events.firstIndex(where: { $0.id == id }) {
+            self.events[index] = event
+        }
+    }
+    
+    func deleteEvent(id: UUID) {
+        self.events = self.events.filter { $0.id != id }
     }
 }

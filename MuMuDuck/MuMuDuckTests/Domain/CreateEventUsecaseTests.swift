@@ -21,11 +21,11 @@ final class CreateEventUsecaseTests: XCTestCase {
         let isAllDay: Bool = false
         let startDate: Date = Date()
         let endDate: Date = Date()
-        let isAlert: Bool = false
+        let alertTime: Int = 5
         let memo: String = "test memo"
         
         let beforeCreateEventCount = repositoryMock.events.count
-        usecase.execute(title: title, isAllDay: isAllDay, startDate: startDate, endDate: endDate, isAlert: isAlert, memo: memo)
+        usecase.execute(title: title, isAllDay: isAllDay, startDate: startDate, endDate: endDate, alertTime: alertTime, memo: memo)
         let afterCreateEventCount = repositoryMock.events.count
         
         // then
@@ -34,6 +34,6 @@ final class CreateEventUsecaseTests: XCTestCase {
         XCTAssertEqual(repositoryMock.events.last?.isAllDay, isAllDay)
         XCTAssertEqual(repositoryMock.events.last?.startDate, startDate)
         XCTAssertEqual(repositoryMock.events.last?.endDate, endDate)
-        XCTAssertEqual(repositoryMock.events.last?.isAlert, isAlert)
+        XCTAssertEqual(repositoryMock.events.last?.alertTime, alertTime)
     }
 }
