@@ -28,13 +28,13 @@ struct EventToAPIEvent: Codable {
         self.type = 1
     }
     
-    init(userId: Int, event: Failed_Event) {
+    init(userId: Int, failed_event: Failed_Event) {
         self.userId = userId
-        self.title = event.title
-        self.isAllDay = event.isAllDay
-        self.startDate = event.startDate
-        self.endDate = event.endDate
-        self.memo = event.memo ?? ""
+        self.title = failed_event.title
+        self.isAllDay = failed_event.isAllDay
+        self.startDate = failed_event.startDate
+        self.endDate = failed_event.endDate
+        self.memo = failed_event.memo ?? ""
         self.type = 1
     }
 }

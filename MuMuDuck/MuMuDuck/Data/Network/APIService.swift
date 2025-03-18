@@ -26,9 +26,7 @@ class APIService {
         let jsonData = try JSONEncoder().encode(event)
         request.httpBody = jsonData
 
-        print(jsonData)
         let (_, response) = try await URLSession.shared.data(for: request)
-        print(response)
         
         guard let httpResponse = response as? HTTPURLResponse else {
             throw URLError(.unknown)

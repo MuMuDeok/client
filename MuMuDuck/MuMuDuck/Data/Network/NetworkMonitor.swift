@@ -26,8 +26,8 @@ class NetworkMonitor {
                 
                 let status = path.status == .satisfied
 
-                // ✅ 이전 상태가 끊김(wasConnected = false) -> 새로 연결된 경우 실행
-                if !self.wasConnected && status {
+                // 인터넷 연결된 경우 실행
+                if status {
                     self.reTryApi()
                 }
 
